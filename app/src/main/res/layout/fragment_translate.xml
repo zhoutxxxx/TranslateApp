@@ -70,11 +70,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
 
-                <TextView
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="点击开始输入文字"
                     android:padding="10dp"
+                    android:gravity="start"
                     android:textSize="16dp" />
             </LinearLayout>
 
