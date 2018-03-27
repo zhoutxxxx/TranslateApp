@@ -3,4 +3,8 @@
     <color name="colorPrimary">#329fda</color>
     <color name="colorPrimaryDark">#329fda</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="tabLayout_Icon">#329fda</color>
+    <color name="bg_White">#FFFFFF</color>
+    <color name="gray_soft">#dadada</color>
+    <color name="gray_soft_bg">#efefef</color>
 </resources>
