@@ -3,10 +3,10 @@
     <string name="app_name">DesignDemo</string>
     <string name="TabLayout_Title_Translate">翻译</string>
     <string name="TabLayout_Title_User">我的</string>
-    <string name="MainActivity_Title">翻译</string>
     <string name="TabLayout_Icon_Translate">&#xf1b4;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
+    <string name="MainActivity_Title">翻译</string>
     <string name="camera_Icon">&#xf030;</string>
     <string name="microphone_Icon">&#xf130;</string>
 </resources>
