@@ -1,12 +1,12 @@
 package com.bnuz.ztx.translateapp;
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     //View的容器用来放Fragment
     private ViewPager mViewPager;
 
+
+    //导航栏
+    TextView nav_title;
+    TextView nav_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         initDate();
         initView();
+        initEvent();
     }
+
+
 
     private void initDate() {
         //初始化导航标题
@@ -67,17 +74,14 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.i("TAG", "position:" + position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -103,22 +107,78 @@ public class MainActivity extends AppCompatActivity {
         });
         //绑定
         mTabLayout.setupWithViewPager(mViewPager);
-        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = mTabLayout.getTabAt(i);
-            if (tab != null) {
-                tab.setCustomView(getTabView(getResources().getString(mListTile.get(i)), getResources().getString(mListIcon.get(i))));
-            }
-        }
+        setupTabIcons();
+//        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+//            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+//            if (tab != null) {
+//                tab.setCustomView(getTabView(getResources().getString(mListTile.get(i)), getResources().getString(mListIcon.get(i))));
+//            }
+//        }
     }
 
-    public View getTabView(String title, String icon) {
+    private void setupTabIcons() {
+        mTabLayout.getTabAt(0).setCustomView(getTabView(0));
+        mTabLayout.getTabAt(1).setCustomView(getTabView(1));
+    }
+
+    public View getTabView(int position) {
         View v = LayoutInflater.from(getApplication()).inflate(R.layout.tab_item, null);
-        TextView textView2= (TextView) v.findViewById(R.id.imageView2);
-        textView2.setText(icon);
-        textView2.setTypeface(new FontManager().getType(getApplication()));
-        TextView textView1 = (TextView) v.findViewById(R.id.textView1);
-        textView1.setText(title);
+        nav_icon= (TextView) v.findViewById(R.id.nav_icon);
+        nav_icon.setText(mListIcon.get(position));
+        nav_icon.setTypeface(new FontManager().getType(getApplication()));
+        nav_title = (TextView) v.findViewById(R.id. nav_title);
+        nav_title.setText(mListTile.get(position));
+        if (position == 0) {
+            nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
+            nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            nav_title.setTextColor(Color.BLACK);
+            nav_icon.setTextColor(Color.BLACK);
+        }
         return v;
     }
 
+    private void initEvent() {
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                changeTabSelect(tab);
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {changeTabUnSelect(tab);}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    private void changeTabUnSelect(TabLayout.Tab tab) {
+        View view = tab.getCustomView();
+        nav_title = view.findViewById(R.id.nav_title);
+        nav_icon = view.findViewById(R.id.nav_icon);
+        if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_Translate))) {
+            nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            mViewPager.setCurrentItem(0);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            mViewPager.setCurrentItem(1);
+        }
+    }
+
+    private void changeTabSelect(TabLayout.Tab tab) {
+        View view = tab.getCustomView();
+        nav_title = view.findViewById(R.id.nav_title);
+        nav_icon = view.findViewById(R.id.nav_icon);
+        if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_Translate))) {
+            nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
+            nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mViewPager.setCurrentItem(0);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
+            nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mViewPager.setCurrentItem(1);
+        }
+    }
 }

@@ -7,4 +7,5 @@
     <color name="bg_White">#FFFFFF</color>
     <color name="gray_soft">#dadada</color>
     <color name="gray_soft_bg">#efefef</color>
+    <color name="gray_navigation_bar">#989898</color>
 </resources>

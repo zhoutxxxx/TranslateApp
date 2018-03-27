@@ -19,11 +19,15 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@android:color/white"></android.support.v4.view.ViewPager>
+        <View  android:layout_height="1px"
+            android:layout_width="match_parent"
+            android:background="@color/gray_navigation_bar"
 
+            />
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="@android:color/white"
             app:tabGravity="fill"
             app:tabIndicatorHeight="0dp">
