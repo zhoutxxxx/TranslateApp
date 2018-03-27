@@ -1,4 +1,4 @@
-package com.bnuz.ztx.translateapp;
+package com.bnuz.ztx.translateapp.Ui;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bnuz.ztx.translateapp.Fragment.TranslateFragment;
 import com.bnuz.ztx.translateapp.Fragment.UserFragment;
+import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
 import java.util.ArrayList;
