@@ -32,10 +32,22 @@ public class TranslateFragment extends Fragment {
 
     private void findView(View view) {
         NiceSpinner niceSpinner1 = (NiceSpinner) view.findViewById(R.id.nice_spinner_1);
-        List<String> dataset1 = new LinkedList<>(Arrays.asList("自动检测","中文", "英语", "日语", "韩语", "葡萄牙语"));
+        List<String> dataset1 = new LinkedList<>();
+        dataset1.add(getResources().getString(R.string.Automatic_language));
+        dataset1.add(getResources().getString(R.string.Chinese_language));
+        dataset1.add(getResources().getString(R.string.English_language));
+        dataset1.add(getResources().getString(R.string.Japanese_language));
+        dataset1.add(getResources().getString(R.string.Korean_language));
+        dataset1.add(getResources().getString(R.string.Portugal_language));
         niceSpinner1.attachDataSource(dataset1);
         NiceSpinner niceSpinner2 = (NiceSpinner) view.findViewById(R.id.nice_spinner_2);
-        List<String> dataset2 = new LinkedList<>(Arrays.asList("中文","自动检测", "英语", "日语", "韩语", "葡萄牙语"));
+        List<String> dataset2 = new LinkedList<>();
+        dataset2.add(getResources().getString(R.string.Portugal_language));
+        dataset2.add(getResources().getString(R.string.Chinese_language));
+        dataset2.add(getResources().getString(R.string.Automatic_language));
+        dataset2.add(getResources().getString(R.string.English_language));
+        dataset2.add(getResources().getString(R.string.Japanese_language));
+        dataset2.add(getResources().getString(R.string.Korean_language));
         niceSpinner2.attachDataSource(dataset2);
         TextView exchange = (TextView)view.findViewById(R.id.exchange_tv);
         exchange.setText(getResources().getString(R.string.exchange_Icon));

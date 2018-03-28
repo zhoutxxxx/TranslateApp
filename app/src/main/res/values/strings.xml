@@ -4,10 +4,15 @@
     <string name="TabLayout_Title_Translate">翻译</string>
     <string name="TabLayout_Title_User">我的</string>
     <string name="MainActivity_Title">翻译</string>
-    <string name="TabLayout_Icon_Translate">&#xf1b4;</string>
+    <string name="Chinese_language">中  文</string>
+    <string name="Automatic_language">自动检测</string>
+    <string name="English_language">英  语</string>
+    <string name="Japanese_language">日  语</string>
+    <string name="Korean_language">韩  语</string>
+    <string name="Portugal_language">葡萄牙语</string>
+    <string name="TabLayout_Icon_Translate">&#xf02d;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
-
     <string name="camera_Icon">&#xf030;</string>
     <string name="microphone_Icon">&#xf130;</string>
 </resources>

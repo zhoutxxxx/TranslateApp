@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/nav_icon"
         android:text="@string/TabLayout_Icon_Translate"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="@color/gray_navigation_bar"
         android:layout_gravity="center"
         />
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nav_title"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:textColor="@color/gray_navigation_bar"
         android:layout_gravity="center"
         android:text="fffffff"

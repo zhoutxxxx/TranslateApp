@@ -2,13 +2,25 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_White"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:text="@string/TabLayout_Title_Translate"
+                android:textColor="@android:color/white"
+                android:textSize="19dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,6 +90,7 @@
                     android:gravity="start"
                     android:textSize="16dp"
                     android:background="@null"
+                    android:textCursorDrawable="@null"
                     />
             </LinearLayout>
 
@@ -123,7 +136,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="这里用来放置详细的翻译结果"
+                android:gravity="center"
+                android:textSize="18dp"/>
         </LinearLayout>
     </LinearLayout>
 
