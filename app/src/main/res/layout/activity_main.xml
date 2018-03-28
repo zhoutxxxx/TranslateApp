@@ -30,6 +30,7 @@
             android:layout_height="40dp"
             android:background="@color/bg_White"
             app:tabGravity="fill"
+            app:tabTextColor="@color/gray_navigation_bar"
             app:tabIndicatorHeight="0dp">
 
         </android.support.design.widget.TabLayout>

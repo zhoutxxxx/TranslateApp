@@ -10,10 +10,16 @@
     <string name="Japanese_language">日  语</string>
     <string name="Korean_language">韩  语</string>
     <string name="Portugal_language">葡萄牙语</string>
-    <string name="TabLayout_Icon_Translate">&#xf02d;</string>
+    <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
     <string name="camera_Icon">&#xf030;</string>
     <string name="microphone_Icon">&#xf130;</string>
+    <string name="money_Icon">&#xf157;</string>
+    <string name="setting_Icon">&#xf013;</string>
+    <string name="download_Icon">&#xf019;</string>
+    <string name="message_Icon">&#xf10e;</string>
+    <string name="pay_Icon">&#xf02a;</string>
+    <string name="right_Icon">&#xf105;</string>
 </resources>
 
