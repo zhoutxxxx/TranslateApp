@@ -1,6 +1,5 @@
 package com.bnuz.ztx.translateapp.Ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -131,8 +130,8 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
             nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
         } else {
-            nav_title.setTextColor(Color.BLACK);
-            nav_icon.setTextColor(Color.BLACK);
+            nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
         }
         return v;
     }
