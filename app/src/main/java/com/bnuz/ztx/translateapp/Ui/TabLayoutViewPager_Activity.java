@@ -18,7 +18,7 @@ import com.bnuz.ztx.translateapp.Util.FontManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//
 public class TabLayoutViewPager_Activity extends AppCompatActivity {
     //滑动
     private TabLayout mTabLayout;
