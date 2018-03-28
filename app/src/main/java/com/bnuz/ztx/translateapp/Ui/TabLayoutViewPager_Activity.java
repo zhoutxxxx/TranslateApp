@@ -1,4 +1,4 @@
-package com.bnuz.ztx.translateapp;
+package com.bnuz.ztx.translateapp.Ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,12 +13,13 @@ import android.widget.TextView;
 
 import com.bnuz.ztx.translateapp.Fragment.TranslateFragment;
 import com.bnuz.ztx.translateapp.Fragment.UserFragment;
+import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class TabLayoutViewPager_Activity extends AppCompatActivity {
     //滑动
     private TabLayout mTabLayout;
     //底部滑动标题
