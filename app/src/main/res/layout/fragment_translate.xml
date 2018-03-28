@@ -76,7 +76,7 @@
                     android:hint="点击开始输入文字"
                     android:padding="10dp"
                     android:gravity="start"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:background="@null"
                     />
             </LinearLayout>
