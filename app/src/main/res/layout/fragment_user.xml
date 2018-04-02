@@ -95,7 +95,7 @@
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="我的余额"
+                        android:text="@string/Money_item"
                         android:textColor="@android:color/black"
                         android:textSize="16dp" />
                     <TextView
@@ -137,7 +137,7 @@
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="我的消息"
+                        android:text="@string/Message_item"
                         android:textColor="@android:color/black"
                         android:textSize="16dp" />
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="下载离线包"
+                        android:text="@string/DownLoad_item"
                         android:textColor="@android:color/black"
                         android:textSize="16dp" />
                     <TextView
@@ -221,7 +221,7 @@
                         android:layout_height="50dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:text="设置"
+                        android:text="@string/Setting_item"
                         android:textColor="@android:color/black"
                         android:textSize="16dp" />
                     <TextView

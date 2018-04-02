@@ -10,6 +10,13 @@
     <string name="Japanese_language">日  语</string>
     <string name="Korean_language">韩  语</string>
     <string name="Portugal_language">葡萄牙语</string>
+    <string name="Setting_item">设置</string>
+    <string name="Money_item">我的余额</string>
+    <string name="Message_item">我的消息</string>
+    <string name="DownLoad_item">下载离线包</string>
+    <string name="Mine_Title">我的</string>
+    <string name="Automatic_updates_item">自动更新</string>
+    <string name="Language_switching_item">语种切换</string>
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
@@ -21,5 +28,6 @@
     <string name="message_Icon">&#xf10e;</string>
     <string name="pay_Icon">&#xf02a;</string>
     <string name="right_Icon">&#xf105;</string>
+    <string name="enter_Icon">&#xf18e;</string>
 </resources>
 

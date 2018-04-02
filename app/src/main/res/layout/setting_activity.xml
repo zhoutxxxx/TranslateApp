@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="@string/Setting_item"
+            android:textColor="@android:color/white"
+            android:textSize="19dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="15dp"
+                android:text="@string/Automatic_updates_item"
+                android:textSize="18dp"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical"/>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="15dp"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"/>
+        </LinearLayout>
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/gray_soft"/>
+    </LinearLayout>
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>
