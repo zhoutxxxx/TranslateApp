@@ -1,6 +1,7 @@
 package com.bnuz.ztx.translateapp.Ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.R;
+import com.bnuz.ztx.translateapp.Util.ShareUtils;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -40,6 +42,7 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         data.add(getResources().getString(R.string.Exchange_language_English_item));
         data.add(getResources().getString(R.string.Exchange_language_Chinese_item));
         niceSpinner.attachDataSource(data);
+        niceSpinner.setSelectedIndex(ShareUtils.getInt(SettingActivity.this,"language",0));
         niceSpinner.setOnItemSelectedListener(this);
     }
 
@@ -49,19 +52,18 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
         // 应用用户选择语言
-
         switch (i){
             case 0:
                 config.locale = Locale.SIMPLIFIED_CHINESE;
+                ShareUtils.putInt(getApplicationContext(),"language",i);
                 break;
             case 1:
                 config.locale = Locale.ENGLISH;
-                break;
-            case 2:
-                config.locale = Locale.SIMPLIFIED_CHINESE;
+                ShareUtils.putInt(getApplicationContext(),"language",i);
                 break;
             default:
                 config.locale = Locale.SIMPLIFIED_CHINESE;
+                ShareUtils.putInt(getApplicationContext(),"language",i);
                 break;
         }
         resources.updateConfiguration(config, dm);
