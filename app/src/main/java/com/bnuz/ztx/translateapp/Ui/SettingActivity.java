@@ -40,7 +40,6 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         data = new LinkedList<>();
         data.add(getResources().getString(R.string.Exchange_language_Chinese_item));
         data.add(getResources().getString(R.string.Exchange_language_English_item));
-        data.add(getResources().getString(R.string.Exchange_language_Chinese_item));
         niceSpinner.attachDataSource(data);
         niceSpinner.setSelectedIndex(ShareUtils.getInt(SettingActivity.this,"language",0));
         niceSpinner.setOnItemSelectedListener(this);
