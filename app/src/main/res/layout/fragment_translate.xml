@@ -86,7 +86,7 @@
                     android:id="@+id/input_et"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="点击开始输入文字"
+                    android:hint="@string/Start_input_string"
                     android:padding="10dp"
                     android:gravity="start"
                     android:textSize="16dp"
@@ -152,7 +152,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="这里用来放置详细的翻译结果"
+                android:text="@string/Translate_information"
                 android:gravity="center"
                 android:textSize="18dp"/>
         </LinearLayout>

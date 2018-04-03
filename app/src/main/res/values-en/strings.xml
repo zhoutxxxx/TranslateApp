@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">毕设翻译</string>
+    <string name="TabLayout_Title_Translate">Translate</string>
+    <string name="TabLayout_Title_User">Me</string>
+    <string name="MainActivity_Title">Translate</string>
+    <string name="Chinese_language">Chinese</string>
+    <string name="Automatic_language">Automatic</string>
+    <string name="English_language">English</string>
+    <string name="Japanese_language">Japanese</string>
+    <string name="Korean_language">Korean</string>
+    <string name="Portugal_language">Portuguese</string>
+    <string name="Setting_item">Setting</string>
+    <string name="Money_item">Balance</string>
+    <string name="Message_item">News</string>
+    <string name="DownLoad_item">Download the offline package</string>
+    <string name="Mine_Title">Me</string>
+    <string name="Automatic_updates_item">Automatic Updates</string>
+    <string name="Language_switching_item">Language Switching</string>
+    <string name="Exchange_language_Chinese_item">简体中文</string>
+    <string name="Exchange_language_English_item">English</string>
+    <string name="Automatic_updates_information">Auto update software under WiFi</string>
+    <string name="Language_switching_information">Choose the language that suits you</string>
+    <string name="Sign_up">Welcome，Please login</string>
+    <string name="Edit_information">Revise</string>
+    <string name="Start_input_string">Click to enter the text</string>
+    <string name="Translate_information">This is used to place the translation details.</string>
+    <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
+    <string name="TabLayout_Icon_User">&#xf007;</string>
+    <string name="exchange_Icon">&#xf0ec;</string>
+    <string name="camera_Icon">&#xf030;</string>
+    <string name="microphone_Icon">&#xf130;</string>
+    <string name="money_Icon">&#xf157;</string>
+    <string name="setting_Icon">&#xf013;</string>
+    <string name="download_Icon">&#xf019;</string>
+    <string name="message_Icon">&#xf10e;</string>
+    <string name="pay_Icon">&#xf02a;</string>
+    <string name="right_Icon">&#xf105;</string>
+    <string name="enter_Icon">&#xf18e;</string>
+</resources>

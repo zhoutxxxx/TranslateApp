@@ -21,6 +21,10 @@
     <string name="Exchange_language_English_item">English</string>
     <string name="Automatic_updates_information">在连接Wifi下,自动更新软件</string>
     <string name="Language_switching_information">选择适合你的语种</string>
+    <string name="Sign_up">欢迎，请登录</string>
+    <string name="Edit_information">编辑资料</string>
+    <string name="Start_input_string">点击开始输入文字</string>
+    <string name="Translate_information">这里用来放置详细翻译结果</string>
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
