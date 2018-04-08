@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
+import com.bnuz.ztx.translateapp.Util.URLUtil;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -39,22 +40,20 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //左下拉列表
         niceSpinner1 = (NiceSpinner) view.findViewById(R.id.nice_spinner_1);
         List<String> dataset1 = new LinkedList<>();
-        dataset1.add(getResources().getString(R.string.Automatic_language));
         dataset1.add(getResources().getString(R.string.Chinese_language));
         dataset1.add(getResources().getString(R.string.English_language));
-        dataset1.add(getResources().getString(R.string.Japanese_language));
-        dataset1.add(getResources().getString(R.string.Korean_language));
-        dataset1.add(getResources().getString(R.string.Portugal_language));
+//        dataset1.add(getResources().getString(R.string.Japanese_language));
+//        dataset1.add(getResources().getString(R.string.Korean_language));
+//        dataset1.add(getResources().getString(R.string.Portugal_language));
         niceSpinner1.attachDataSource(dataset1);
         //右下拉列表
         niceSpinner2 = (NiceSpinner) view.findViewById(R.id.nice_spinner_2);
         List<String> dataset2 = new LinkedList<>();
-        dataset2.add(getResources().getString(R.string.Portugal_language));
-        dataset2.add(getResources().getString(R.string.Chinese_language));
-        dataset2.add(getResources().getString(R.string.Automatic_language));
         dataset2.add(getResources().getString(R.string.English_language));
-        dataset2.add(getResources().getString(R.string.Japanese_language));
-        dataset2.add(getResources().getString(R.string.Korean_language));
+        dataset2.add(getResources().getString(R.string.Chinese_language));
+//        dataset2.add(getResources().getString(R.string.Portugal_language));
+//        dataset2.add(getResources().getString(R.string.Japanese_language));
+//        dataset2.add(getResources().getString(R.string.Korean_language));
         niceSpinner2.attachDataSource(dataset2);
         //顶部交换按钮
         exchange = (TextView)view.findViewById(R.id.exchange_tv);
@@ -82,7 +81,13 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()){
             case R.id.enter_tv:
                 String s = input.getText().toString();
-                Toast.makeText(getActivity(),"获取到字符串：" + s ,Toast.LENGTH_SHORT).show();
+                int fromInt = niceSpinner1.getSelectedIndex();
+                int toInt = niceSpinner2.getSelectedIndex();
+                try {
+                    input.setText(new URLUtil().getTranslateURL(s,fromInt,toInt));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
         }
     }
 }

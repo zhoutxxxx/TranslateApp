@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+     }
     defaultConfig {
         applicationId "com.bnuz.ztx.translateapp"
         minSdkVersion 19
@@ -32,6 +36,4 @@ dependencies {
     compile 'com.github.arcadefire:nice-spinner:1.3.1'
     //圆形头像
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    //EventBus实现语言切换
-    compile 'org.greenrobot:eventbus:3.1.1'
 }
