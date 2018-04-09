@@ -81,7 +81,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         enter.setOnClickListener(this);
         //输入框
         input = (EditText)view.findViewById(R.id.input_et);
-        //翻译文本详细框
+        //Json数据显示框
         translateInformation = (TextView)view.findViewById(R.id.translate_tv);
     }
 
