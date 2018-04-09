@@ -111,8 +111,12 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         try {
             JSONObject jsonObject = new JSONObject(t);
             JSONObject json = jsonObject.getJSONObject("basic");
-            String explains = json.getJSONArray("explains").get(0).toString();
-            translateInformation.setText(explains);
+            JSONArray explainsList = json.getJSONArray("explains");
+            String s = "";
+            for (int i = 0 ; i < explainsList.length(); i++){
+                s = s + explainsList.get(i).toString() + "\n";
+            }
+            translateInformation.setText(s);
         } catch (JSONException e) {
             e.printStackTrace();
         }
