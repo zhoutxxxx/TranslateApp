@@ -3,6 +3,7 @@ package com.bnuz.ztx.translateapp.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,13 @@ import android.widget.Toast;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 
 import org.angmarch.views.NiceSpinner;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -26,9 +32,10 @@ import java.util.List;
  */
 
 public class TranslateFragment extends Fragment implements View.OnClickListener {
-    TextView enter,microphone,photo,exchange;
+    TextView enter,microphone,photo,exchange,translateInformation;
     NiceSpinner niceSpinner1,niceSpinner2;
     EditText input;
+    String url;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_translate, null);
@@ -74,6 +81,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         enter.setOnClickListener(this);
         //输入框
         input = (EditText)view.findViewById(R.id.input_et);
+        //翻译文本详细框
+        translateInformation = (TextView)view.findViewById(R.id.translate_tv);
     }
 
     @Override
@@ -84,10 +93,28 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                 int fromInt = niceSpinner1.getSelectedIndex();
                 int toInt = niceSpinner2.getSelectedIndex();
                 try {
-                    input.setText(new URLUtil().getTranslateURL(s,fromInt,toInt));
+                    url = new URLUtil().getTranslateURL(s,fromInt,toInt);
+                    Log.d("ztx","url is --------->" + url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                RxVolley.get(url, new HttpCallback() {
+                    @Override
+                    public void onSuccess(String t) {
+                        parsingJson(t);
+                    }
+                });
+        }
+    }
+
+    private void parsingJson(String t) {
+        try {
+            JSONObject jsonObject = new JSONObject(t);
+            JSONObject json = jsonObject.getJSONObject("basic");
+            String explains = json.getJSONArray("explains").get(0).toString();
+            translateInformation.setText(explains);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
