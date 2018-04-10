@@ -25,6 +25,7 @@
     <string name="Edit_information">编辑资料</string>
     <string name="Start_input_string">点击开始输入文字</string>
     <string name="Translate_information">这里用来放置详细翻译结果</string>
+    <string name="change_Language_Log">成功修改语言为：</string>
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>

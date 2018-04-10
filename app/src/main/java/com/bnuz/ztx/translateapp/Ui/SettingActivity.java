@@ -65,7 +65,7 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
                 break;
         }
         resources.updateConfiguration(config, dm);
-        Toast.makeText(getApplicationContext(),"成功修改语言为：" + data.get(i).toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),getResources().getString(R.string.change_Language_Log) + data.get(i).toString(),Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, TabLayoutViewPager_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

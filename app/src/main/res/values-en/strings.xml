@@ -25,6 +25,7 @@
     <string name="Edit_information">Revise</string>
     <string name="Start_input_string">Click to enter the text</string>
     <string name="Translate_information">This is used to place the translation details.</string>
+    <string name="change_Language_Log">Successful change language to：</string>
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
