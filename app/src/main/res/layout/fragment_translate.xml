@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -149,18 +149,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/translate_tv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/Translate_information"
-                android:gravity="left"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:textSize="18dp"/>
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+            <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+                <com.bnuz.ztx.translateapp.View.MyListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/myListView"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:footerDividersEnabled="true"
+                    android:headerDividersEnabled="true">
+                </com.bnuz.ztx.translateapp.View.MyListView>
+            </ScrollView>
         </LinearLayout>
+
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

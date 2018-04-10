@@ -21,18 +21,18 @@ public class URLUtil {
     public String getTranslateURL(String query , int fromInt ,int toInt) throws Exception {
         switch (fromInt){
             case 0:
-                this.from = "zh-CHS";
+                this.from = "EN";
                 break;
             case 1:
-                this.from = "EN";
+                this.from = "zh-CHS";
                 break;
         }
         switch (toInt){
             case 0:
-                this.to = "EN";
+                this.to = "zh-CHS";
                 break;
             case 1:
-                this.to = "zh-CHS";
+                this.to = "EN";
                 break;
         }
         this.query = query;

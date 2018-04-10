@@ -9,9 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bnuz.ztx.translateapp.Adapter.TranslateInformationAdapter;
+import com.bnuz.ztx.translateapp.Entity.TranslateInformation;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
@@ -23,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,10 +38,13 @@ import java.util.List;
  */
 
 public class TranslateFragment extends Fragment implements View.OnClickListener {
-    TextView enter,microphone,photo,exchange,translateInformation;
+    TextView enter,microphone,photo,exchange;
     NiceSpinner niceSpinner1,niceSpinner2;
     EditText input;
     String url;
+    ListView informationListView;
+    List<TranslateInformation> mList = new ArrayList<>();
+    List<TranslateInformation> mListClean = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_translate, null);
@@ -48,8 +56,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //左下拉列表
         niceSpinner1 = (NiceSpinner) view.findViewById(R.id.nice_spinner_1);
         List<String> dataset1 = new LinkedList<>();
-        dataset1.add(getResources().getString(R.string.Chinese_language));
         dataset1.add(getResources().getString(R.string.English_language));
+        dataset1.add(getResources().getString(R.string.Chinese_language));
 //        dataset1.add(getResources().getString(R.string.Japanese_language));
 //        dataset1.add(getResources().getString(R.string.Korean_language));
 //        dataset1.add(getResources().getString(R.string.Portugal_language));
@@ -57,8 +65,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //右下拉列表
         niceSpinner2 = (NiceSpinner) view.findViewById(R.id.nice_spinner_2);
         List<String> dataset2 = new LinkedList<>();
-        dataset2.add(getResources().getString(R.string.English_language));
         dataset2.add(getResources().getString(R.string.Chinese_language));
+        dataset2.add(getResources().getString(R.string.English_language));
 //        dataset2.add(getResources().getString(R.string.Portugal_language));
 //        dataset2.add(getResources().getString(R.string.Japanese_language));
 //        dataset2.add(getResources().getString(R.string.Korean_language));
@@ -83,7 +91,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //输入框
         input = (EditText)view.findViewById(R.id.input_et);
         //Json数据显示框
-        translateInformation = (TextView)view.findViewById(R.id.translate_tv);
+        informationListView = (ListView)view.findViewById(R.id.myListView);
     }
 
     @Override
@@ -114,29 +122,39 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             JSONObject json = jsonObject.getJSONObject("basic");
             JSONArray explainsList = json.getJSONArray("explains");
             String s = "";
+            mList.clear();
             for (int i = 0 ; i < explainsList.length(); i++){
-                //符号开关，只选取第一个.
-                boolean SYMBOL = true;
-                //搜索第一个.的位置
-                int index = 0;
                 String changeString = explainsList.get(i).toString();
                 StringBuffer sb = new StringBuffer();
-                sb.append(changeString).insert(0,"<font color='#FF0000'><i>");
-                changeString = sb.toString();
+                //符号开关，只选取第一个.
+                boolean SYMBOL = false;
+                for (int k = 0 ; k < changeString.length() ; k++){
+                    if (changeString.charAt(k) == '.'){
+                        SYMBOL = true;
+                    }
+                }
+                //搜索第一个.的位置
+                int index = -1;
+                if (SYMBOL){
+                    sb.append(changeString).insert(0,"<font color='#FF0000'><i>");
+                    changeString = sb.toString();
+                }
                 for (int j = 0 ; j < changeString.length() ; j++){
                     if(SYMBOL && changeString.charAt(j) == '.'){
                         SYMBOL = false;
                         index = j + 1;
                     }
                 }
-                sb.insert(index,"</i></font>");
-                changeString = sb.toString();
-                sb.insert(changeString.length(),"<br>");
-                changeString = sb.toString();
-                s = s + changeString;
-                Log.d("ztx",s);
+                if (index != -1){
+                    sb.insert(index,"</i></font> ");
+                    changeString = sb.toString();
+                }
+                TranslateInformation translateInformation = new TranslateInformation();
+                translateInformation.setExplains(changeString);
+                mList.add(translateInformation);
             }
-            translateInformation.setText(Html.fromHtml(s));
+            TranslateInformationAdapter adapter = new TranslateInformationAdapter(getActivity(), mList);
+            informationListView.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
