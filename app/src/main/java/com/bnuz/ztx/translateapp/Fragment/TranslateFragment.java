@@ -3,6 +3,7 @@ package com.bnuz.ztx.translateapp.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,9 +115,28 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             JSONArray explainsList = json.getJSONArray("explains");
             String s = "";
             for (int i = 0 ; i < explainsList.length(); i++){
-                s = s + explainsList.get(i).toString() + "\n";
+                //符号开关，只选取第一个.
+                boolean SYMBOL = true;
+                //搜索第一个.的位置
+                int index = 0;
+                String changeString = explainsList.get(i).toString();
+                StringBuffer sb = new StringBuffer();
+                sb.append(changeString).insert(0,"<font color='#FF0000'><i>");
+                changeString = sb.toString();
+                for (int j = 0 ; j < changeString.length() ; j++){
+                    if(SYMBOL && changeString.charAt(j) == '.'){
+                        SYMBOL = false;
+                        index = j + 1;
+                    }
+                }
+                sb.insert(index,"</i></font>");
+                changeString = sb.toString();
+                sb.insert(changeString.length(),"<br>");
+                changeString = sb.toString();
+                s = s + changeString;
+                Log.d("ztx",s);
             }
-            translateInformation.setText(s);
+            translateInformation.setText(Html.fromHtml(s));
         } catch (JSONException e) {
             e.printStackTrace();
         }
