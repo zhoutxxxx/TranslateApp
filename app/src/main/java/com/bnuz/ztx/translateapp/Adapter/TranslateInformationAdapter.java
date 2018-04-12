@@ -23,12 +23,12 @@ import java.util.List;
 public class TranslateInformationAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater inflater;
-    private List<TranslateInformation> mList;
-    private TranslateInformation translateInformation;
+    private List<String> mList;
+    private String explains;
     private int width, height;
     private WindowManager wm;
 
-    public TranslateInformationAdapter(Context mContext, List<TranslateInformation> mList) {
+    public TranslateInformationAdapter(Context mContext, List<String> mList) {
         this.mContext = mContext;
         this.mList = mList;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,8 +62,9 @@ public class TranslateInformationAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        translateInformation = mList.get(i);
-        viewHolder.tv_title.setText(Html.fromHtml(translateInformation.getExplains()));
+        explains = mList.get(i);
+
+        viewHolder.tv_title.setText(Html.fromHtml(explains));
         return view;
     }
 

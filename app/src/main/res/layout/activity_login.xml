@@ -17,7 +17,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:padding="10dp"
-                android:text="登录"
+                android:text="@string/Login_button"
                 android:textColor="@android:color/white"
                 android:textSize="19dp" />
         </LinearLayout>
