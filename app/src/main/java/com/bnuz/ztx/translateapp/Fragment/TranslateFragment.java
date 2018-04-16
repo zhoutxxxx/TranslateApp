@@ -3,8 +3,6 @@ package com.bnuz.ztx.translateapp.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +34,13 @@ import java.util.List;
  */
 
 public class TranslateFragment extends Fragment implements View.OnClickListener {
-    TextView enter,microphone,photo,exchange,queryTv,phoneticTv;
-    NiceSpinner niceSpinner1,niceSpinner2;
+    TextView enter, microphone, photo, exchange, queryTv, phoneticTv;
+    NiceSpinner niceSpinner1, niceSpinner2;
     EditText input;
     String url;
     ListView informationListView;
     List<TranslateInformation> mList = new ArrayList<>();
+    List<String> explainsLists = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_translate, null);
@@ -69,43 +68,50 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
 //        dataset2.add(getResources().getString(R.string.Korean_language));
         niceSpinner2.attachDataSource(dataset2);
         //顶部交换按钮
-        exchange = (TextView)view.findViewById(R.id.exchange_tv);
+        exchange = (TextView) view.findViewById(R.id.exchange_tv);
         exchange.setText(getResources().getString(R.string.exchange_Icon));
         exchange.setTypeface(new FontManager().getType(getActivity()));
         //拍照按钮
-        photo = (TextView)view.findViewById(R.id.photo_tv);
+        photo = (TextView) view.findViewById(R.id.photo_tv);
         photo.setText(getResources().getString(R.string.camera_Icon));
         photo.setTypeface(new FontManager().getType(getActivity()));
         //麦克风按钮
-        microphone = (TextView)view.findViewById(R.id.voice_tv);
+        microphone = (TextView) view.findViewById(R.id.voice_tv);
         microphone.setText(getResources().getString(R.string.microphone_Icon));
         microphone.setTypeface(new FontManager().getType(getActivity()));
         //翻译按钮
-        enter = (TextView)view.findViewById(R.id.enter_tv);
+        enter = (TextView) view.findViewById(R.id.enter_tv);
         enter.setText(getResources().getString(R.string.enter_Icon));
-        enter .setTypeface(new FontManager().getType(getActivity()));
+        enter.setTypeface(new FontManager().getType(getActivity()));
         enter.setOnClickListener(this);
         //输入框
-        input = (EditText)view.findViewById(R.id.input_et);
+        input = (EditText) view.findViewById(R.id.input_et);
         //Json数据显示框
-        informationListView = (ListView)view.findViewById(R.id.myListView);
-        phoneticTv = (TextView)view.findViewById(R.id.phonetic_tv);
-        queryTv = (TextView)view.findViewById(R.id.query_tv);
+        informationListView = (ListView) view.findViewById(R.id.myListView);
+        phoneticTv = (TextView) view.findViewById(R.id.phonetic_tv);
+        queryTv = (TextView) view.findViewById(R.id.query_tv);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.enter_tv:
+                //获取到输入的文本
                 String s = input.getText().toString();
+                Logger.d("this EditText getText().toString():---->" + s);
+                //获取翻译状态，由什么语言翻译到什么语言
                 int fromInt = niceSpinner1.getSelectedIndex();
                 int toInt = niceSpinner2.getSelectedIndex();
                 try {
-                    url = new URLUtil().getTranslateURL(s,fromInt,toInt);
+                    //将数据传入，返回生成的url
+                    url = new URLUtil().getTranslateURL(s, fromInt, toInt).toString();
+                    //将带有空格的url转化成Android可以识别的url才可进行访问获取接送数据
+                    url = url.replace(" ", "%20");
                     Logger.t("ztx").d("url-------->" + url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                //网络请求接送数据
                 RxVolley.get(url, new HttpCallback() {
                     @Override
                     public void onSuccess(String t) {
@@ -120,58 +126,79 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         try {
             Logger.t("ztx").json(t);
             JSONObject jsonObject = new JSONObject(t);
-            JSONObject json = jsonObject.getJSONObject("basic");
-            JSONArray explainsList = json.getJSONArray("explains");
-            TranslateInformation translateInformation = new TranslateInformation();
-            List<String> explainsLists = new ArrayList<>();
+            //数据的初始化，每次点击先清除之前查询的数据
+            explainsLists.clear();
             mList.clear();
-            for (int i = 0 ; i < explainsList.length(); i++){
-                String changeString = explainsList.get(i).toString();
-                StringBuffer sb = new StringBuffer();
-                //符号开关，只选取第一个.
-                boolean SYMBOL = false;
-                for (int k = 0 ; k < changeString.length() ; k++){
-                    if (changeString.charAt(k) == '.'){
-                        SYMBOL = true;
+            //实例化一个翻译对象
+            TranslateInformation translateInformation = new TranslateInformation();
+            //查询的文本
+            String query = jsonObject.getString("query");
+            translateInformation.setQuery(query);
+            queryTv.setText(translateInformation.getQuery());
+            //翻译的文本
+            String translations = jsonObject.getJSONArray("translation").get(0).toString();
+            translateInformation.setTranslations(translations);
+            phoneticTv.setText(translateInformation.getTranslations());
+            //翻译的详细内容
+            try{
+                JSONObject json = jsonObject.getJSONObject("basic");
+                JSONArray explainsList = json.getJSONArray("explains");
+                for (int i = 0; i < explainsList.length(); i++) {
+                    String changeString = explainsList.get(i).toString();
+                    StringBuffer sb = new StringBuffer();
+                    //符号开关，只选取第一个.
+                    boolean SYMBOL = false;
+                    for (int k = 0; k < changeString.length(); k++) {
+                        if (changeString.charAt(k) == '.') {
+                            SYMBOL = true;
+                        }
+                    }
+                    //搜索第一个.的位置
+                    int index = -1;
+                    if (SYMBOL) {
+                        //在android中添加html语言，改变风格
+                        sb.append(changeString).insert(0, "<font color='#FF0000'><i>");
+                        changeString = sb.toString();
+                    }
+                    for (int j = 0; j < changeString.length(); j++) {
+                        if (SYMBOL && changeString.charAt(j) == '.') {
+                            SYMBOL = false;
+                            index = j + 1;
+                        }
+                    }
+                    if (index != -1) {
+                        sb.insert(index, "</i></font> ");
+                        changeString = sb.toString();
+                    }
+                    explainsLists.add(changeString);
+                }
+                //英语音标的判定条件
+                if (niceSpinner1.getSelectedIndex() == 0) {
+                    try {
+                        String us_phonetic = json.getString("us-phonetic");
+                        String uk_phonetic = json.getString("uk-phonetic");
+                        String phonetic = json.getString("phonetic");
+                        translateInformation.setPhonetic(phonetic);
+                        translateInformation.setUk_phonetic(uk_phonetic);
+                        translateInformation.setUs_phonetic(us_phonetic);
+                        phoneticTv.setText(translateInformation.getENPhonetictoString());
+                    } catch (Exception e) {
+                        Logger.d("无json对象，因此不显示");
+                    }
+                } else if (niceSpinner2.getSelectedIndex() == 1) {//汉语拼音的判定条件
+                    try {
+                        String phonetic = json.getString("phonetic");
+                        translateInformation.setPhonetic(phonetic);
+                        phoneticTv.setText(translateInformation.getPhonetictoString());
+                    } catch (Exception e) {
+                        Logger.d("无json对象，因此不显示");
                     }
                 }
-                //搜索第一个.的位置
-                int index = -1;
-                if (SYMBOL){
-                    sb.append(changeString).insert(0,"<font color='#FF0000'><i>");
-                    changeString = sb.toString();
-                }
-                for (int j = 0 ; j < changeString.length() ; j++){
-                    if(SYMBOL && changeString.charAt(j) == '.'){
-                        SYMBOL = false;
-                        index = j + 1;
-                    }
-                }
-                if (index != -1){
-                    sb.insert(index,"</i></font> ");
-                    changeString = sb.toString();
-                }
-                explainsLists.add(changeString);
             }
-            if (niceSpinner1.getSelectedIndex() == 0){
-                String query = jsonObject.getString("query");
-                String us_phonetic = json.getString("us-phonetic");
-                String uk_phonetic = json.getString("uk-phonetic");
-                String phonetic = json.getString("phonetic");
-                translateInformation.setPhonetic(phonetic);
-                translateInformation.setUk_phonetic(uk_phonetic);
-                translateInformation.setUs_phonetic(us_phonetic);
-                translateInformation.setQuery(query);
-                queryTv.setText(translateInformation.getQuery());
-                phoneticTv.setText(translateInformation.getENPhonetictoString());
-            }else{
-                String query = jsonObject.getString("query");
-                String phonetic = json.getString("phonetic");
-                translateInformation.setPhonetic(phonetic);
-                translateInformation.setQuery(query);
-                queryTv.setText(translateInformation.getQuery());
-                phoneticTv.setText(translateInformation.getPhonetictoString());
+            catch (Exception e){
+                Logger.d("无json对象，因此不显示");
             }
+            //添加ListView的适配器，是得到的文本都显示出来
             translateInformation.setExplains(explainsLists);
             mList.add(translateInformation);
             TranslateInformationAdapter adapter = new TranslateInformationAdapter(getActivity(), explainsLists);
