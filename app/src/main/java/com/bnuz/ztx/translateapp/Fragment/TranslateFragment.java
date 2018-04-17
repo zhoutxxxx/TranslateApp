@@ -1,15 +1,22 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
+import android.annotation.TargetApi;
+import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -139,17 +148,15 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                         if (which==0){
                             //调用摄像头
                             File outputImage = new File(getContext().getExternalCacheDir(), "output_image.jpg");
-
                             try {
                                 if (outputImage.exists()) {
                                     outputImage.delete();
                                 }
                                 outputImage.createNewFile();
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
+                            //根据SDK版本获取imageUri
                             if (Build.VERSION.SDK_INT >= 24) {
                                 imageUri = FileProvider.getUriForFile(getActivity(),
                                         "com.gyq.cameraalbumtest.fileprovider", outputImage);
@@ -164,10 +171,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                         }
                         //从相册中选择
                         if(which==1){
-                            Intent intent = new Intent(Intent.ACTION_PICK);
-                            intent.setType("image/*");//相片类型
-                            startActivityForResult(intent, 2);
-
+                                Intent intent = new Intent(Intent.ACTION_PICK);
+                                intent.setType("image/*");//相片类型
+                                startActivityForResult(intent, 2);
                         }
                         Toast.makeText(getActivity(), items[which],
                                 Toast.LENGTH_SHORT).show();
@@ -181,24 +187,100 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-
+            //1 即拍照， 2 即从相册中选择
+            case 1:
+              if(resultCode ==getActivity().RESULT_OK){
+                  try{
+                      Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver()
+                      .openInputStream(imageUri));
+                      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                      bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                      byte[] appicon = baos.toByteArray();
+                      String img_string = Base64.encodeToString(appicon,Base64.DEFAULT);
+                  }catch (FileNotFoundException e){
+                      e.printStackTrace();
+                  }
+              }
+                    break;
+            case 2:
+                if(resultCode ==getActivity().RESULT_OK){
+                   if(Build.VERSION.SDK_INT >=19){
+                       handleImageOnKitKat(data);
+                   }else{
+                       handleImageBeforeKitKat(data);
+                   }
+                }
+                break;
+              default:
+                    break;
         }
     }
 
-    //权限控制
-//@Override
-//public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//    switch (requestCode) {
-//        case 1:
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                openAlbum();
-//            } else {
-//                Toast.makeText(getActivity(), "you denied the permission", Toast.LENGTH_SHORT).show();
-//            }
-//            break;
-//
-//    }
-//}
+    private void handleImageBeforeKitKat(Intent data) {
+        Uri uri = data.getData();
+        String imagePath = getImagePath(uri, null);
+        displayImage(imagePath);
+    }
+    /**
+     * 4.4及以上的系统使用这个方法处理图片
+     * API>=19
+     */
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (DocumentsContract.isDocumentUri(getActivity(), uri)) {
+            //如果document类型的Uri,则通过document来处理
+            String docID = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docID.split(":")[1];     //解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/piblic_downloads"), Long.valueOf(docID));
+
+                imagePath = getImagePath(contentUri, null);
+
+            }
+
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            //如果是content类型的uri，则使用普通方式使用
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            //如果是file类型的uri，直接获取路径即可
+            imagePath = uri.getPath();
+
+        }
+        displayImage(imagePath);
+    }
+
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        //通过Uri和selection来获取真实的图片路径
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
+
+    private void displayImage(String imagePath) {
+        if (imagePath != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+            byte[] appicon = baos.toByteArray();
+            String img_string = Base64.encodeToString(appicon,Base64.DEFAULT);
+        } else {
+            Toast.makeText(getActivity(), "failed to get image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 //解析Json
     private void parsingJson(String t) {
