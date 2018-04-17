@@ -13,6 +13,15 @@ public class TranslateInformation {
     String phonetic = "";
     String uk_phonetic = "";
     String query = "";
+    String translations = "";
+
+    public String getTranslations() {
+        return translations;
+    }
+
+    public void setTranslations(String translations) {
+        this.translations = translations;
+    }
 
     public String getUs_phonetic() {
         return us_phonetic;
