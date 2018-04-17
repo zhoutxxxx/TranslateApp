@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">毕设翻译</string>
+    <string name="app_name">TranslateApp</string>
     <string name="TabLayout_Title_Translate">Translate</string>
     <string name="TabLayout_Title_User">Me</string>
     <string name="MainActivity_Title">Translate</string>
@@ -12,7 +12,7 @@
     <string name="Portugal_language">Portuguese</string>
     <string name="Setting_item">Setting</string>
     <string name="Money_item">Balance</string>
-    <string name="Message_item">News</string>
+    <string name="Message_item">Message</string>
     <string name="DownLoad_item">Download the offline package</string>
     <string name="Mine_Title">Me</string>
     <string name="Automatic_updates_item">Automatic Updates</string>
@@ -27,6 +27,12 @@
     <string name="Translate_information">This is used to place the translation details.</string>
     <string name="change_Language_Log">Successful change language to：</string>
     <string name="Login_button">Sign Up</string>
+    <!--拍照-->
+    <string name="Please_choose_the_following_way">Please choose the following way</string>
+    <string name="Take_photo">Take photo</string>
+    <string name="Choose_from_the_album">Choose from the album</string>
+    <string name="Cancel">Cancel</string>
+    <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>

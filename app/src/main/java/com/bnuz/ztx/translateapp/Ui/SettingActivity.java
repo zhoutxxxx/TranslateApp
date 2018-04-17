@@ -54,6 +54,7 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
             case 0:
                 config.locale = Locale.SIMPLIFIED_CHINESE;
                 ShareUtils.putInt(getApplicationContext(),"language",i);
+
                 break;
             case 1:
                 config.locale = Locale.ENGLISH;

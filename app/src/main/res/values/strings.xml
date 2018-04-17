@@ -1,6 +1,6 @@
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">译pp</string>
+    <string name="app_name">翻译App</string>
     <string name="TabLayout_Title_Translate">翻译</string>
     <string name="TabLayout_Title_User">我的</string>
     <string name="MainActivity_Title">翻译</string>
@@ -27,6 +27,12 @@
     <string name="Translate_information">这里用来放置详细翻译结果</string>
     <string name="change_Language_Log">成功修改语言为：</string>
     <string name="Login_button">登录</string>
+    <!--拍照-->
+    <string name="Please_choose_the_following_way">请选择以下方式</string>
+    <string name="Take_photo">拍照</string>
+    <string name="Choose_from_the_album">从相册中选择</string>
+    <string name="Cancel">取消</string>
+    <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
     <string name="exchange_Icon">&#xf0ec;</string>
