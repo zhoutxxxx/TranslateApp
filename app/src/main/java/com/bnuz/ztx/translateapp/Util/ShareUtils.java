@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 /**
  * Created by ZTX on 2018/4/3.
+ * 键值类
  */
 
 public class ShareUtils {

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 
 /**
  * Created by ZTX on 2018/3/25.
+ * 文字处理类
  */
 
 public class FontManager {

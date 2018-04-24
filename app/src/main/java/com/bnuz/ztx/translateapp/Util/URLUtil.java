@@ -10,29 +10,30 @@ import java.util.Map;
 
 /**
  * Created by ZTX on 2018/4/8.
+ * url访问类
  */
 
 public class URLUtil {
-    final String appKey = "073c24ee75a4bc9e";
-    final String appPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
-    String query = null;
-    String salt = String.valueOf(System.currentTimeMillis());
-    String from = null;
-    String to = null;
-    String sign = null;
-
+    final String appKey = "073c24ee75a4bc9e";//应用实例
+    final String appPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";//应用密钥
+    String query = null;//查询文本
+    String salt = String.valueOf(System.currentTimeMillis());//随机数
+    String from = null;//初始语言
+    String to = null;//目标语言
+    String sign = null;//签名
+    //OCR模块参数
     final String OCRUrl = "http://openapi.youdao.com/ocrapi";
     final String OCRAppKey = "073c24ee75a4bc9e";
     final String OCRAppPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
-    String OCRDetectType = "10012";
-    String OCRImageType = "1";
-    String OCRLangType = "zh-en";
-    String OCRDocType = "json";
+    String OCRDetectType = "10012";//10012整行翻译  10011按字翻译
+    String OCRImageType = "1";//图片类型 只支持base64
+    String OCRLangType = "zh-en";//语言支持中英混合
+    String OCRDocType = "json";//返回数据类型
     String OCRSalt = String.valueOf(System.currentTimeMillis());
-    String OCRImg = "";
-    String OCRSign = "";
+    String OCRImg = "";//图片参数  仅支持base64
+    String OCRSign = "";//签名
     HttpParams httpParams = new HttpParams();
-
+    //将参数放入，并作UTF-8编码
     public HttpParams getHttpParams(String base64Image) throws UnsupportedEncodingException {
         this.OCRImg = base64Image;
         this.httpParams.put("appKey",URLEncoder.encode(OCRAppKey,"utf-8"));
@@ -56,6 +57,7 @@ public class URLUtil {
     }
 
     public String getTranslateURL(String query, int fromInt, int toInt) throws Exception {
+        //初始语言
         switch (fromInt) {
             case 0:
                 this.from = "EN";
@@ -64,6 +66,7 @@ public class URLUtil {
                 this.from = "zh-CHS";
                 break;
         }
+        //目标语言
         switch (toInt) {
             case 0:
                 this.to = "EN";
@@ -73,6 +76,7 @@ public class URLUtil {
                 break;
         }
         this.query = query;
+        //签名生成方式
         sign = md5(appKey + query + salt + appPassWord);
         return "https://openapi.youdao.com/api?q=" + query + "&from=" + from + "&to=" + to + "&appKey=" + appKey + "&salt=" + salt + "&sign=" + sign;
     }
@@ -172,7 +176,7 @@ public class URLUtil {
 
         return input;
     }
-
+    //OCR识别后的文本翻译API
     public String getOCRTranslate(String query){
         this.query = query;
         sign = md5(appKey + query + salt + appPassWord);

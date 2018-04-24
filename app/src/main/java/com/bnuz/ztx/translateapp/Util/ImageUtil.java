@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * Created by ZTX on 2018/4/23.
+ * 图片处理类
  */
 
 public class ImageUtil {
