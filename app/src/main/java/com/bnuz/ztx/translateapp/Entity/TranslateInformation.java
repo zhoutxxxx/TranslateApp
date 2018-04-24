@@ -14,6 +14,33 @@ public class TranslateInformation {
     String uk_phonetic = "";
     String query = "";
     String translations = "";
+    String speakUrl = "";
+    String us_speech = "";
+    String uk_speech = "";
+
+    public String getSpeakUrl() {
+        return speakUrl;
+    }
+
+    public void setSpeakUrl(String speakUrl) {
+        this.speakUrl = speakUrl;
+    }
+
+    public String getUs_speech() {
+        return us_speech;
+    }
+
+    public void setUs_speech(String us_speech) {
+        this.us_speech = us_speech;
+    }
+
+    public String getUk_speech() {
+        return uk_speech;
+    }
+
+    public void setUk_speech(String uk_speech) {
+        this.uk_speech = uk_speech;
+    }
 
     public String getTranslations() {
         return translations;
@@ -63,8 +90,12 @@ public class TranslateInformation {
         this.explains = explains;
     }
 
-    public String getENPhonetictoString() {
-        String s = "英 /" + uk_phonetic + "/     美/" + us_phonetic + "/";
+    public String getUSPhonetictoString() {
+        String s = "美/" + us_phonetic + "/";
+        return s;
+    }
+    public String getUKPhonetictoString() {
+        String s = "英/" + uk_phonetic + "/";
         return s;
     }
     public String getPhonetictoString() {

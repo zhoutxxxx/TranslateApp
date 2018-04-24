@@ -33,7 +33,8 @@ dependencies {
     //圆形头像
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //rxvolley
-    compile('com.kymjs.rxvolley:rxvolley:1.1.2')
+    compile 'com.kymjs.rxvolley:rxvolley:1.1.2'
     //Logger日志
     compile 'com.orhanobut:logger:1.15'
+    implementation files('src/main/libs/sun.misc.BASE64Decoder.jar')
 }

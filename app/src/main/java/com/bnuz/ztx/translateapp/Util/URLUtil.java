@@ -1,15 +1,12 @@
 package com.bnuz.ztx.translateapp.Util;
 
-import android.util.Base64;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import com.kymjs.rxvolley.client.HttpParams;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+
 
 /**
  * Created by ZTX on 2018/4/8.
@@ -17,23 +14,46 @@ import java.util.Map;
 
 public class URLUtil {
     final String appKey = "073c24ee75a4bc9e";
-    final String appPassWord = "oCLsRlxIMRAoq5aRTxsDgiZWkgFsRZDs";
+    final String appPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
     String query = null;
     String salt = String.valueOf(System.currentTimeMillis());
     String from = null;
     String to = null;
     String sign = null;
 
-    final String OCRUrl = "http://openapi.youdao.com/ocrapi?";
-    final String OCRAppKey = "46f98245ce756749";
-    final String OCRAppPassWord = "oCLsRlxIMRAoq5aRTxsDgiZWkgFsRZDs";
+    final String OCRUrl = "http://openapi.youdao.com/ocrapi";
+    final String OCRAppKey = "073c24ee75a4bc9e";
+    final String OCRAppPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
     String OCRDetectType = "10012";
     String OCRImageType = "1";
-    String OCRLangType = "en";
+    String OCRLangType = "zh-en";
     String OCRDocType = "json";
     String OCRSalt = String.valueOf(System.currentTimeMillis());
-    String OCRImg = null;
-    String OCRSign = null;
+    String OCRImg = "";
+    String OCRSign = "";
+    HttpParams httpParams = new HttpParams();
+
+    public HttpParams getHttpParams(String base64Image) throws UnsupportedEncodingException {
+        this.OCRImg = base64Image;
+        this.httpParams.put("appKey",URLEncoder.encode(OCRAppKey,"utf-8"));
+        this.httpParams.put("img",URLEncoder.encode(OCRImg,"utf-8"));
+        this.httpParams.put("detectType",URLEncoder.encode(OCRDetectType,"utf-8"));
+        this.httpParams.put("imageType",URLEncoder.encode(OCRImageType,"utf-8"));
+        this.httpParams.put("langType",URLEncoder.encode(OCRLangType,"utf-8"));
+        this.httpParams.put("salt",URLEncoder.encode(OCRSalt,"utf-8"));
+        this.httpParams.put("docType",URLEncoder.encode(OCRDocType,"utf-8"));
+        OCRSign = md5(OCRAppKey + OCRImg + OCRSalt + OCRAppPassWord);
+        this.httpParams.put("sign",URLEncoder.encode(OCRSign,"utf-8"));
+        return httpParams;
+    }
+
+    public void setHttpParams(HttpParams httpParams) {
+        this.httpParams = httpParams;
+    }
+
+    public String getOCRUrl() {
+        return OCRUrl;
+    }
 
     public String getTranslateURL(String query, int fromInt, int toInt) throws Exception {
         switch (fromInt) {
@@ -46,10 +66,10 @@ public class URLUtil {
         }
         switch (toInt) {
             case 0:
-                this.to = "zh-CHS";
+                this.to = "EN";
                 break;
             case 1:
-                this.to = "EN";
+                this.to = "zh-CHS";
                 break;
         }
         this.query = query;
@@ -153,31 +173,9 @@ public class URLUtil {
         return input;
     }
 
-    /**
-     * 获得图片的Base64编码
-     *
-     * @param imgFile
-     * @return
-     */
-    public String getImageStr(String imgFile) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        InputStream in = null;
-        byte[] data = null;
-        //读取图片字节数组
-        try {
-            in = new FileInputStream(imgFile);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //对字节数组Base64编码
-        return Base64.encodeToString(data,0);//返回Base64编码过的字节数组字符串
-    }
-
-    public String getOCRURL(String imageString) {
-        OCRImg = getImageStr(imageString);
-        OCRSign = md5(OCRAppKey + OCRImg + OCRSalt + OCRAppPassWord);
-        return OCRUrl + "appKey=" + OCRAppKey + "&img=" + OCRImg + "&detectType=" + OCRDetectType + "&imageType=" + OCRImageType + "&langType=" + OCRLangType + "&salt=" + OCRSalt + "&docType=" + OCRDocType + "&sign=" + OCRSign;
+    public String getOCRTranslate(String query){
+        this.query = query;
+        sign = md5(appKey + query + salt + appPassWord);
+        return "https://openapi.youdao.com/api?q=" + query + "&from=auto" + "&to=auto" + "&appKey=" + appKey + "&salt=" + salt + "&sign=" + sign;
     }
 }
