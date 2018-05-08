@@ -37,4 +37,6 @@ dependencies {
     //Logger日志
     compile 'com.orhanobut:logger:1.15'
     implementation files('src/main/libs/sun.misc.BASE64Decoder.jar')
+    implementation files('src/main/libs/YoudaoBase.jar')
+    implementation files('src/main/libs/YoudaoTranslateOnline.jar')
 }

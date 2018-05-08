@@ -1,6 +1,8 @@
 package com.bnuz.ztx.translateapp.Util;
 
 import com.kymjs.rxvolley.client.HttpParams;
+import com.youdao.sdk.app.Language;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -22,7 +24,7 @@ public class URLUtil {
     String to = null;//目标语言
     String sign = null;//签名
     //OCR模块参数
-    final String OCRUrl = "http://openapi.youdao.com/ocrapi";
+    final String OCRUrl = "https://openapi.youdao.com/ocrapi";
     final String OCRAppKey = "073c24ee75a4bc9e";
     final String OCRAppPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
     String OCRDetectType = "10012";//10012整行翻译  10011按字翻译
@@ -32,8 +34,39 @@ public class URLUtil {
     String OCRSalt = String.valueOf(System.currentTimeMillis());
     String OCRImg = "";//图片参数  仅支持base64
     String OCRSign = "";//签名
+    //ASR模块
+    final String ASRUrl = "https://openapi.youdao.com/asrapi";
+    final String ASRAppKey = "073c24ee75a4bc9e";
+    final String ASRAppPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";
+    String q = "";
+    String ASRLangType = "";
+    String ASRFormat = "wav";
+    String ASRRate = "16000";
+    String ASRChannel = "1";
+    String ASRSalt = String.valueOf(System.currentTimeMillis());
+    String ASRType = "1";
+    String ASRSign = "";//签名
     HttpParams httpParams = new HttpParams();
-    //将参数放入，并作UTF-8编码
+    //ASR将参数放入，并作UTF-8编码
+    public HttpParams getASRHttpParams(String base64qVoice , String language) throws UnsupportedEncodingException {
+        this.q = base64qVoice;
+        this.ASRLangType = language;
+        this.httpParams.put("appKey",URLEncoder.encode(ASRAppKey,"utf-8"));
+        this.httpParams.put("q",URLEncoder.encode(q,"utf-8"));
+        this.httpParams.put("langType",URLEncoder.encode(ASRLangType,"utf-8"));
+        this.httpParams.put("format",URLEncoder.encode(ASRFormat,"utf-8"));
+        this.httpParams.put("rate",URLEncoder.encode(ASRRate,"utf-8"));
+        this.httpParams.put("salt",URLEncoder.encode(ASRSalt,"utf-8"));
+        this.httpParams.put("channel",URLEncoder.encode(ASRChannel,"utf-8"));
+        this.httpParams.put("type",URLEncoder.encode(ASRType,"utf-8"));
+        ASRSign = md5(ASRAppKey + q + ASRSalt + ASRAppPassWord);
+        this.httpParams.put("sign",URLEncoder.encode(ASRSign,"utf-8"));
+        return httpParams;
+    }
+    public String getASRUrl(){
+        return ASRUrl;
+    }
+    //OCR将参数放入，并作UTF-8编码
     public HttpParams getHttpParams(String base64Image) throws UnsupportedEncodingException {
         this.OCRImg = base64Image;
         this.httpParams.put("appKey",URLEncoder.encode(OCRAppKey,"utf-8"));

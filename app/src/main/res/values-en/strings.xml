@@ -27,11 +27,14 @@
     <string name="Translate_information">This is used to place the translation details.</string>
     <string name="change_Language_Log">Successful change language to：</string>
     <string name="Login_button">Sign Up</string>
+    <string name="speaking_dialog">speak Now...</string>
+    <string name="TabLayout_Title_shopping">Market</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">Please choose the following way</string>
     <string name="Take_photo">Take photo</string>
     <string name="Choose_from_the_album">Choose from the album</string>
     <string name="Cancel">Cancel</string>
+    <string name="Finish">Finish</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
@@ -46,4 +49,5 @@
     <string name="right_Icon">&#xf105;</string>
     <string name="enter_Icon">&#xf002;</string>
     <string name="voice_Icon">&#xf028;</string>
+    <string name="TabLayout_Icon_shopping">&#xf07a;</string>
 </resources>

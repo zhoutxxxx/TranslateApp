@@ -1,27 +1,35 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
-import android.preference.PreferenceActivity;
+import android.os.SystemClock;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,10 +39,14 @@ import android.widget.Toast;
 import com.bnuz.ztx.translateapp.Adapter.TranslateInformationAdapter;
 import com.bnuz.ztx.translateapp.Entity.TranslateInformation;
 import com.bnuz.ztx.translateapp.R;
+import com.bnuz.ztx.translateapp.Ui.TabLayoutViewPager_Activity;
+import com.bnuz.ztx.translateapp.Util.AudioUtil;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.ImageUtil;
 import com.bnuz.ztx.translateapp.Util.MediaPlayerUtil;
+import com.bnuz.ztx.translateapp.Util.MediaUtils;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
+import com.bnuz.ztx.translateapp.View.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -53,6 +65,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -72,7 +86,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     Bitmap bitmap;
     Handler mHandler;
     HttpParams httpParams;
-
+    CustomDialog voiceDialog;
+    AudioUtil audioUtil;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_translate, null);
@@ -112,6 +127,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         microphone = (TextView) view.findViewById(R.id.voice_tv);
         microphone.setText(getResources().getString(R.string.microphone_Icon));
         microphone.setTypeface(new FontManager().getType(getActivity()));
+        microphone.setOnClickListener(this);
         //翻译按钮
         enter = (TextView) view.findViewById(R.id.enter_tv);
         enter.setText(getResources().getString(R.string.enter_Icon));
@@ -125,10 +141,10 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         phoneticTv = (TextView) view.findViewById(R.id.phonetic_tv1);
         phoneticTv2 = (TextView) view.findViewById(R.id.phonetic_tv2);
         //发音图标显示 事件监听
-        voiceTv1 = (TextView)view.findViewById(R.id.voice_tv1);
+        voiceTv1 = (TextView) view.findViewById(R.id.voice_tv1);
         voiceTv1.setText(getResources().getString(R.string.voice_Icon));
         voiceTv1.setTypeface(new FontManager().getType(getActivity()));
-        voiceTv2 = (TextView)view.findViewById(R.id.voice_tv2);
+        voiceTv2 = (TextView) view.findViewById(R.id.voice_tv2);
         voiceTv2.setText(getResources().getString(R.string.voice_Icon));
         voiceTv2.setTypeface(new FontManager().getType(getActivity()));
         voiceTv1.setOnClickListener(this);
@@ -138,6 +154,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         voiceTv2.setVisibility(View.INVISIBLE);
         //查询的文本显示框
         queryTv = (TextView) view.findViewById(R.id.query_tv);
+
+        voiceDialog = new CustomDialog(getActivity(), 100, 100, R.layout.dialog_voice, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
+        voiceDialog.setCancelable(true);
     }
 
     @Override
@@ -147,6 +166,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             case R.id.enter_tv:
                 //获取到输入的文本
                 String s = input.getText().toString();
+                //清除ImageView的图片
+                queryTv.setText(null);
+                iv.setImageDrawable(null);
                 //获取翻译状态，由什么语言翻译到什么语言
                 int fromInt = niceSpinner1.getSelectedIndex();
                 int toInt = niceSpinner2.getSelectedIndex();
@@ -223,11 +245,92 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.voice_tv1:
                 //调用函数，播放音频
-                new MediaPlayerUtil().Paly(getActivity(),mList.get(0).getSpeakUrl());
+                new MediaPlayerUtil().Paly(getActivity(), mList.get(0).getSpeakUrl());
                 break;
             case R.id.voice_tv2:
-                new MediaPlayerUtil().Paly(getActivity(),mList.get(0).getUs_speech());
+                new MediaPlayerUtil().Paly(getActivity(), mList.get(0).getUs_speech());
                 break;
+            case R.id.voice_tv:
+                //初始化dialog
+                TextView textView = (TextView)voiceDialog.findViewById(R.id.voice_dialog);
+                textView.setText(getResources().getString(R.string.microphone_Icon));
+                textView.setTypeface(new FontManager().getType(getContext()));
+                Button finish = (Button)voiceDialog.findViewById(R.id.cancel_bt);
+                finish.setOnClickListener(this);
+                Button cancel = (Button)voiceDialog.findViewById(R.id.finish_bt);
+                cancel.setOnClickListener(this);
+                //将dialog展现出来
+                voiceDialog.show();
+                //实例化一个计时器
+                final Chronometer chronometer = (Chronometer)voiceDialog.findViewById(R.id.voice_ch);
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
+                //实例化一个语音工具类
+                audioUtil = new AudioUtil(getContext());
+                //开始录音
+                audioUtil.startRecord();
+                //同步记录数据到本地
+                audioUtil.recordData();
+                break;
+            case R.id.finish_bt:
+                //停止录音
+                audioUtil.stopRecord();
+                //请求网络
+                HttpParams ASRHttpParams = null;
+                Logger.d(audioUtil.getOutFileName());
+                try {
+                    ASRHttpParams = new URLUtil().getASRHttpParams(audioUtil.getVoiceStr(audioUtil.getOutFileName()),"en");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                HttpCallback callback = new HttpCallback() {
+                    @Override
+                    public void onSuccessInAsync(byte[] t) {
+                    }
+
+                    @Override
+                    public void onSuccess(String t) {
+                        parsingASRJson(t);
+                    }
+
+                    @Override
+                    public void onFailure(int errorNo, String strMsg) {
+                    }
+                };
+                new RxVolley.Builder()
+                        .url(new URLUtil().getASRUrl())//访问地址
+                        .httpMethod(RxVolley.Method.POST)//访问方式POST
+                        .params(ASRHttpParams)//参数
+                        .encoding("UTF-8")//UTF-8编码
+                        .callback(callback)//响应
+                        .doTask();//执行请求
+                //释放资源
+                audioUtil.getRecorder().release();
+                //dialog消失
+                voiceDialog.dismiss();
+                break;
+            case R.id.cancel_bt:
+                //释放资源
+                audioUtil.getRecorder().release();
+                Toast.makeText(getContext(),"取消了本次录音",Toast.LENGTH_SHORT).show();
+                voiceDialog.dismiss();
+                break;
+        }
+    }
+
+    private void parsingASRJson(String t) {
+        try {
+            JSONObject jsonObject = new JSONObject(t);
+            JSONArray result = jsonObject.getJSONArray("result");
+            String ASRString = result.get(0).toString();
+            RxVolley.get(new URLUtil().getOCRTranslate(ASRString).replace(" ", "%20"), new HttpCallback() {
+                @Override
+                public void onSuccess(String t) {
+                    parsingJson(t);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -335,7 +438,6 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             Logger.t("ztx").json(t);
             JSONObject jsonObject = new JSONObject(t);
             //数据的初始化，每次点击先清除之前查询的数据
-            iv.setImageDrawable(null);
             voiceTv1.setVisibility(View.INVISIBLE);
             voiceTv2.setVisibility(View.INVISIBLE);
             phoneticTv.setText(null);
@@ -439,15 +541,16 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         phoneticTv2.setText(null);
         explainsLists.clear();
         mList.clear();
+        Logger.json(t);
         try {
             JSONObject jsonObject = new JSONObject(t);
             JSONObject result = jsonObject.getJSONObject("Result");
             JSONArray regions = result.getJSONArray("regions");
             String OCRQuery = "";
-            for (int i = 0 ; i < regions.length() ; i++){
+            for (int i = 0; i < regions.length(); i++) {
                 JSONObject regionsNumber = regions.getJSONObject(i);
                 JSONArray lines = regionsNumber.getJSONArray("lines");
-                for (int j = 0 ; j < lines.length() ; j++){
+                for (int j = 0; j < lines.length(); j++) {
                     JSONObject linesNumber = lines.getJSONObject(j);
                     OCRQuery = OCRQuery + linesNumber.getString("text");
                 }
@@ -464,6 +567,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             e.printStackTrace();
         }
     }
+
     //线程UI更新
     Runnable runnableUI = new Runnable() {
         @Override
@@ -471,21 +575,23 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             //将优化好的照片放在ImageView里
             iv.setImageBitmap(bitmap);
             //获取OCR的API
-            OCRUrl = new URLUtil().getOCRUrl();
+            OCRUrl = new URLUtil().getOCRUrl().toString();
             try {
                 //调用函数，将图片通过base64编码传参
                 httpParams = new URLUtil().getHttpParams(new ImageUtil().bitmapToBase64(bitmap));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            HttpCallback callback = new HttpCallback(){
+            HttpCallback callback = new HttpCallback() {
                 @Override
                 public void onSuccessInAsync(byte[] t) {
                 }
+
                 @Override
                 public void onSuccess(String t) {
                     parsingOCRJson(t);
                 }
+
                 @Override
                 public void onFailure(int errorNo, String strMsg) {
                 }
@@ -499,6 +605,4 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                     .doTask();//执行请求
         }
     };
-
-
 }

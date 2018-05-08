@@ -4,5 +4,7 @@
     <external-path
         name="my_images"
         path="images/" />
-
+    <external-path
+        name="my_voice"
+        path="translateVoice/" />
 </paths>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bnuz.ztx.translateapp.Fragment.ShoppingFragment;
 import com.bnuz.ztx.translateapp.Fragment.TranslateFragment;
 import com.bnuz.ztx.translateapp.Fragment.UserFragment;
 import com.bnuz.ztx.translateapp.R;
@@ -17,6 +18,7 @@ import com.bnuz.ztx.translateapp.Util.FontManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
 //
 public class TabLayoutViewPager_Activity extends AppCompatActivity {
     //滑动
@@ -34,6 +36,7 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
     //导航栏
     TextView nav_title;
     TextView nav_icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +48,21 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
     }
 
 
-
     private void initDate() {
         //初始化导航标题
         mListTile = new ArrayList<>();
         mListTile.add(R.string.TabLayout_Title_Translate);
+        mListTile.add(R.string.TabLayout_Title_shopping);
         mListTile.add(R.string.TabLayout_Title_User);
         //初始化导航图标
         mListIcon = new ArrayList<>();
         mListIcon.add(R.string.TabLayout_Icon_Translate);
+        mListIcon.add(R.string.TabLayout_Icon_shopping);
         mListIcon.add(R.string.TabLayout_Icon_User);
         //初始化Fragment
         mFragment = new ArrayList<>();
         mFragment.add(new TranslateFragment());
+        mFragment.add(new ShoppingFragment());
         mFragment.add(new UserFragment());
     }
 
@@ -117,14 +122,15 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
     private void setupTabIcons() {
         mTabLayout.getTabAt(0).setCustomView(getTabView(0));
         mTabLayout.getTabAt(1).setCustomView(getTabView(1));
+        mTabLayout.getTabAt(2).setCustomView(getTabView(2));
     }
 
     public View getTabView(int position) {
         View v = LayoutInflater.from(getApplication()).inflate(R.layout.tab_item, null);
-        nav_icon= (TextView) v.findViewById(R.id.nav_icon);
+        nav_icon = (TextView) v.findViewById(R.id.nav_icon);
         nav_icon.setText(mListIcon.get(position));
         nav_icon.setTypeface(new FontManager().getType(getApplication()));
-        nav_title = (TextView) v.findViewById(R.id. nav_title);
+        nav_title = (TextView) v.findViewById(R.id.nav_title);
         nav_title.setText(mListTile.get(position));
         if (position == 0) {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -142,8 +148,12 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 changeTabSelect(tab);
             }
+
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {changeTabUnSelect(tab);}
+            public void onTabUnselected(TabLayout.Tab tab) {
+                changeTabUnSelect(tab);
+            }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
@@ -158,10 +168,14 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             mViewPager.setCurrentItem(0);
-        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_shopping))) {
             nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             mViewPager.setCurrentItem(1);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            mViewPager.setCurrentItem(2);
         }
     }
 
@@ -173,10 +187,14 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
             nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
             mViewPager.setCurrentItem(0);
-        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_shopping))) {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
             nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
             mViewPager.setCurrentItem(1);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
+            nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mViewPager.setCurrentItem(2);
         }
     }
 }
