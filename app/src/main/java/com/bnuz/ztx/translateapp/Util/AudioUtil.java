@@ -1,13 +1,10 @@
 package com.bnuz.ztx.translateapp.Util;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
+
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Environment;
 
 import com.orhanobut.logger.Logger;
