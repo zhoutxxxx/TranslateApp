@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--TranslateFragment-->
     <string name="app_name">TranslateApp</string>
     <string name="TabLayout_Title_Translate">Translate</string>
-    <string name="TabLayout_Title_User">Me</string>
     <string name="MainActivity_Title">Translate</string>
     <string name="Chinese_language">Chinese</string>
     <string name="Automatic_language">Automatic</string>
@@ -10,31 +10,38 @@
     <string name="Japanese_language">Japanese</string>
     <string name="Korean_language">Korean</string>
     <string name="Portugal_language">Portuguese</string>
-    <string name="Setting_item">Setting</string>
+    <string name="Start_input_string">Click to enter the text</string>
+    <string name="Translate_information">This is used to place the translation details.</string>
+    <string name="change_Language_Log">Successful change language to：</string>
+    <!--MarketFragment-->
+    <string name="TabLayout_Title_shopping">Market</string>
+    <!--MeFragment-->
+    <string name="TabLayout_Title_User">Me</string>
     <string name="Money_item">Balance</string>
     <string name="Message_item">Message</string>
     <string name="DownLoad_item">Download the offline package</string>
     <string name="Mine_Title">Me</string>
+    <string name="Sign_up">Welcome，Please login</string>
+    <string name="Edit_information">Revise</string>
+    <!--SettingActivity-->
+    <string name="Setting_item">Setting</string>
     <string name="Automatic_updates_item">Automatic Updates</string>
     <string name="Language_switching_item">Language Switching</string>
     <string name="Exchange_language_Chinese_item">简体中文</string>
     <string name="Exchange_language_English_item">English</string>
     <string name="Automatic_updates_information">Auto update software under WiFi</string>
     <string name="Language_switching_information">Choose the language that suits you</string>
-    <string name="Sign_up">Welcome，Please login</string>
-    <string name="Edit_information">Revise</string>
-    <string name="Start_input_string">Click to enter the text</string>
-    <string name="Translate_information">This is used to place the translation details.</string>
-    <string name="change_Language_Log">Successful change language to：</string>
-    <string name="Login_button">Sign Up</string>
+    <!--Voice-->
     <string name="speaking_dialog">speak Now...</string>
-    <string name="TabLayout_Title_shopping">Market</string>
+    <string name="Finish">Finish</string>
+    <string name="select_Input_Language_Dialog_Title">Please select the language you enter?</string>
+    <!--Sign up-->
+    <string name="Login_button">Sign Up</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">Please choose the following way</string>
     <string name="Take_photo">Take photo</string>
     <string name="Choose_from_the_album">Choose from the album</string>
     <string name="Cancel">Cancel</string>
-    <string name="Finish">Finish</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>

@@ -65,8 +65,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -86,8 +84,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     Bitmap bitmap;
     Handler mHandler;
     HttpParams httpParams;
-    CustomDialog voiceDialog;
+    CustomDialog voiceDialog, selectDialog;
     AudioUtil audioUtil;
+    String selectLanguage;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_translate, null);
@@ -154,9 +153,25 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         voiceTv2.setVisibility(View.INVISIBLE);
         //查询的文本显示框
         queryTv = (TextView) view.findViewById(R.id.query_tv);
-
+        //录音dialog
         voiceDialog = new CustomDialog(getActivity(), 100, 100, R.layout.dialog_voice, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
         voiceDialog.setCancelable(true);
+        //初始化dialog
+        TextView textView = (TextView) voiceDialog.findViewById(R.id.voice_dialog);
+        textView.setText(getResources().getString(R.string.microphone_Icon));
+        textView.setTypeface(new FontManager().getType(getContext()));
+        Button finish = (Button) voiceDialog.findViewById(R.id.cancel_bt);
+        finish.setOnClickListener(this);
+        Button cancel = (Button) voiceDialog.findViewById(R.id.finish_bt);
+        cancel.setOnClickListener(this);
+        //选择语音dialog
+        selectDialog = new CustomDialog(getActivity(), 220, 100, R.layout.dialog_select, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
+        selectDialog.setCancelable(true);
+        //初始化dialog
+        Button EnButton = (Button) selectDialog.findViewById(R.id.en_bt);
+        EnButton.setOnClickListener(this);
+        Button CnButton = (Button) selectDialog.findViewById(R.id.cn_bt);
+        CnButton.setOnClickListener(this);
     }
 
     @Override
@@ -164,105 +179,31 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
             //翻译按钮
             case R.id.enter_tv:
-                //获取到输入的文本
-                String s = input.getText().toString();
-                //清除ImageView的图片
-                queryTv.setText(null);
-                iv.setImageDrawable(null);
-                //获取翻译状态，由什么语言翻译到什么语言
-                int fromInt = niceSpinner1.getSelectedIndex();
-                int toInt = niceSpinner2.getSelectedIndex();
-                try {
-                    //将数据传入，返回生成的url
-                    url = new URLUtil().getTranslateURL(s, fromInt, toInt).toString();
-                    //将带有空格的url转化成Android可以识别的url才可进行访问获取接送数据
-                    url = url.replace(" ", "%20");
-                    Logger.t("ztx").d("url-------->" + url);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //网络请求接送数据
-                RxVolley.get(url, new HttpCallback() {
-                    @Override
-                    public void onSuccess(String t) {
-                        parsingJson(t);
-                    }
-                });
+                TXTRequest();
                 break;
             //照相按钮
             case R.id.photo_tv:
-                final String[] items = {getResources().getString(R.string.Take_photo)
-                        , getResources().getString(R.string.Choose_from_the_album)
-                        , getResources().getString(R.string.Cancel)};
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(getResources().getString(R.string.Please_choose_the_following_way));
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        //拍照
-                        if (which == 0) {
-                            //调用摄像头
-                            File outputImage = new File(getContext().getExternalCacheDir(), "output_image.jpg");
-                            try {
-                                if (outputImage.exists()) {
-                                    outputImage.delete();
-                                }
-                                outputImage.createNewFile();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            //根据SDK版本获取imageUri
-                            if (Build.VERSION.SDK_INT >= 24) {
-                                imageUri = FileProvider.getUriForFile(getActivity(),
-                                        "com.gyq.cameraalbumtest.fileprovider", outputImage);
-                            } else {
-                                imageUri = Uri.fromFile(outputImage);
-                            }
-
-                            //启动相机程序
-                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                            startActivityForResult(intent, 1);
-                        }
-                        //从相册中选择
-                        if (which == 1) {
-                            Intent intent = new Intent(Intent.ACTION_PICK);
-                            intent.setType("image/*");//相片类型
-                            startActivityForResult(intent, 2);
-                        }
-                        Toast.makeText(getActivity(), items[which],
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.create().show();
+                OCRRequest();
                 break;
+            //交换两个下拉列表的数据
             case R.id.exchange_tv:
-                //交换两个下拉列表的数据
                 int temp = niceSpinner2.getSelectedIndex();
                 niceSpinner2.setSelectedIndex(niceSpinner1.getSelectedIndex());
                 niceSpinner1.setSelectedIndex(temp);
                 break;
+            //调用函数，播放音频
             case R.id.voice_tv1:
-                //调用函数，播放音频
                 new MediaPlayerUtil().Paly(getActivity(), mList.get(0).getSpeakUrl());
                 break;
             case R.id.voice_tv2:
                 new MediaPlayerUtil().Paly(getActivity(), mList.get(0).getUs_speech());
                 break;
+            //语音按钮
             case R.id.voice_tv:
-                //初始化dialog
-                TextView textView = (TextView)voiceDialog.findViewById(R.id.voice_dialog);
-                textView.setText(getResources().getString(R.string.microphone_Icon));
-                textView.setTypeface(new FontManager().getType(getContext()));
-                Button finish = (Button)voiceDialog.findViewById(R.id.cancel_bt);
-                finish.setOnClickListener(this);
-                Button cancel = (Button)voiceDialog.findViewById(R.id.finish_bt);
-                cancel.setOnClickListener(this);
                 //将dialog展现出来
                 voiceDialog.show();
                 //实例化一个计时器
-                final Chronometer chronometer = (Chronometer)voiceDialog.findViewById(R.id.voice_ch);
+                final Chronometer chronometer = (Chronometer) voiceDialog.findViewById(R.id.voice_ch);
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 chronometer.start();
                 //实例化一个语音工具类
@@ -275,49 +216,140 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             case R.id.finish_bt:
                 //停止录音
                 audioUtil.stopRecord();
-                //请求网络
-                HttpParams ASRHttpParams = null;
-                Logger.d(audioUtil.getOutFileName());
-                try {
-                    ASRHttpParams = new URLUtil().getASRHttpParams(audioUtil.getVoiceStr(audioUtil.getOutFileName()),"en");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                HttpCallback callback = new HttpCallback() {
-                    @Override
-                    public void onSuccessInAsync(byte[] t) {
-                    }
-
-                    @Override
-                    public void onSuccess(String t) {
-                        parsingASRJson(t);
-                    }
-
-                    @Override
-                    public void onFailure(int errorNo, String strMsg) {
-                    }
-                };
-                new RxVolley.Builder()
-                        .url(new URLUtil().getASRUrl())//访问地址
-                        .httpMethod(RxVolley.Method.POST)//访问方式POST
-                        .params(ASRHttpParams)//参数
-                        .encoding("UTF-8")//UTF-8编码
-                        .callback(callback)//响应
-                        .doTask();//执行请求
-                //释放资源
-                audioUtil.getRecorder().release();
                 //dialog消失
                 voiceDialog.dismiss();
+                //选择语言dialog出现
+                selectDialog.show();
+                //释放资源
+                audioUtil.getRecorder().release();
                 break;
             case R.id.cancel_bt:
                 //释放资源
                 audioUtil.getRecorder().release();
-                Toast.makeText(getContext(),"取消了本次录音",Toast.LENGTH_SHORT).show();
                 voiceDialog.dismiss();
+                break;
+            case R.id.cn_bt:
+                selectLanguage = "zh-CHS";
+                selectDialog.dismiss();
+                ASRRequest();
+                break;
+            case R.id.en_bt:
+                selectLanguage = "en";
+                selectDialog.dismiss();
+                ASRRequest();
                 break;
         }
     }
 
+    //文本请求识别
+    public void TXTRequest() {
+        //获取到输入的文本
+        String s = input.getText().toString();
+        //清除ImageView的图片
+        queryTv.setText(null);
+        iv.setImageDrawable(null);
+        //获取翻译状态，由什么语言翻译到什么语言
+        int fromInt = niceSpinner1.getSelectedIndex();
+        int toInt = niceSpinner2.getSelectedIndex();
+        try {
+            //将数据传入，返回生成的url
+            url = new URLUtil().getTranslateURL(s, fromInt, toInt).toString();
+            //将带有空格的url转化成Android可以识别的url才可进行访问获取接送数据
+            url = url.replace(" ", "%20");
+            Logger.t("ztx").d("url-------->" + url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //网络请求接送数据
+        RxVolley.get(url, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                parsingJson(t);
+            }
+        });
+    }
+
+    //图片识别请求
+    public void OCRRequest() {
+        final String[] items = {getResources().getString(R.string.Take_photo)
+                , getResources().getString(R.string.Choose_from_the_album)
+                , getResources().getString(R.string.Cancel)};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(getResources().getString(R.string.Please_choose_the_following_way));
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //拍照
+                if (which == 0) {
+                    //调用摄像头
+                    File outputImage = new File(getContext().getExternalCacheDir(), "output_image.jpg");
+                    try {
+                        if (outputImage.exists()) {
+                            outputImage.delete();
+                        }
+                        outputImage.createNewFile();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //根据SDK版本获取imageUri
+                    if (Build.VERSION.SDK_INT >= 24) {
+                        imageUri = FileProvider.getUriForFile(getActivity(),
+                                "com.gyq.cameraalbumtest.fileprovider", outputImage);
+                    } else {
+                        imageUri = Uri.fromFile(outputImage);
+                    }
+                    //启动相机程序
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(intent, 1);
+                }
+                //从相册中选择
+                if (which == 1) {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");//相片类型
+                    startActivityForResult(intent, 2);
+                }
+                Toast.makeText(getActivity(), items[which],
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.create().show();
+    }
+
+    //语音识别请求
+    public void ASRRequest() {
+        //请求网络
+        HttpParams ASRHttpParams = null;
+        Logger.d(audioUtil.getOutFileName());
+        try {
+            ASRHttpParams = new URLUtil().getASRHttpParams(audioUtil.getVoiceStr(audioUtil.getOutFileName()), selectLanguage);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        HttpCallback callback = new HttpCallback() {
+            @Override
+            public void onSuccessInAsync(byte[] t) {
+            }
+
+            @Override
+            public void onSuccess(String t) {
+                parsingASRJson(t);
+            }
+
+            @Override
+            public void onFailure(int errorNo, String strMsg) {
+            }
+        };
+        new RxVolley.Builder()
+                .url(new URLUtil().getASRUrl())//访问地址
+                .httpMethod(RxVolley.Method.POST)//访问方式POST
+                .params(ASRHttpParams)//参数
+                .encoding("UTF-8")//UTF-8编码
+                .callback(callback)//响应
+                .doTask();//执行请求
+    }
+    //语音识别json解析
     private void parsingASRJson(String t) {
         try {
             JSONObject jsonObject = new JSONObject(t);
@@ -442,6 +474,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             voiceTv2.setVisibility(View.INVISIBLE);
             phoneticTv.setText(null);
             phoneticTv2.setText(null);
+            iv.setImageDrawable(null);
             explainsLists.clear();
             mList.clear();
             //实例化一个翻译对象

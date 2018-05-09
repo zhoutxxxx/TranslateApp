@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--翻译fragment-->
     <string name="app_name">翻译App</string>
     <string name="TabLayout_Title_Translate">翻译</string>
-    <string name="TabLayout_Title_User">我的</string>
     <string name="MainActivity_Title">翻译</string>
     <string name="Chinese_language">中  文</string>
     <string name="Automatic_language">自动检测</string>
@@ -10,31 +10,38 @@
     <string name="Japanese_language">日  语</string>
     <string name="Korean_language">韩  语</string>
     <string name="Portugal_language">葡萄牙语</string>
-    <string name="Setting_item">设置</string>
+    <string name="Start_input_string">点击开始输入文字</string>
+    <string name="Translate_information">这里用来放置详细翻译结果</string>
+    <string name="change_Language_Log">成功修改语言为：</string>
+    <!--商城fragment-->
+    <string name="TabLayout_Title_shopping">商场</string>
+    <!--我的fragment-->
+    <string name="TabLayout_Title_User">我的</string>
     <string name="Money_item">我的余额</string>
     <string name="Message_item">我的消息</string>
     <string name="DownLoad_item">下载离线包</string>
     <string name="Mine_Title">我的</string>
+    <string name="Sign_up">欢迎，请登录</string>
+    <string name="Edit_information">编辑资料</string>
+    <!--设置Activity-->
+    <string name="Setting_item">设置</string>
     <string name="Automatic_updates_item">自动更新</string>
     <string name="Language_switching_item">语种切换</string>
     <string name="Exchange_language_Chinese_item">简体中文</string>
     <string name="Exchange_language_English_item">English</string>
     <string name="Automatic_updates_information">在连接Wifi下,自动更新软件</string>
     <string name="Language_switching_information">选择适合你的语种</string>
-    <string name="Sign_up">欢迎，请登录</string>
-    <string name="Edit_information">编辑资料</string>
-    <string name="Start_input_string">点击开始输入文字</string>
-    <string name="Translate_information">这里用来放置详细翻译结果</string>
-    <string name="change_Language_Log">成功修改语言为：</string>
-    <string name="Login_button">登录</string>
+    <!--语音-->
     <string name="speaking_dialog">正在说话...</string>
-    <string name="TabLayout_Title_shopping">商场</string>
+    <string name="Finish">结束</string>
+    <string name="select_Input_Language_Dialog_Title">请选择你输入语言?</string>
+    <!--登录界面-->
+    <string name="Login_button">登录</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">请选择以下方式</string>
     <string name="Take_photo">拍照</string>
     <string name="Choose_from_the_album">从相册中选择</string>
     <string name="Cancel">取消</string>
-    <string name="Finish">结束</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
