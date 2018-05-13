@@ -13,6 +13,7 @@
     <string name="Start_input_string">点击开始输入文字</string>
     <string name="Translate_information">这里用来放置详细翻译结果</string>
     <string name="change_Language_Log">成功修改语言为：</string>
+    <string name="inquiring_dialog">正在查询...</string>
     <!--商城fragment-->
     <string name="TabLayout_Title_shopping">商场</string>
     <!--我的fragment-->
@@ -37,6 +38,11 @@
     <string name="select_Input_Language_Dialog_Title">请选择你输入语言?</string>
     <!--登录界面-->
     <string name="Login_button">登录</string>
+    <string name="User_EditText">账号/手机号/邮箱</string>
+    <string name="Password_EditText">密码</string>
+    <string name="forgetPsw_TextView">忘记密码?</string>
+    <string name="register_TextView">新用户注册</string>
+    <string name="check_Information">登录失败，请检查信息是否正确</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">请选择以下方式</string>
     <string name="Take_photo">拍照</string>
@@ -57,5 +63,7 @@
     <string name="enter_Icon">&#xf002;</string>
     <string name="voice_Icon">&#xf028;</string>
     <string name="TabLayout_Icon_shopping">&#xf07a;</string>
+    <string name="password_Icon">&#xf084;</string>
+    <string name="look_password_Icon">&#xf06e;</string>
 </resources>
 

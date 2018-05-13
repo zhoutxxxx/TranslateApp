@@ -13,6 +13,7 @@
     <string name="Start_input_string">Click to enter the text</string>
     <string name="Translate_information">This is used to place the translation details.</string>
     <string name="change_Language_Log">Successful change language to：</string>
+    <string name="inquiring_dialog">Being Inquiring...</string>
     <!--MarketFragment-->
     <string name="TabLayout_Title_shopping">Market</string>
     <!--MeFragment-->
@@ -37,6 +38,11 @@
     <string name="select_Input_Language_Dialog_Title">Please select the language you enter?</string>
     <!--Sign up-->
     <string name="Login_button">Sign Up</string>
+    <string name="User_EditText">ID/Mobile Number/E-mail</string>
+    <string name="Password_EditText">PassWord</string>
+    <string name="forgetPsw_TextView">Forgot Password?</string>
+    <string name="register_TextView">Sign In</string>
+    <string name="check_Information">Login failed,Please check the information is correct?</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">Please choose the following way</string>
     <string name="Take_photo">Take photo</string>
@@ -57,4 +63,6 @@
     <string name="enter_Icon">&#xf002;</string>
     <string name="voice_Icon">&#xf028;</string>
     <string name="TabLayout_Icon_shopping">&#xf07a;</string>
+    <string name="password_Icon">&#xf084;</string>
+    <string name="look_password_Icon">&#xf06e;</string>
 </resources>

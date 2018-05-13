@@ -139,35 +139,6 @@ public class AudioUtil {
         }
     }
 
-    // 这里得到可播放的音频文件
-    public void convertWaveFile() {
-        FileInputStream in = null;
-        FileOutputStream out = null;
-        long totalAudioLen = 0;
-        long totalDataLen = totalAudioLen + 36;
-        long longSampleRate = AudioUtil.audioRate;
-        int channels = 1;
-        long byteRate = 16 * AudioUtil.audioRate * channels / 8;
-        byte[] data = new byte[bufferSize];
-        try {
-            in = new FileInputStream(inFileName);
-            out = new FileOutputStream(outFileName);
-            totalAudioLen = in.getChannel().size();
-            //由于不包括RIFF和WAV
-            totalDataLen = totalAudioLen + 36;
-            WriteWaveFileHeader(out, totalAudioLen, totalDataLen, longSampleRate, channels, byteRate);
-            while (in.read(data) != -1) {
-                out.write(data);
-            }
-            in.close();
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /* 任何一种文件在头部添加相应的头文件才能够确定的表示这种文件的格式，wave是RIFF文件结构，每一部分为一个chunk，其中有RIFF WAVE chunk， FMT Chunk，Fact chunk,Data chunk,其中Fact chunk是可以选择的， */
     public void WriteWaveFileHeader(FileOutputStream out, long totalAudioLen, long totalDataLen, long longSampleRate,
                                     int channels, long byteRate) throws IOException {

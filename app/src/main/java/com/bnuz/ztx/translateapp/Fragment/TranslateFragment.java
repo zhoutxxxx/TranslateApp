@@ -44,7 +44,6 @@ import com.bnuz.ztx.translateapp.Util.AudioUtil;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.ImageUtil;
 import com.bnuz.ztx.translateapp.Util.MediaPlayerUtil;
-import com.bnuz.ztx.translateapp.Util.MediaUtils;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
 import com.bnuz.ztx.translateapp.View.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
@@ -84,7 +83,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     Bitmap bitmap;
     Handler mHandler;
     HttpParams httpParams;
-    CustomDialog voiceDialog, selectDialog;
+    CustomDialog voiceDialog, selectDialog , loadingDialog;
     AudioUtil audioUtil;
     String selectLanguage;
 
@@ -172,6 +171,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         EnButton.setOnClickListener(this);
         Button CnButton = (Button) selectDialog.findViewById(R.id.cn_bt);
         CnButton.setOnClickListener(this);
+        //初始化dialog
+        loadingDialog = new CustomDialog(getActivity(),100,100,R.layout.dialog_query,R.style.Theme_dialog,Gravity.CENTER,R.style.pop_anim_style);
+        loadingDialog.setCancelable(true);
     }
 
     @Override
@@ -179,6 +181,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         switch (view.getId()) {
             //翻译按钮
             case R.id.enter_tv:
+                loadingDialog.show();
                 TXTRequest();
                 break;
             //照相按钮
@@ -231,11 +234,13 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             case R.id.cn_bt:
                 selectLanguage = "zh-CHS";
                 selectDialog.dismiss();
+                loadingDialog.show();
                 ASRRequest();
                 break;
             case R.id.en_bt:
                 selectLanguage = "en";
                 selectDialog.dismiss();
+                loadingDialog.show();
                 ASRRequest();
                 break;
         }
@@ -335,6 +340,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onSuccess(String t) {
                 parsingASRJson(t);
+                Logger.json(t);
             }
 
             @Override
@@ -470,6 +476,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             Logger.t("ztx").json(t);
             JSONObject jsonObject = new JSONObject(t);
             //数据的初始化，每次点击先清除之前查询的数据
+            loadingDialog.dismiss();
             voiceTv1.setVisibility(View.INVISIBLE);
             voiceTv2.setVisibility(View.INVISIBLE);
             phoneticTv.setText(null);
@@ -605,6 +612,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     Runnable runnableUI = new Runnable() {
         @Override
         public void run() {
+            loadingDialog.show();
             //将优化好的照片放在ImageView里
             iv.setImageBitmap(bitmap);
             //获取OCR的API
