@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--翻译fragment-->
-    <string name="app_name">翻译App</string>
+    <string name="app_name">毕设App</string>
     <string name="TabLayout_Title_Translate">翻译</string>
     <string name="MainActivity_Title">翻译</string>
     <string name="Chinese_language">中  文</string>
@@ -14,6 +14,7 @@
     <string name="Translate_information">这里用来放置详细翻译结果</string>
     <string name="change_Language_Log">成功修改语言为：</string>
     <string name="inquiring_dialog">正在查询...</string>
+    <string name="history_query">历史搜索</string>
     <!--商城fragment-->
     <string name="TabLayout_Title_shopping">商场</string>
     <!--我的fragment-->

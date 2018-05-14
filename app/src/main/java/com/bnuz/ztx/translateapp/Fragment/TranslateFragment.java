@@ -1,29 +1,26 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
-import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,18 +29,20 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bnuz.ztx.translateapp.Adapter.TranslateInformationAdapter;
+import com.bnuz.ztx.translateapp.Adapter.HistoryAdapter;
+import com.bnuz.ztx.translateapp.Adapter.MyRecyclerViewAdapter;
 import com.bnuz.ztx.translateapp.Entity.TranslateInformation;
+import com.bnuz.ztx.translateapp.Interface.OnItemClickListener;
 import com.bnuz.ztx.translateapp.R;
-import com.bnuz.ztx.translateapp.Ui.TabLayoutViewPager_Activity;
 import com.bnuz.ztx.translateapp.Util.AudioUtil;
 import com.bnuz.ztx.translateapp.Util.FontManager;
+import com.bnuz.ztx.translateapp.Util.HistoryUtil;
 import com.bnuz.ztx.translateapp.Util.ImageUtil;
 import com.bnuz.ztx.translateapp.Util.MediaPlayerUtil;
+import com.bnuz.ztx.translateapp.Util.ShareUtils;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
 import com.bnuz.ztx.translateapp.View.CustomDialog;
 import com.kymjs.rxvolley.RxVolley;
@@ -70,15 +69,17 @@ import java.util.List;
  * Created by ZTX on 2018/3/25.
  */
 
-public class TranslateFragment extends Fragment implements View.OnClickListener {
+public class TranslateFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
     TextView enter, microphone, photo, exchange, queryTv, phoneticTv, phoneticTv2, voiceTv1, voiceTv2;
     NiceSpinner niceSpinner1, niceSpinner2;
     EditText input;
     String url, OCRUrl;
     Uri imageUri;
-    ListView informationListView;
+    RecyclerView recyclerView , historyView;
+    MyRecyclerViewAdapter mAdapter;
+    HistoryAdapter historyAdapter;
     List<TranslateInformation> mList = new ArrayList<>();
-    List<String> explainsLists = new ArrayList<>();
+    List<String> explainsLists = new ArrayList<>() ,nullList = new ArrayList<>();
     ImageView iv;
     Bitmap bitmap;
     Handler mHandler;
@@ -134,7 +135,19 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //输入框
         input = (EditText) view.findViewById(R.id.input_et);
         //Json数据显示框
-        informationListView = (ListView) view.findViewById(R.id.myListView);
+        recyclerView = view.findViewById(R.id.myRecycleView);
+        //设置RecyclerView管理器
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        historyView = view.findViewById(R.id.historyView);
+        //设置RecyclerView管理器
+        historyView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        //初始化适配器
+        historyAdapter = new HistoryAdapter(new HistoryUtil().getHistoryList(ShareUtils.getString(getContext(),"history",".1.2.3.4.5.")));
+//设置添加或删除item时的动画，这里使用默认动画
+        historyView.setItemAnimator(new DefaultItemAnimator());
+//设置适配器
+        historyView.setAdapter(historyAdapter);
+        historyAdapter.setItemClickListener(this);
         //音标显示
         phoneticTv = (TextView) view.findViewById(R.id.phonetic_tv1);
         phoneticTv2 = (TextView) view.findViewById(R.id.phonetic_tv2);
@@ -174,6 +187,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
         //初始化dialog
         loadingDialog = new CustomDialog(getActivity(),100,100,R.layout.dialog_query,R.style.Theme_dialog,Gravity.CENTER,R.style.pop_anim_style);
         loadingDialog.setCancelable(true);
+
+//        ShareUtils.deleShare(getContext(),"history");
+//        ShareUtils.deleShare(getContext(),"wordIndex");
     }
 
     @Override
@@ -250,6 +266,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
     public void TXTRequest() {
         //获取到输入的文本
         String s = input.getText().toString();
+        int index = ShareUtils.getInt(getContext(),"wordIndex",0);
+        new HistoryUtil().putWord(getActivity(), index,s);
         //清除ImageView的图片
         queryTv.setText(null);
         iv.setImageDrawable(null);
@@ -477,6 +495,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             JSONObject jsonObject = new JSONObject(t);
             //数据的初始化，每次点击先清除之前查询的数据
             loadingDialog.dismiss();
+            historyAdapter.setList(nullList);
+            historyView.setAdapter(historyAdapter);
             voiceTv1.setVisibility(View.INVISIBLE);
             voiceTv2.setVisibility(View.INVISIBLE);
             phoneticTv.setText(null);
@@ -566,8 +586,12 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
             //添加ListView的适配器，是得到的文本都显示出来
             translateInformation.setExplains(explainsLists);
             mList.add(translateInformation);
-            TranslateInformationAdapter adapter = new TranslateInformationAdapter(getActivity(), explainsLists);
-            informationListView.setAdapter(adapter);
+            //初始化适配器
+            mAdapter = new MyRecyclerViewAdapter(explainsLists);
+            //设置添加或删除item时的动画，这里使用默认动画
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            //设置适配器
+            recyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -646,4 +670,15 @@ public class TranslateFragment extends Fragment implements View.OnClickListener 
                     .doTask();//执行请求
         }
     };
+
+    @Override
+    public void onItemClick(int position) {
+        String query = new HistoryUtil().getHistoryList(ShareUtils.getString(getContext(),"history",".1.2.3.4.5.")).get(position);
+        RxVolley.get(new URLUtil().getOCRTranslate(query), new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                parsingJson(t);
+            }
+        });
+    }
 }

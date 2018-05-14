@@ -14,6 +14,7 @@
     <string name="Translate_information">This is used to place the translation details.</string>
     <string name="change_Language_Log">Successful change language to：</string>
     <string name="inquiring_dialog">Being Inquiring...</string>
+    <string name="history_query">Historical Search</string>
     <!--MarketFragment-->
     <string name="TabLayout_Title_shopping">Market</string>
     <!--MeFragment-->
