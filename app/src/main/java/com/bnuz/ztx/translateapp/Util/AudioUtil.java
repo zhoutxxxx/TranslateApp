@@ -201,7 +201,7 @@ public class AudioUtil {
 
     //创建文件夹,首先创建目录，然后创建对应的文件
     public void createFile() {
-//        File baseFile = new File(basePath);
+//        File baseFile = news File(basePath);
         File baseFile = new File(context.getExternalCacheDir(), "translateVoice");
         if (!baseFile.exists()) {
             Logger.d("文件夹创建成功" + baseFile.getAbsolutePath());

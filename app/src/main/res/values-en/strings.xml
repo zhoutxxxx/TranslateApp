@@ -17,6 +17,11 @@
     <string name="history_query">Historical Search</string>
     <!--MarketFragment-->
     <string name="TabLayout_Title_shopping">Market</string>
+    <string name="scanning_item">scanning</string>
+    <!--applyFragment-->
+    <string name="TabLayout_Title_apply">Apply</string>
+    <string name="video_item_title">Video</string>
+    <string name="online_service_title">onLineService</string>
     <!--MeFragment-->
     <string name="TabLayout_Title_User">Me</string>
     <string name="Money_item">Balance</string>
@@ -39,11 +44,17 @@
     <string name="select_Input_Language_Dialog_Title">Please select the language you enter?</string>
     <!--Sign up-->
     <string name="Login_button">Sign Up</string>
-    <string name="User_EditText">ID/Mobile Number/E-mail</string>
+    <string name="User_EditText">Mobile Number/E-mail</string>
     <string name="Password_EditText">PassWord</string>
     <string name="forgetPsw_TextView">Forgot Password?</string>
     <string name="register_TextView">Sign In</string>
     <string name="check_Information">Login failed,Please check the information is correct?</string>
+    <!--注册界面-->
+    <string name="phone_EditText">Phone Number</string>
+    <string name="e_mail_EditText">E—Mail Address</string>
+    <string name="password_EditText">Password</string>
+    <string name="sure_password_EditText">Confirm the password</string>
+    <string name="register_button">Sign In</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">Please choose the following way</string>
     <string name="Take_photo">Take photo</string>
@@ -66,4 +77,10 @@
     <string name="TabLayout_Icon_shopping">&#xf07a;</string>
     <string name="password_Icon">&#xf084;</string>
     <string name="look_password_Icon">&#xf06e;</string>
+    <string name="scanning_market_Icon">&#xe60c;</string>
+    <string name="query_market_Icon">&#xe604;</string>
+    <string name="camera_market_Icon">&#xe612;</string>
+    <string name="TabLayout_Icon_Apply">&#xf009;</string>
+    <string name="online_service_Icon">&#xe621;</string>
+    <string name="video_translate_Icon">&#xe64e;</string>
 </resources>

@@ -6,7 +6,14 @@
     <color name="tabLayout_Icon">#329fda</color>
     <color name="bg_White">#FFFFFF</color>
     <color name="gray_soft">#dadada</color>
-    <color name="gray_soft_bg">#efefef</color>
+    <color name="gray_soft_bg">#f4f4f4</color>
     <color name="gray_navigation_bar">#989898</color>
     <color name="list_icon">#329fda</color>
+    <color name="chunkTitle_blue_start">#6ab0ed</color>
+    <color name="chunkTitle_purple_end">#a072f5</color>
+    <color name="chunkTitle_orange_start">#faa44e</color>
+    <color name="chunkTitle_red_end">#ff535c</color>
+    <color name="chunkTitle_green_start">#79fc51</color>
+    <color name="chunkTitle_cyan_end">#75fce5</color>
+    <color name="money_red">#ff0000</color>
 </resources>

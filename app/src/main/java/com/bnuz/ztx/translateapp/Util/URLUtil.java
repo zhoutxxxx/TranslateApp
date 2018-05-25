@@ -46,21 +46,51 @@ public class URLUtil {
     String ASRSalt = String.valueOf(System.currentTimeMillis());
     String ASRType = "1";
     String ASRSign = "";//签名
-    HttpParams httpParams = new HttpParams();
+    HttpParams httpParams;
     //ASR将参数放入，并作UTF-8编码
+
+    public  String getIP() {
+        return IP;
+    }
+
+    //IP
+    final  String IP = "http://192.168.43.191:8080";
+    public HttpParams getRegisterParams(String phone,String mail,String password){
+        httpParams = new HttpParams();
+        try {
+            httpParams.put("phone",URLEncoder.encode(phone,"utf-8"));
+            httpParams.put("mail",URLEncoder.encode(mail,"utf-8"));
+            httpParams.put("password",URLEncoder.encode(password,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return httpParams;
+    }
+    public HttpParams getLoginParams(String user,String password,String isPhone){
+        httpParams = new HttpParams();
+        try {
+            httpParams.put("user",URLEncoder.encode(user,"utf-8"));
+            httpParams.put("isPhone",URLEncoder.encode(isPhone,"utf-8"));
+            httpParams.put("password",URLEncoder.encode(password,"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return httpParams;
+    }
     public HttpParams getASRHttpParams(String base64qVoice , String language) throws UnsupportedEncodingException {
+        httpParams = new HttpParams();
         this.q = base64qVoice;
         this.ASRLangType = language;
-        this.httpParams.put("appKey",URLEncoder.encode(ASRAppKey,"utf-8"));
-        this.httpParams.put("q",URLEncoder.encode(q,"utf-8"));
-        this.httpParams.put("langType",URLEncoder.encode(ASRLangType,"utf-8"));
-        this.httpParams.put("format",URLEncoder.encode(ASRFormat,"utf-8"));
-        this.httpParams.put("rate",URLEncoder.encode(ASRRate,"utf-8"));
-        this.httpParams.put("salt",URLEncoder.encode(ASRSalt,"utf-8"));
-        this.httpParams.put("channel",URLEncoder.encode(ASRChannel,"utf-8"));
-        this.httpParams.put("type",URLEncoder.encode(ASRType,"utf-8"));
+        httpParams.put("appKey",URLEncoder.encode(ASRAppKey,"utf-8"));
+        httpParams.put("q",URLEncoder.encode(q,"utf-8"));
+        httpParams.put("langType",URLEncoder.encode(ASRLangType,"utf-8"));
+        httpParams.put("format",URLEncoder.encode(ASRFormat,"utf-8"));
+        httpParams.put("rate",URLEncoder.encode(ASRRate,"utf-8"));
+        httpParams.put("salt",URLEncoder.encode(ASRSalt,"utf-8"));
+        httpParams.put("channel",URLEncoder.encode(ASRChannel,"utf-8"));
+        httpParams.put("type",URLEncoder.encode(ASRType,"utf-8"));
         ASRSign = md5(ASRAppKey + q + ASRSalt + ASRAppPassWord);
-        this.httpParams.put("sign",URLEncoder.encode(ASRSign,"utf-8"));
+        httpParams.put("sign",URLEncoder.encode(ASRSign,"utf-8"));
         return httpParams;
     }
     public String getASRUrl(){
@@ -68,16 +98,17 @@ public class URLUtil {
     }
     //OCR将参数放入，并作UTF-8编码
     public HttpParams getHttpParams(String base64Image) throws UnsupportedEncodingException {
+        httpParams = new HttpParams();
         this.OCRImg = base64Image;
-        this.httpParams.put("appKey",URLEncoder.encode(OCRAppKey,"utf-8"));
-        this.httpParams.put("img",URLEncoder.encode(OCRImg,"utf-8"));
-        this.httpParams.put("detectType",URLEncoder.encode(OCRDetectType,"utf-8"));
-        this.httpParams.put("imageType",URLEncoder.encode(OCRImageType,"utf-8"));
-        this.httpParams.put("langType",URLEncoder.encode(OCRLangType,"utf-8"));
-        this.httpParams.put("salt",URLEncoder.encode(OCRSalt,"utf-8"));
-        this.httpParams.put("docType",URLEncoder.encode(OCRDocType,"utf-8"));
+        httpParams.put("appKey",URLEncoder.encode(OCRAppKey,"utf-8"));
+        httpParams.put("img",URLEncoder.encode(OCRImg,"utf-8"));
+        httpParams.put("detectType",URLEncoder.encode(OCRDetectType,"utf-8"));
+        httpParams.put("imageType",URLEncoder.encode(OCRImageType,"utf-8"));
+        httpParams.put("langType",URLEncoder.encode(OCRLangType,"utf-8"));
+        httpParams.put("salt",URLEncoder.encode(OCRSalt,"utf-8"));
+        httpParams.put("docType",URLEncoder.encode(OCRDocType,"utf-8"));
         OCRSign = md5(OCRAppKey + OCRImg + OCRSalt + OCRAppPassWord);
-        this.httpParams.put("sign",URLEncoder.encode(OCRSign,"utf-8"));
+        httpParams.put("sign",URLEncoder.encode(OCRSign,"utf-8"));
         return httpParams;
     }
 

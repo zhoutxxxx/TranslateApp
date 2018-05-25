@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bnuz.ztx.translateapp.Fragment.ShoppingFragment;
 import com.bnuz.ztx.translateapp.Fragment.TranslateFragment;
 import com.bnuz.ztx.translateapp.Fragment.UserFragment;
+import com.bnuz.ztx.translateapp.Fragment.applyFragment;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
@@ -53,16 +54,19 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
         mListTile = new ArrayList<>();
         mListTile.add(R.string.TabLayout_Title_Translate);
         mListTile.add(R.string.TabLayout_Title_shopping);
+        mListTile.add(R.string.TabLayout_Title_apply);
         mListTile.add(R.string.TabLayout_Title_User);
         //初始化导航图标
         mListIcon = new ArrayList<>();
         mListIcon.add(R.string.TabLayout_Icon_Translate);
         mListIcon.add(R.string.TabLayout_Icon_shopping);
+        mListIcon.add(R.string.TabLayout_Icon_Apply);
         mListIcon.add(R.string.TabLayout_Icon_User);
         //初始化Fragment
         mFragment = new ArrayList<>();
         mFragment.add(new TranslateFragment());
         mFragment.add(new ShoppingFragment());
+        mFragment.add(new applyFragment());
         mFragment.add(new UserFragment());
     }
 
@@ -123,6 +127,7 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
         mTabLayout.getTabAt(0).setCustomView(getTabView(0));
         mTabLayout.getTabAt(1).setCustomView(getTabView(1));
         mTabLayout.getTabAt(2).setCustomView(getTabView(2));
+        mTabLayout.getTabAt(3).setCustomView(getTabView(3));
     }
 
     public View getTabView(int position) {
@@ -172,10 +177,14 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             mViewPager.setCurrentItem(1);
-        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_apply))) {
             nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
             mViewPager.setCurrentItem(2);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            nav_icon.setTextColor(getResources().getColor(R.color.gray_navigation_bar));
+            mViewPager.setCurrentItem(3);
         }
     }
 
@@ -191,10 +200,14 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
             nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
             mViewPager.setCurrentItem(1);
-        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_apply))) {
             nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
             nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
             mViewPager.setCurrentItem(2);
+        } else if (nav_title.getText().toString().equals(getString(R.string.TabLayout_Title_User))) {
+            nav_title.setTextColor(getResources().getColor(R.color.colorPrimary));
+            nav_icon.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mViewPager.setCurrentItem(3);
         }
     }
 }

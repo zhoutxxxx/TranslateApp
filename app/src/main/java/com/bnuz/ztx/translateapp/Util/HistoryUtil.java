@@ -66,4 +66,17 @@ public class HistoryUtil {
         }
         return history;
     }
+
+    public String getPointString(String str){
+        String s = "";
+        for (int i = 0; i < str.length(); i++){
+            if (i != str.length() - 1){
+                s = s + str.charAt(i);
+                s = s + "·";
+            }else{
+                s = s + str.charAt(i);
+            }
+        }
+        return s;
+    }
 }

@@ -17,6 +17,11 @@
     <string name="history_query">历史搜索</string>
     <!--商城fragment-->
     <string name="TabLayout_Title_shopping">商场</string>
+    <string name="scanning_item">扫一扫</string>
+    <!--小应用-->
+    <string name="TabLayout_Title_apply">应用</string>
+    <string name="video_item_title">视频翻译</string>
+    <string name="online_service_title">在线客服</string>
     <!--我的fragment-->
     <string name="TabLayout_Title_User">我的</string>
     <string name="Money_item">我的余额</string>
@@ -39,11 +44,17 @@
     <string name="select_Input_Language_Dialog_Title">请选择你输入语言?</string>
     <!--登录界面-->
     <string name="Login_button">登录</string>
-    <string name="User_EditText">账号/手机号/邮箱</string>
+    <string name="User_EditText">手机号/邮箱</string>
     <string name="Password_EditText">密码</string>
     <string name="forgetPsw_TextView">忘记密码?</string>
     <string name="register_TextView">新用户注册</string>
     <string name="check_Information">登录失败，请检查信息是否正确</string>
+    <!--注册界面-->
+    <string name="phone_EditText">手机号</string>
+    <string name="e_mail_EditText">邮箱</string>
+    <string name="password_EditText">密码</string>
+    <string name="sure_password_EditText">确认密码</string>
+    <string name="register_button">注册</string>
     <!--拍照-->
     <string name="Please_choose_the_following_way">请选择以下方式</string>
     <string name="Take_photo">拍照</string>
@@ -66,5 +77,13 @@
     <string name="TabLayout_Icon_shopping">&#xf07a;</string>
     <string name="password_Icon">&#xf084;</string>
     <string name="look_password_Icon">&#xf06e;</string>
+    <string name="E_Mail_Icon">&#xf0e0;</string>
+    <string name="phone_Icon">&#xf095;</string>
+    <string name="scanning_market_Icon">&#xe60c;</string>
+    <string name="query_market_Icon">&#xe612;</string>
+    <string name="camera_market_Icon">&#xe604;</string>
+    <string name="TabLayout_Icon_Apply">&#xf009;</string>
+    <string name="online_service_Icon">&#xe621;</string>
+    <string name="video_translate_Icon">&#xe64e;</string>
 </resources>
 

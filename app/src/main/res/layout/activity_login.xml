@@ -44,19 +44,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@null"
+                android:textCursorDrawable="@null"
                 android:cursorVisible="false"
                 android:hint="@string/User_EditText"
                 android:textAlignment="center"
+                android:textColor="@android:color/black"
                 android:textSize="18dp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="#939393" />
 
         <LinearLayout
@@ -80,8 +82,10 @@
                 android:layout_height="35dp"
                 android:background="@null"
                 android:cursorVisible="false"
+                android:textCursorDrawable="@null"
                 android:hint="@string/Password_EditText"
                 android:inputType="textPassword"
+                android:textColor="@android:color/black"
                 android:textAlignment="center"
                 android:textSize="18dp" />
             <TextView
@@ -97,7 +101,7 @@
             android:id="@+id/login_bt"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="15dp"

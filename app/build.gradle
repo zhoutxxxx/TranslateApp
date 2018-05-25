@@ -36,6 +36,14 @@ dependencies {
     compile 'com.kymjs.rxvolley:rxvolley:1.1.2'
     //Logger日志
     compile 'com.orhanobut:logger:1.15'
+    //轮播图
+    compile 'com.youth.banner:banner:1.4.9'
+    //毕加索图片加载
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //注解实例化
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
     implementation files('src/main/libs/sun.misc.BASE64Decoder.jar')
     implementation files('src/main/libs/YoudaoBase.jar')
     implementation files('src/main/libs/YoudaoTranslateOnline.jar')

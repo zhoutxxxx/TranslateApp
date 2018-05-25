@@ -58,7 +58,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -188,8 +187,6 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
         loadingDialog = new CustomDialog(getActivity(),100,100,R.layout.dialog_query,R.style.Theme_dialog,Gravity.CENTER,R.style.pop_anim_style);
         loadingDialog.setCancelable(true);
 
-//        ShareUtils.deleShare(getContext(),"history");
-//        ShareUtils.deleShare(getContext(),"wordIndex");
     }
 
     @Override
@@ -671,7 +668,6 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
         }
     };
 
-    @Override
     public void onItemClick(int position) {
         String query = new HistoryUtil().getHistoryList(ShareUtils.getString(getContext(),"history",".1.2.3.4.5.")).get(position);
         RxVolley.get(new URLUtil().getOCRTranslate(query), new HttpCallback() {
