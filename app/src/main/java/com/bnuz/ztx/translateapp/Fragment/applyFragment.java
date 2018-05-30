@@ -1,23 +1,15 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.MediaController;
 
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
-
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 /**
@@ -25,21 +17,22 @@ import butterknife.Unbinder;
  */
 
 public class applyFragment extends Fragment implements View.OnClickListener {
-    @BindView(R.id.service_bt) Button service;
-    @BindView(R.id.video_bt) Button video;
-    @BindView(R.id.webView) WebView webView;
-    @BindView(R.id.link) Button link;
-    Unbinder unbinder;
+    Button service,video,link;
+    WebView webView;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_apply, null);
-        unbinder = ButterKnife.bind(this,view);
-        findView();
+        findView(view);
         return view;
     }
 
-    private void findView() {
+    private void findView(View view) {
+
+        webView = (WebView) view.findViewById(R.id.webView);
+        video = (Button)view.findViewById(R.id.video_bt);
         video.setTypeface(new FontManager().getALiType(getContext()));
+        service = (Button)view.findViewById(R.id.service_bt);
         service.setTypeface(new FontManager().getALiType(getContext()));
+        link = (Button) view.findViewById(R.id.link);
         link.setOnClickListener(this);
     }
 

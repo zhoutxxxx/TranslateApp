@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Environment;
 
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.jakewharton.disklrucache.Util;
-import com.orhanobut.logger.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -26,16 +22,13 @@ import java.security.NoSuchAlgorithmException;
  * Created by ZTX on 2018/5/29.
  */
 
-public class CacheUtil {
-    int appVersion = 1;//app的版本号
-    int valueCount = 1;//一个key对应的值// 获取到可用内存的最大值，使用内存超出这个值会引起OutOfMemory异常
-    int cacheSize = 1024 * 1024 * 50;//
-    HttpURLConnection urlConnection;
-    BufferedOutputStream out;
-    BufferedInputStream in;
+public class DiskLruCacheUtil {
+    int appVersion = 1;//app的版本号（默认值）
+    int valueCount = 1;//一个key对应的值（默认值）
+    static final long cacheSize = 1024 * 1024 * 50;//缓存总大小 50MB
     Bitmap bitmap = null;
     boolean result = false;
-
+    //存储设备缓存
     public DiskLruCache getDiskLruCache(Context context) {
         DiskLruCache diskLruCache = null;
         try {
@@ -66,7 +59,7 @@ public class CacheUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String key = hashKeyForDisk(imageUrl);// 把Url转换成KEY
+                String key = hashKeyForDisk(imageUrl);// 把Url转换成Key
                 try {
                     DiskLruCache.Snapshot snapShot = diskLruCache.get(key);// 通过key获取Snapshot对象
                     if (snapShot != null) {
@@ -94,15 +87,15 @@ public class CacheUtil {
         }
         return null;
     }
-
-    public String hashKeyForDisk(String key) {
+    //将URL转换成KEY，采用url的MD5值作为key
+    public String hashKeyForDisk(String url) {
         String cacheKey;
         try {
             final MessageDigest mDigest = MessageDigest.getInstance("MD5");
-            mDigest.update(key.getBytes());
+            mDigest.update(url.getBytes());
             cacheKey = bytesToHexString(mDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            cacheKey = String.valueOf(key.hashCode());
+            cacheKey = String.valueOf(url.hashCode());
         }
         return cacheKey;
     }

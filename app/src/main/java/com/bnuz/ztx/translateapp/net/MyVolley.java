@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.ACache;
-import com.bnuz.ztx.translateapp.Util.CacheUtil;
+import com.bnuz.ztx.translateapp.Util.DiskLruCacheUtil;
 import com.bnuz.ztx.translateapp.Util.HistoryUtil;
 import com.bnuz.ztx.translateapp.Util.PicassoImageLoader;
 import com.bnuz.ztx.translateapp.Util.URLUtil;
@@ -40,13 +40,13 @@ import java.util.List;
 public class MyVolley {
     List<String> bannerList, looperTextViewList, topIdList, chunkTitleList, descriptionList, imageList, loveImageList, loveStoriesList, loveMoneyList;
     List<Integer> loveStateList, mipmapList;
-    CacheUtil cacheUtil;
+    DiskLruCacheUtil cacheUtil;
     DiskLruCache diskLruCache;
     Context context;
 
     public MyVolley(Context context) {
         this.context = context;
-        cacheUtil = new CacheUtil();
+        cacheUtil = new DiskLruCacheUtil();
         diskLruCache = cacheUtil.getDiskLruCache(context);
     }
 
