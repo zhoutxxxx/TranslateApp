@@ -7,4 +7,7 @@
     <external-path
         name="my_voice"
         path="translateVoice/" />
+    <external-path
+        name="my_bitmap"
+        path="bitmap/" />
 </paths>

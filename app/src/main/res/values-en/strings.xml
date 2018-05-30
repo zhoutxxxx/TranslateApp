@@ -18,6 +18,7 @@
     <!--MarketFragment-->
     <string name="TabLayout_Title_shopping">Market</string>
     <string name="scanning_item">scanning</string>
+    <string name="query_stories_EditText">Please Input your goods</string>
     <!--applyFragment-->
     <string name="TabLayout_Title_apply">Apply</string>
     <string name="video_item_title">Video</string>
@@ -84,3 +85,6 @@
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>
 </resources>
+
+
+

@@ -18,6 +18,7 @@
     <!--商城fragment-->
     <string name="TabLayout_Title_shopping">商场</string>
     <string name="scanning_item">扫一扫</string>
+    <string name="query_stories_EditText">请输入要搜索的商品</string>
     <!--小应用-->
     <string name="TabLayout_Title_apply">应用</string>
     <string name="video_item_title">视频翻译</string>
@@ -80,8 +81,8 @@
     <string name="E_Mail_Icon">&#xf0e0;</string>
     <string name="phone_Icon">&#xf095;</string>
     <string name="scanning_market_Icon">&#xe60c;</string>
-    <string name="query_market_Icon">&#xe612;</string>
-    <string name="camera_market_Icon">&#xe604;</string>
+    <string name="query_market_Icon">&#xe604;</string>
+    <string name="camera_market_Icon">&#xe612;</string>
     <string name="TabLayout_Icon_Apply">&#xf009;</string>
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>

@@ -1,6 +1,5 @@
 package com.bnuz.ztx.translateapp.Interface;
 
-import android.view.View;
 
 /**
  * Created by ZTX on 2018/5/14.
