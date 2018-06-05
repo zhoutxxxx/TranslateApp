@@ -79,8 +79,8 @@
     <string name="password_Icon">&#xf084;</string>
     <string name="look_password_Icon">&#xf06e;</string>
     <string name="scanning_market_Icon">&#xe60c;</string>
-    <string name="query_market_Icon">&#xe604;</string>
-    <string name="camera_market_Icon">&#xe612;</string>
+    <string name="query_market_Icon">&#xe612;</string>
+    <string name="camera_market_Icon">&#xe604;</string>
     <string name="TabLayout_Icon_Apply">&#xf009;</string>
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>

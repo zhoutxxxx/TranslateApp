@@ -1,14 +1,18 @@
 package com.bnuz.ztx.translateapp.Ui;
 
+import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.Fragment.ShoppingFragment;
 import com.bnuz.ztx.translateapp.Fragment.TranslateFragment;
@@ -16,6 +20,12 @@ import com.bnuz.ztx.translateapp.Fragment.UserFragment;
 import com.bnuz.ztx.translateapp.Fragment.applyFragment;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
+import com.bnuz.ztx.translateapp.net.MyMQTT;
+
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +79,6 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
         mFragment.add(new applyFragment());
         mFragment.add(new UserFragment());
     }
-
     //初始化View
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);

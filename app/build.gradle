@@ -44,8 +44,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     //缓存
     compile 'com.jakewharton:disklrucache:2.0.2'
+    //事件总线
+    compile 'org.greenrobot:eventbus:3.1.1'
+    //mqtt推送
+    compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
     implementation files('src/main/libs/sun.misc.BASE64Decoder.jar')
     implementation files('src/main/libs/YoudaoBase.jar')
     implementation files('src/main/libs/YoudaoTranslateOnline.jar')

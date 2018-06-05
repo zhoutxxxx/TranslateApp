@@ -1,24 +1,26 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
-import android.annotation.SuppressLint;
-import android.graphics.LinearGradient;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
 import com.bnuz.ztx.translateapp.Util.URLUtil;
 import com.bnuz.ztx.translateapp.View.LooperTextView;
+import com.bnuz.ztx.translateapp.net.MyMQTT;
 import com.bnuz.ztx.translateapp.net.MyVolley;
-
 import com.youth.banner.Banner;
 
 
@@ -26,13 +28,15 @@ import com.youth.banner.Banner;
  * Created by ZTX on 2018/5/2.
  */
 
-public class ShoppingFragment extends Fragment {
+public class ShoppingFragment extends Fragment implements View.OnClickListener {
     TextView scanningTextView, enterTextView, cameraTextView;
+    EditText editText;
     Banner banner;
     LooperTextView looperTextView;
     ViewStub view1, view2, view3, view4, viewLove;
     TextView more_bt;
     MyVolley myVolley;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping, null);
         findView(view);
@@ -40,10 +44,15 @@ public class ShoppingFragment extends Fragment {
     }
 
     private void findView(View view) {
+        editText = view.findViewById(R.id.input_et);
+        //初始化，订阅推送
+        MyMQTT mqtt = new MyMQTT(getActivity());
+        mqtt.init();
         more_bt = view.findViewById(R.id.more);
         more_bt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         scanningTextView = view.findViewById(R.id.sao_tv);
         scanningTextView.setTypeface(new FontManager().getALiType(getContext()));
+        scanningTextView.setOnClickListener(this);
         enterTextView = view.findViewById(R.id.enter_tv);
         enterTextView.setTypeface(new FontManager().getALiType(getContext()));
         cameraTextView = view.findViewById(R.id.camera_tv);
@@ -64,5 +73,14 @@ public class ShoppingFragment extends Fragment {
         myVolley.getPromotion(promotionUrl, view4, 3, getContext());
         viewLove = view.findViewById(R.id.viewLove);
         myVolley.getPromotion(new URLUtil().getIP() + "/marketLove", viewLove, getContext());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.sao_tv:
+                Toast.makeText(getContext(),"扫一扫",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
