@@ -1,8 +1,5 @@
 package com.bnuz.ztx.translateapp.Fragment;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.graphics.Paint;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

@@ -1,5 +1,6 @@
 package com.bnuz.ztx.translateapp.net;
 
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -119,7 +120,10 @@ public class MyMQTT extends Service {
     private void startNotification(MqttMessage message) {
         NotificationManager notificationManager =(NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,new Intent(this,SettingActivity.class),PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent intent = new Intent(this.context,this.context.getClass());
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(context)
                 .setSmallIcon(R.mipmap.start)
                 .setContentTitle("翻译app")
