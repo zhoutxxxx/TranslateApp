@@ -60,14 +60,14 @@ public class ShoppingFragment extends Fragment implements View.OnClickListener {
         looperTextView = view.findViewById(R.id.myLooper);
         myVolley.getLooperTextView(new URLUtil().getIP() + "/NewsCarousel", looperTextView);
         String promotionUrl = new URLUtil().getIP() + "/Promotion?Type=subPromotion&subTitle=null";
-        view1 = view.findViewById(R.id.viewOne);
-        myVolley.getPromotion(promotionUrl, view1, 0, getContext());
-        view2 = view.findViewById(R.id.viewTwo);
-        myVolley.getPromotion(promotionUrl, view2, 1, getContext());
-        view3 = view.findViewById(R.id.viewThree);
-        myVolley.getPromotion(promotionUrl, view3, 2, getContext());
-        view4 = view.findViewById(R.id.viewFour);
-        myVolley.getPromotion(promotionUrl, view4, 3, getContext());
+//        view1 = view.findViewById(R.id.viewOne);
+//        myVolley.getPromotion(promotionUrl, view1, 0, getContext());
+//        view2 = view.findViewById(R.id.viewTwo);
+//        myVolley.getPromotion(promotionUrl, view2, 1, getContext());
+//        view3 = view.findViewById(R.id.viewThree);
+//        myVolley.getPromotion(promotionUrl, view3, 2, getContext());
+//        view4 = view.findViewById(R.id.viewFour);
+//        myVolley.getPromotion(promotionUrl, view4, 3, getContext());
         viewLove = view.findViewById(R.id.viewLove);
         myVolley.getPromotion(new URLUtil().getIP() + "/marketLove", viewLove, getContext());
     }
