@@ -130,7 +130,9 @@
                     app:indicator_drawable_unselected="@drawable/point_unselect"
                     app:indicator_height="7dp"
                     app:indicator_margin="5dp"
-                    app:indicator_width="7dp"></com.youth.banner.Banner>
+                    app:indicator_width="7dp">
+
+                </com.youth.banner.Banner>
 
                 <LinearLayout
                     android:layout_width="match_parent"

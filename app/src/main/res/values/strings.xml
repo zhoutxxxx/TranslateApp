@@ -86,5 +86,9 @@
     <string name="TabLayout_Icon_Apply">&#xf009;</string>
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>
+    <!--图片TAG-->
+    <item type="id" name="img_tag"></item>
+
+
 </resources>
 
