@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -20,6 +21,8 @@ import com.bnuz.ztx.translateapp.Fragment.ShoppingFragment;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Ui.SettingActivity;
 import com.bnuz.ztx.translateapp.Ui.TabLayoutViewPager_Activity;
+import com.bnuz.ztx.translateapp.Ui.VideoActivity;
+import com.bnuz.ztx.translateapp.Util.EventMessage;
 import com.orhanobut.logger.Logger;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -30,6 +33,8 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -42,6 +47,8 @@ import java.util.concurrent.TimeUnit;
 public class MyMQTT extends Service {
     private static final String TAG = "MqttTest";
     final String subscriptionTopic = "exampleAndroidTopic";
+    final String translateTopic = "TranslateAnswer";
+    final String offerICETopic = "AnswerICE";
     private ScheduledExecutorService scheduler;
     private String userName = "guest"; // 连接的用户名
     private String passWord = "guest"; //连接的密码
@@ -51,9 +58,11 @@ public class MyMQTT extends Service {
     private Context context;
     private MqttAndroidClient mqttAndroidClient;
 
+
     public MyMQTT(Context context) {
         this.context = context;
     }
+
 
     /**
      * 初始化相关数据
@@ -71,8 +80,8 @@ public class MyMQTT extends Service {
             options.setPassword(passWord.toCharArray());
             // 设置超时时间 单位为秒
             options.setConnectionTimeout(10);
-            // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送个消息判断客户端是否在线，但这个方法并没有重连的机制
-            options.setKeepAliveInterval(20);
+            // 设置会话心跳时间 单位为秒 服务器会每隔1.5*60秒的时间向客户端发送个消息判断客户端是否在线，但这个方法并没有重连的机制
+            options.setKeepAliveInterval(60);
             //断线重新连接
             options.setAutomaticReconnect(true);
             //客户端连接
@@ -82,6 +91,7 @@ public class MyMQTT extends Service {
                 @Override
                 public void connectComplete(boolean reconnect, String serverURI) {
                     subscribeToTopic();
+                    Logger.d("正在订阅主题");
                 }
 
                 @Override
@@ -95,8 +105,13 @@ public class MyMQTT extends Service {
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     //subscribe后得到的消息会执行到这里面
-                    Log.e(TAG, "message=:" + message.toString());
-                    startNotification(message);
+                    if (topic.equals(subscriptionTopic)){
+                        Log.e(TAG, "message=:" + message.toString());
+                        startNotification(message);
+                    }else{
+                        EventBus.getDefault().post(new EventMessage(true,topic,message.toString()));
+                    }
+
                 }
 
                 @Override
@@ -112,8 +127,6 @@ public class MyMQTT extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        context.registerReceiver(mConnectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
     }
 
@@ -137,7 +150,7 @@ public class MyMQTT extends Service {
 
     public void subscribeToTopic() {
         try {
-            mqttAndroidClient.subscribe(subscriptionTopic, 1, null, new IMqttActionListener() {
+            mqttAndroidClient.subscribe(subscriptionTopic, 0, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.e(TAG, "onSuccess ---> " + asyncActionToken);
@@ -148,12 +161,53 @@ public class MyMQTT extends Service {
                     Log.e(TAG, "onFailure ---> " + exception);
                 }
             });
+            mqttAndroidClient.subscribe(translateTopic, 0, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.e(TAG, "onSuccess ---> " + asyncActionToken);
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.e(TAG, "onFailure ---> " + asyncActionToken);
+                }
+            });
+            mqttAndroidClient.subscribe(offerICETopic, 0, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.e(TAG, "onSuccess ---> " + asyncActionToken);
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Log.e(TAG, "onFailure ---> " + asyncActionToken);
+                }
+            });
         } catch (MqttException e) {
             Log.e(TAG, "subscribeToTopic is error");
             e.printStackTrace();
         }
     }
 
+
+    //发布消息
+    public void publish(String topic,String msg,boolean isRetained,int qos) {
+
+        try {
+            if (mqttAndroidClient!=null) {
+                MqttMessage message = new MqttMessage();
+                message.setQos(qos);
+                message.setRetained(isRetained);
+                message.setPayload(msg.getBytes());
+                mqttAndroidClient.publish(topic, message);
+                Logger.d("topic="+topic+"--msg="+msg+"--isRetained"+isRetained);
+            }
+        } catch (MqttPersistenceException e) {
+            e.printStackTrace();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Query's the NetworkInfo via ConnectivityManager
      * to return the current connected state

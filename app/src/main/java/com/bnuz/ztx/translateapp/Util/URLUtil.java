@@ -54,7 +54,7 @@ public class URLUtil {
     }
 
     //IP
-    final  String IP = "http://192.168.31.117:8080";
+    final  String IP = "http://10.20.195.228:8080";
     public HttpParams getRegisterParams(String phone,String mail,String password){
         httpParams = new HttpParams();
         try {

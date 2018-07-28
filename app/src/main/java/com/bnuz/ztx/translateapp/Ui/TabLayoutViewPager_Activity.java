@@ -42,6 +42,7 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
     private List<Fragment> mFragment;
     //View的容器用来放Fragment
     private ViewPager mViewPager;
+    protected MyMQTT myMQTT;
 
 
     //导航栏
@@ -78,6 +79,9 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
         mFragment.add(new ShoppingFragment());
         mFragment.add(new applyFragment());
         mFragment.add(new UserFragment());
+
+        myMQTT = new MyMQTT(getApplicationContext());
+        myMQTT.init();
     }
     //初始化View
     private void initView() {

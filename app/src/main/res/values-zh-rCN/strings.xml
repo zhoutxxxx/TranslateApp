@@ -87,8 +87,5 @@
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>
     <!--图片TAG-->
-    <item name="img_tag" type="id"></item>
-
-
+    <item type="id" name="img_tag"></item>
 </resources>
-

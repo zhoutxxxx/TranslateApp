@@ -76,6 +76,7 @@
                         android:hint="@string/query_stories_EditText"
                         android:textColor="@android:color/white"
                         android:textCursorDrawable="@null"
+                        android:singleLine="true"
                         android:textSize="14dp" />
                 </LinearLayout>
 

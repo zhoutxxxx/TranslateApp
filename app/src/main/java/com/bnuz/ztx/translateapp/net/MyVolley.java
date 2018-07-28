@@ -15,6 +15,7 @@ import com.bnuz.ztx.translateapp.Util.ACache;
 import com.bnuz.ztx.translateapp.Util.HistoryUtil;
 import com.bnuz.ztx.translateapp.Util.ImageCacheUtil;
 import com.bnuz.ztx.translateapp.Util.PicassoImageLoader;
+import com.bnuz.ztx.translateapp.Util.URLUtil;
 import com.bnuz.ztx.translateapp.View.LooperTextView;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
@@ -150,109 +151,109 @@ public class MyVolley {
         looperTextView.setTipList(looperTextViewList);
     }
 
-//    public void getPromotion(String s, final ViewStub view, final int index, final Context context) {
-//        topIdList = new ArrayList<>();
-//        RxVolley.get(s, new HttpCallback() {
-//
-//            @Override
-//            public void onSuccess(String t) {
-//                Logger.json(t);
-//                parsingTopIdJson(t);
-//                String chunkUrl = new URLUtil().getIP() + "/Promotion?Type=subChunk&subTitle=";
-//                switch (index) {
-//                    case 0:
-//                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onSuccess(String t) {
-//                                Logger.json(t);
-//                                ACache.get(context).put("oneJson", t);
-//                                parsingViewOneJson(t, view, context);
-//                            }
-//
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onFailure(VolleyError error) {
-//                                parsingViewOneJson(ACache.get(context).getAsString("oneJson"), view, context);
-//                            }
-//                        });
-//                        break;
-//                    case 1:
-//                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onSuccess(String t) {
-//                                Logger.json(t);
-//                                ACache.get(context).put("twoJson", t);
-//                                parsingViewTwoJson(t, view, context);
-//                            }
-//
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onFailure(VolleyError error) {
-//                                parsingViewTwoJson(ACache.get(context).getAsString("twoJson"), view, context);
-//                            }
-//                        });
-//                        break;
-//                    case 2:
-//                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onSuccess(String t) {
-//                                Logger.json(t);
-//                                ACache.get(context).put("threeJson", t);
-//                                parsingViewThreeJson(t, view, context);
-//                            }
-//
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onFailure(VolleyError error) {
-//                                parsingViewThreeJson(ACache.get(context).getAsString("threeJson"), view, context);
-//                            }
-//                        });
-//                        break;
-//                    case 3:
-//                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onSuccess(String t) {
-//                                Logger.json(t);
-//                                ACache.get(context).put("fourJson", t);
-//                                parsingViewFourJson(t, view, context);
-//                            }
-//
-//                            @RequiresApi(api = Build.VERSION_CODES.M)
-//                            @Override
-//                            public void onFailure(VolleyError error) {
-//                                parsingViewFourJson(ACache.get(context).getAsString("fourJson"), view, context);
-//                            }
-//                        });
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onFailure(VolleyError error) {
-//                switch (index){
-//                    case 0:
-//                        parsingViewOneJson(ACache.get(context).getAsString("oneJson"), view, context);
-//                        break;
-//                    case 1:
-//                        parsingViewTwoJson(ACache.get(context).getAsString("twoJson"), view, context);
-//                        break;
-//                    case 2:
-//                        parsingViewThreeJson(ACache.get(context).getAsString("threeJson"), view, context);
-//                        break;
-//                    case 3:
-//                        parsingViewFourJson(ACache.get(context).getAsString("fourJson"), view, context);
-//                        break;
-//                }
-//            }
-//        });
-//
-//    }
+    public void getPromotion(String s, final ViewStub view, final int index, final Context context) {
+        topIdList = new ArrayList<>();
+        RxVolley.get(s, new HttpCallback() {
+
+            @Override
+            public void onSuccess(String t) {
+                Logger.json(t);
+                parsingTopIdJson(t);
+                String chunkUrl = new URLUtil().getIP() + "/Promotion?Type=subChunk&subTitle=";
+                switch (index) {
+                    case 0:
+                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onSuccess(String t) {
+                                Logger.json(t);
+                                ACache.get(context).put("oneJson", t);
+                                parsingViewOneJson(t, view, context);
+                            }
+
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onFailure(VolleyError error) {
+                                parsingViewOneJson(ACache.get(context).getAsString("oneJson"), view, context);
+                            }
+                        });
+                        break;
+                    case 1:
+                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onSuccess(String t) {
+                                Logger.json(t);
+                                ACache.get(context).put("twoJson", t);
+                                parsingViewTwoJson(t, view, context);
+                            }
+
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onFailure(VolleyError error) {
+                                parsingViewTwoJson(ACache.get(context).getAsString("twoJson"), view, context);
+                            }
+                        });
+                        break;
+                    case 2:
+                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onSuccess(String t) {
+                                Logger.json(t);
+                                ACache.get(context).put("threeJson", t);
+                                parsingViewThreeJson(t, view, context);
+                            }
+
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onFailure(VolleyError error) {
+                                parsingViewThreeJson(ACache.get(context).getAsString("threeJson"), view, context);
+                            }
+                        });
+                        break;
+                    case 3:
+                        RxVolley.get(chunkUrl + topIdList.get(index), new HttpCallback() {
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onSuccess(String t) {
+                                Logger.json(t);
+                                ACache.get(context).put("fourJson", t);
+                                parsingViewFourJson(t, view, context);
+                            }
+
+                            @RequiresApi(api = Build.VERSION_CODES.M)
+                            @Override
+                            public void onFailure(VolleyError error) {
+                                parsingViewFourJson(ACache.get(context).getAsString("fourJson"), view, context);
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onFailure(VolleyError error) {
+                switch (index){
+                    case 0:
+                        parsingViewOneJson(ACache.get(context).getAsString("oneJson"), view, context);
+                        break;
+                    case 1:
+                        parsingViewTwoJson(ACache.get(context).getAsString("twoJson"), view, context);
+                        break;
+                    case 2:
+                        parsingViewThreeJson(ACache.get(context).getAsString("threeJson"), view, context);
+                        break;
+                    case 3:
+                        parsingViewFourJson(ACache.get(context).getAsString("fourJson"), view, context);
+                        break;
+                }
+            }
+        });
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void parsingViewLoveJson(String t, ViewStub view, Context context) {
@@ -285,7 +286,6 @@ public class MyVolley {
                     //mImageCacheUtil.loadBitmap(imageUrl,100,100);
                   //  cacheUtil.addBitmapToDiskLruCache(imageUrl, diskLruCache);
                     ACache.get(context).put("love" + i, imageUrl);
-
                     ACache.get(context).put("stories" + i, stories);
                     ACache.get(context).put("money" + i, money);
                     ACache.get(context).put("state" + i, String.valueOf(state));
@@ -342,46 +342,45 @@ public class MyVolley {
                 ImageView image1, image2, image3, image4, image5, image6, image7, image8, image9, image10;
                 int startImage = 0;
                 image1 = a.findViewById(R.id.image1);
-                image1.setTag("love" + startImage++);
+                image1.setTag("love" + startImage);
                // String image11 = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528872471&di=a141d98b71fbb4b90a8bdd1a21c9f398&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01e4ef59395005a8012193a37970d9.jpg%401280w_1l_2o_100sh.jpg";
-                int Count = 0;
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image1,100,100);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image1,100,100);
                 //image1.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image2 = a.findViewById(R.id.image2);
-                image2.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image2,100,100);
+                image2.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image2,100,100);
                 //image2.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image3 = a.findViewById(R.id.image3);
-                image3.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image3,100,100);
+                image3.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image3,100,100);
                 //image3.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image4 = a.findViewById(R.id.image4);
-                image4.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image4,100,100);
+                image4.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image4,100,100);
                 //image4.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image5 = a.findViewById(R.id.image5);
-                image5.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image5,100,100);
+                image5.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image5,100,100);
                 //image5.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image6 = a.findViewById(R.id.image6);
-                image6.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image6,100,100);
+                image6.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image6,100,100);
                 //image6.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image7 = a.findViewById(R.id.image7);
-                image7.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image7,100,100);
+                image7.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image7,100,100);
                 //image7.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image8 = a.findViewById(R.id.image8);
-                image8.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image8,100,100);
+                image8.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image8,100,100);
                 //image8.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image9 = a.findViewById(R.id.image9);
-                image9.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image9,100,100);
+                image9.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image9,100,100);
                 //image9.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 image10 = a.findViewById(R.id.image10);
-                image10.setTag("love" + startImage++);
-                mImageCacheUtil.bindBitmap(loveImageUrlList.get(Count++),image10,100,100);
+                image10.setTag("love" + startImage);
+                mImageCacheUtil.bindBitmap(loveImageUrlList.get(startImage++),image10,100,100);
                 //image10.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("love" + startImage++), diskLruCache));
                 mipmapList = new ArrayList<>();
                 for (int z = 0; z < loveStateList.size(); z++) {
@@ -463,11 +462,11 @@ public class MyVolley {
                         imageUrl = url.get(j).toString();
                         if (!imageUrl.equals("null")) {
                             ACache.get(context).put("four" + z++, imageUrl);
+                            imageUrlList.add(imageUrl);
                            // cacheUtil.addBitmapToDiskLruCache(imageUrl,diskLruCache);
                             //mImageCacheUtil.loadBitmap(imageUrl,100,100);
                         }
                     }
-                    imageUrlList.add(imageUrl);
                     chunkTitleList.add(chunkTitle);
                     descriptionList.add(description);
                 }
@@ -511,35 +510,35 @@ public class MyVolley {
                 ImageView img1, img2, img3, img4, img5, img6, img7, img8;
                 int startImage = 0;
                 img1 = a.findViewById(R.id.image1);
-                img1.setTag("four" + startImage++);
+                img1.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img1,100,100);
                 //img1.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img2 = a.findViewById(R.id.image2);
-                img2.setTag("four" + startImage++);
+                img2.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img2,100,100);
                 //img2.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img3 = a.findViewById(R.id.image3);
-                img3.setTag("four" + startImage++);
+                img3.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img3,100,100);
                 //img3.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img4 = a.findViewById(R.id.image4);
-                img4.setTag("four" + startImage++);
+                img4.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img4,100,100);
                 //img4.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img5 = a.findViewById(R.id.image5);
-                img5.setTag("four" + startImage++);
+                img5.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img5,100,100);
                 //img5.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img6 = a.findViewById(R.id.image6);
-                img6.setTag("four" + startImage++);
+                img6.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img6,100,100);
                 //img6.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img7 = a.findViewById(R.id.image7);
-                img7.setTag("four" + startImage++);
+                img7.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img7,100,100);
                 //img7.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
                 img8 = a.findViewById(R.id.image8);
-                img8.setTag("four" + startImage++);
+                img8.setTag("four" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img8,100,100);
                 //img8.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("four" + startImage++), diskLruCache));
             }
@@ -579,11 +578,11 @@ public class MyVolley {
                         imageUrl = url.get(j).toString();
                         if (!imageUrl.equals("null")) {
                             ACache.get(context).put("three" + z++, imageUrl);
+                            imageUrlList.add(imageUrl);
                             //cacheUtil.addBitmapToDiskLruCache(imageUrl,diskLruCache);
                             //mImageCacheUtil.loadBitmap(imageUrl,100,100);
                         }
                     }
-                    imageUrlList.add(imageUrl);
                     chunkTitleList.add(chunkTitle);
                     descriptionList.add(description);
                 }
@@ -619,35 +618,35 @@ public class MyVolley {
                 ImageView img1, img2, img3, img4, img5, img6, img7, img8;
                 int startImage = 0;
                 img1 = a.findViewById(R.id.image1);
-                img1.setTag("three" + startImage++);
+                img1.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img1,100,100);
                // img1.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img2 = a.findViewById(R.id.image2);
-                img2.setTag("three" + startImage++);
+                img2.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img2,100,100);
                // img2.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img3 = a.findViewById(R.id.image3);
-                img3.setTag("three" + startImage++);
+                img3.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img3,100,100);
                // img3.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img4 = a.findViewById(R.id.image4);
-                img4.setTag("three" + startImage++);
+                img4.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img4,100,100);
                 //img4.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img5 = a.findViewById(R.id.image5);
-                img5.setTag("three" + startImage++);
+                img5.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img5,100,100);
                 //img5.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img6 = a.findViewById(R.id.image6);
-                img6.setTag("three" + startImage++);
+                img6.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img6,100,100);
                // img6.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img7 = a.findViewById(R.id.image7);
-                img7.setTag("three" + startImage++);
+                img7.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img7,100,100);
                 //img7.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
                 img8 = a.findViewById(R.id.image8);
-                img8.setTag("three" + startImage++);
+                img8.setTag("three" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img8,100,100);
                 //img8.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("three" + startImage++), diskLruCache));
             }
@@ -687,11 +686,11 @@ public class MyVolley {
                         imageUrl = url.get(j).toString();
                         if (!imageUrl.equals("null")) {
                             ACache.get(context).put("two" + z++, imageUrl);
+                            imageUrlList.add(imageUrl);
                            // cacheUtil.addBitmapToDiskLruCache(imageUrl,diskLruCache);
                             //mImageCacheUtil.loadBitmap(imageUrl,100,100);
                         }
                     }
-                    imageUrlList.add(imageUrl);
                     chunkTitleList.add(chunkTitle);
                     descriptionList.add(description);
                 }
@@ -719,35 +718,35 @@ public class MyVolley {
                 ImageView img1, img2, img3, img4, img5, img6, img7, img8;
                 int startImage = 0;
                 img1 = a.findViewById(R.id.image1);
-                img1.setTag("two" + startImage++);
+                img1.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img1,100,100);
                 //img1.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img2 = a.findViewById(R.id.image2);
-                img2.setTag("two" + startImage++);
+                img2.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img2,100,100);
                // img2.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img3 = a.findViewById(R.id.image3);
-                img3.setTag("two" + startImage++);
+                img3.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img3,100,100);
                // img3.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img4 = a.findViewById(R.id.image4);
-                img4.setTag("two" + startImage++);
+                img4.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img4,100,100);
                 //img4.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img5 = a.findViewById(R.id.image5);
-                img5.setTag("two" + startImage++);
+                img5.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img5,100,100);
                 //img5.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img6 = a.findViewById(R.id.image6);
-                img6.setTag("two" + startImage++);
+                img6.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img6,100,100);
                 //img6.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img7 = a.findViewById(R.id.image7);
-                img7.setTag("two" + startImage++);
+                img7.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img7,100,100);
                 //img7.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
                 img8 = a.findViewById(R.id.image8);
-                img8.setTag("two" + startImage++);
+                img8.setTag("two" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img8,100,100);
                 //img8.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("two" + startImage++), diskLruCache));
             }
@@ -787,11 +786,11 @@ public class MyVolley {
                         imageUrl = url.get(j).toString();
                         if (!imageUrl.equals("null")) {
                             ACache.get(context).put("one" + z++, imageUrl);
+                            imageUrlList.add(imageUrl);
                             //cacheUtil.addBitmapToDiskLruCache(imageUrl,diskLruCache);
                            // mImageCacheUtil.loadBitmap(imageUrl,100,100);
                         }
                     }
-                    imageUrlList.add(imageUrl);
                     chunkTitleList.add(chunkTitle);
                     descriptionList.add(description);
                 }
@@ -835,51 +834,51 @@ public class MyVolley {
                 ImageView img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12;
                 int startImage = 0;
                 img1 = a.findViewById(R.id.image1);
-                img1.setTag("one" + startImage++);
+                img1.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img1,100,100);
                 //img1.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img2 = a.findViewById(R.id.image2);
-                img2.setTag("one" + startImage++);
+                img2.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img2,100,100);
                 //img2.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img3 = a.findViewById(R.id.image3);
-                img3.setTag("one" + startImage++);
+                img3.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img3,100,100);
                 //img3.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img4 = a.findViewById(R.id.image4);
-                img4.setTag("one" + startImage++);
+                img4.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img4,100,100);
                 //img4.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img5 = a.findViewById(R.id.image5);
-                img5.setTag("one" + startImage++);
+                img5.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img5,100,100);
                 //img5.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img6 = a.findViewById(R.id.image6);
-                img6.setTag("one" + startImage++);
+                img6.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img6,100,100);
                 //img6.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img7 = a.findViewById(R.id.image7);
-                img7.setTag("one" + startImage++);
+                img7.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img7,100,100);
                 //img7.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img8 = a.findViewById(R.id.image8);
-                img8.setTag("one" + startImage++);
+                img8.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img8,100,100);
                 //img8.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img9 = a.findViewById(R.id.image9);
-                img9.setTag("one" + startImage++);
+                img9.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img9,100,100);
                 //img9.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img10 = a.findViewById(R.id.image10);
-                img10.setTag("one" + startImage++);
+                img10.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img10,100,100);
                 //img10.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img11 = a.findViewById(R.id.image11);
-                img11.setTag("one" + startImage++);
+                img11.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img11,100,100);
                 //img11.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
                 img12 = a.findViewById(R.id.image12);
-                img12.setTag("one" + startImage++);
+                img12.setTag("one" + startImage);
                 mImageCacheUtil.bindBitmap(imageUrlList.get(startImage++),img12,100,100);
                 //img12.setImageBitmap(cacheUtil.getCache(ACache.get(context).getAsString("one" + startImage++), diskLruCache));
             }
