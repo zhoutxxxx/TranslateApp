@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-</LinearLayout>                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    <android.opengl.GLSurfaceView
+        android:id="@+id/myView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/camera_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/camera_exchange_Icon"
+        android:textSize="30dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        />
+    <TextView
+        android:id="@+id/waiting_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:text="正在连线，请等待..."
+        android:textSize="18dp"/>
+    <Button
+        android:id="@+id/phone_end"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="60dp"
+        android:textSize="30dp"
+        android:text="@string/phone_end_Icon"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_phone"/>
+    <TextView
+        android:id="@+id/phone_end_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="挂断"
+        android:layout_gravity="center|bottom"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="33dp"/>
+</FrameLayout>

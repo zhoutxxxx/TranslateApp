@@ -1,9 +1,19 @@
 package com.bnuz.ztx.translateapp.View;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.support.v4.media.AudioAttributesCompat;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Xml;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+
+import com.bnuz.ztx.translateapp.R;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -14,6 +24,9 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLSurfaceView extends GLSurfaceView {
     public MyGLSurfaceView(Context context) {
         super(context);
+    }
+    public MyGLSurfaceView(Context context , AttributeSet attributeSet){
+        super(context,attributeSet);
     }
 
     class MyRenderer implements GLSurfaceView.Renderer {

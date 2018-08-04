@@ -2,19 +2,25 @@ package com.bnuz.ztx.translateapp.Ui;
 
 
 import android.bluetooth.BluetoothHeadset;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Camera;
 import android.media.AudioManager;
-import android.preference.PreferenceActivity;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.EventMessage;
+import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.HeadSetReceiver;
-import com.bnuz.ztx.translateapp.View.MyGLSurfaceView;
 import com.bnuz.ztx.translateapp.net.MyMQTT;
 import com.orhanobut.logger.Logger;
 
@@ -40,48 +46,63 @@ import org.webrtc.VideoRendererGui;
 import org.webrtc.VideoSource;
 import org.webrtc.VideoTrack;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class VideoActivity extends AppCompatActivity {
-    MyGLSurfaceView myGLSurfaceView;
+public class VideoActivity extends AppCompatActivity implements View.OnClickListener {
+    GLSurfaceView myGLSurfaceView;
     PeerConnection pc;
     final SDPObserve sdpObserver = new SDPObserve();
     final PCObserve pcObserve = new PCObserve();
     MyMQTT myMQTT;
+    PeerConnectionFactory pcFactory;
     IceCandidate remoteIceCandidate;
     AudioManager audioManager;
     VideoRenderer remoteVideoRenderer;
     MediaConstraints sdpVideoConstraints;
     MediaConstraints pcConstraints;
     VideoCapturer videoCapturer;
+    VideoCapturer videoCapturerBack;
     VideoRenderer localRenderer;
     VideoSource videoSource;
     HeadSetReceiver myReceiver;
+    String CameraName;
+    VideoTrack videoTrack;
+    AudioTrack audioTrack;
+    AudioSource audioSource;
+    MediaStream mediaStream;
+    List<PeerConnection.IceServer> iceServers;
+    boolean isBack = false;
 
+    TextView cameraChange, waitting, endLabel;
+    Button phoneEnd;
+    FrameLayout frameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myGLSurfaceView = new MyGLSurfaceView(this);
-        setContentView(myGLSurfaceView);
+        setContentView(R.layout.activity_video);
+        myGLSurfaceView = findViewById(R.id.myView);
         EventBus.getDefault().register(this);
         init();
         //初始化PeerConnectionFactory类（核心类）
         PeerConnectionFactory.initializeAndroidGlobals(getApplicationContext(), true, true, true, true);
-        PeerConnectionFactory pcFactory = new PeerConnectionFactory();
+        pcFactory = new PeerConnectionFactory();
         //获取摄像头设备的数量和名字等属性
-        String frontCameraName = VideoCapturerAndroid.getNameOfFrontFacingDevice();
-        videoCapturer = VideoCapturerAndroid.create(frontCameraName);
+        CameraName = VideoCapturerAndroid.getNameOfFrontFacingDevice();
+        videoCapturer = VideoCapturerAndroid.create(CameraName);
         //对界面进行一个属性设置
         sdpVideoConstraints = new MediaConstraints();
         //视频源
         videoSource = pcFactory.createVideoSource(videoCapturer, sdpVideoConstraints);
         //将视频转换成stream
-        VideoTrack videoTrack = pcFactory.createVideoTrack("VIDEO", videoSource);
+        videoTrack = pcFactory.createVideoTrack("VIDEO", videoSource);
         //音频源
-        AudioSource audioSource = pcFactory.createAudioSource(new MediaConstraints());
+        audioSource = pcFactory.createAudioSource(new MediaConstraints());
         //将音频转换成stream
-        AudioTrack audioTrack = pcFactory.createAudioTrack("AUDIO", audioSource);
+        audioTrack = pcFactory.createAudioTrack("AUDIO", audioSource);
         //自己界面的实例化
         Runnable runnable = new Runnable() {
             @Override
@@ -92,16 +113,16 @@ public class VideoActivity extends AppCompatActivity {
         VideoRendererGui.setView(myGLSurfaceView, runnable);
         try {
             VideoRendererGui.ScalingType scalingType = VideoRendererGui.ScalingType.SCALE_ASPECT_FILL;
-            remoteVideoRenderer = VideoRendererGui.createGui(0, 0, 100, 100, scalingType, true);
-            localRenderer = VideoRendererGui.createGui(4, 2, 30, 28, VideoRendererGui.ScalingType.SCALE_ASPECT_BALANCED, true);
+            remoteVideoRenderer = VideoRendererGui.createGui(0, 0, 100, 100, scalingType, false);
+            localRenderer = VideoRendererGui.createGui(4, 2, 30, 26, VideoRendererGui.ScalingType.SCALE_ASPECT_BALANCED, false);
             videoTrack.addRenderer(localRenderer);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MediaStream mediaStream = pcFactory.createLocalMediaStream("ZTX");
+        mediaStream = pcFactory.createLocalMediaStream("ZTX");
         mediaStream.addTrack(videoTrack);
         mediaStream.addTrack(audioTrack);
-        List<PeerConnection.IceServer> iceServers = getIceServers();
+        iceServers = getIceServers();
         pcConstraints = new MediaConstraints();
         pcConstraints.optional.add(new MediaConstraints.KeyValuePair("DtlsSrtpKeyAgreement", "true"));
         pcConstraints.mandatory.add(new MediaConstraints.KeyValuePair("VoiceActivityDetection", "false"));
@@ -130,10 +151,56 @@ public class VideoActivity extends AppCompatActivity {
 
         //打开扬声器或者耳机
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-        if (audioManager.isWiredHeadsetOn()){
+        if (audioManager.isWiredHeadsetOn()) {
             audioManager.setBluetoothScoOn(true);
-        }else{
+        } else {
             audioManager.setSpeakerphoneOn(true);
+        }
+
+        cameraChange = findViewById(R.id.camera_change);
+        cameraChange.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        cameraChange.setOnClickListener(this);
+        waitting = findViewById(R.id.waiting_tv);
+        endLabel = findViewById(R.id.phone_end_label);
+        phoneEnd = findViewById(R.id.phone_end);
+        phoneEnd.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        phoneEnd.setOnClickListener(this);
+        frameLayout = findViewById(R.id.myFrame);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.camera_change:
+                pc.removeStream(mediaStream);
+                mediaStream.removeTrack(videoTrack);
+                videoSource.stop();
+                videoCapturer.dispose();
+                if (isBack) {
+                    CameraName = VideoCapturerAndroid.getNameOfFrontFacingDevice();
+                    isBack = false;
+                } else {
+                    CameraName = VideoCapturerAndroid.getNameOfBackFacingDevice();
+                    isBack = true;
+                }
+                videoCapturer = VideoCapturerAndroid.create(CameraName);
+                sdpVideoConstraints = new MediaConstraints();
+                videoSource = pcFactory.createVideoSource(videoCapturer, sdpVideoConstraints);
+                videoSource.restart();
+                videoTrack = pcFactory.createVideoTrack("VIDEO", videoSource);
+                videoTrack.addRenderer(localRenderer);
+                mediaStream.addTrack(videoTrack);
+                pc.addStream(mediaStream);
+                Logger.d("this isBack is ---->" + isBack);
+                break;
+            case R.id.phone_end:
+                myMQTT.publish("offerEND", "end", false, 0);
+                videoCapturer.dispose();
+                videoSource.stop();
+                videoTrack.dispose();
+                pc.close();
+                Toast.makeText(getApplicationContext(), "通话结束", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -193,11 +260,14 @@ public class VideoActivity extends AppCompatActivity {
                         return;
                     }
                     if (mediaStream.videoTracks.size() == 1) {
-                        Logger.e("媒体流正在传输。。。。尽情的通话吧~");
+                        waitting.setVisibility(View.GONE);
+                        phoneEnd.setVisibility(View.INVISIBLE);
+                        cameraChange.setVisibility(View.INVISIBLE);
+                        endLabel.setVisibility(View.INVISIBLE);
                         VideoTrack videoTrack = mediaStream.videoTracks.get(0);
                         videoTrack.addRenderer(remoteVideoRenderer);
                     }
-                    if (mediaStream.videoTracks.size() == 0){
+                    if (mediaStream.videoTracks.size() == 0) {
                         Logger.e("没有流媒体，请检查！");
                     }
                 }
@@ -322,8 +392,8 @@ public class VideoActivity extends AppCompatActivity {
     public void Event(EventMessage messageEvent) {
         if (messageEvent.getTopic().equals("AnswerICE")) {
             processExtraDataICE(messageEvent.getMessage());
-        } else if (messageEvent.getTopic().equals("TranslateAnswer")){
-            if (pc.getRemoteDescription() == null){
+        } else if (messageEvent.getTopic().equals("TranslateAnswer")) {
+            if (pc.getRemoteDescription() == null) {
                 processExtraData(messageEvent.getMessage());
             }
         }
@@ -358,8 +428,44 @@ public class VideoActivity extends AppCompatActivity {
         }
         audioManager.setSpeakerphoneOn(false);
 
-        if (myReceiver != null){
+        if (myReceiver != null) {
             unregisterReceiver(myReceiver);
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                phoneEnd.setVisibility(View.VISIBLE);
+                cameraChange.setVisibility(View.VISIBLE);
+                endLabel.setVisibility(View.VISIBLE);
+                phoneEnd.bringToFront();
+                cameraChange.bringToFront();
+                endLabel.bringToFront();
+                break;
+            case MotionEvent.ACTION_UP:
+                startTime();
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void startTime() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        phoneEnd.setVisibility(View.INVISIBLE);
+                        cameraChange.setVisibility(View.INVISIBLE);
+                        endLabel.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 2000);
     }
 }

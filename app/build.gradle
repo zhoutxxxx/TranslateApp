@@ -6,7 +6,7 @@ android {
         applicationId "com.bnuz.ztx.translateapp"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -27,32 +27,32 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //TabLayout
-    compile 'com.android.support:design:24.0.0'
+    implementation 'com.android.support:design:24.0.0'
     //下拉列表
-    compile 'com.github.arcadefire:nice-spinner:1.3.1'
+    implementation 'com.github.arcadefire:nice-spinner:1.3.1'
     //圆形头像
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
     //rxvolley
-    compile 'com.kymjs.rxvolley:rxvolley:1.1.2'
+    implementation 'com.kymjs.rxvolley:rxvolley:1.1.2'
     //Logger日志
-    compile 'com.orhanobut:logger:1.15'
+    implementation 'com.orhanobut:logger:1.15'
     //轮播图
-    compile 'com.youth.banner:banner:1.4.9'
+    implementation 'com.youth.banner:banner:1.4.9'
     //毕加索图片加载
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //注解实例化
-    compile 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.jakewharton:butterknife:8.5.1'
     //缓存
-    compile 'com.jakewharton:disklrucache:2.0.2'
+    implementation 'com.jakewharton:disklrucache:2.0.2'
     //事件总线
-    compile 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //mqtt推送
-    compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
-    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1'
     //注释
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //webRTC
-    compile 'io.pristine:libjingle:9694@aar'
+    implementation 'io.pristine:libjingle:9694@aar'
     implementation files('src/main/libs/sun.misc.BASE64Decoder.jar')
     implementation files('src/main/libs/YoudaoBase.jar')
     implementation files('src/main/libs/YoudaoTranslateOnline.jar')

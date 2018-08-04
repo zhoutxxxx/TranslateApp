@@ -579,8 +579,6 @@ public class MyVolley {
                         if (!imageUrl.equals("null")) {
                             ACache.get(context).put("three" + z++, imageUrl);
                             imageUrlList.add(imageUrl);
-                            //cacheUtil.addBitmapToDiskLruCache(imageUrl,diskLruCache);
-                            //mImageCacheUtil.loadBitmap(imageUrl,100,100);
                         }
                     }
                     chunkTitleList.add(chunkTitle);
