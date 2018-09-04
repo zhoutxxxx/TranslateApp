@@ -184,7 +184,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
         Button CnButton = (Button) selectDialog.findViewById(R.id.cn_bt);
         CnButton.setOnClickListener(this);
         //初始化dialog
-        loadingDialog = new CustomDialog(getActivity(),100,100,R.layout.dialog_query,R.style.Theme_dialog,Gravity.CENTER,R.style.pop_anim_style);
+        loadingDialog = new CustomDialog(getActivity(),80,80,R.layout.dialog_query,R.style.Theme_dialog,Gravity.CENTER,R.style.pop_anim_style);
         loadingDialog.setCancelable(true);
 
     }

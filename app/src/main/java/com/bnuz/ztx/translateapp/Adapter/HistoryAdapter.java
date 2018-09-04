@@ -49,13 +49,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return list.size();
     }
 
-    @Override
-    public void onClick(View view) {
-        if (mItemClickListener!=null){
-            mItemClickListener.onItemClick((Integer) view.getTag());
-        }
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView mText;
 
@@ -64,6 +57,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             mText = itemView.findViewById(R.id.information_tv);
         }
     }
+
+    @Override
+    public void onClick(View view) {
+        if (mItemClickListener!=null){
+            mItemClickListener.onItemClick((Integer) view.getTag());
+        }
+    }
+
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
     }

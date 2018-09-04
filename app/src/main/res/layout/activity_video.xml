@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:text="正在连线，请等待..."
+        android:text="@string/link_waiting_Label"
         android:textSize="18dp"/>
     <Button
         android:id="@+id/phone_end"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16dp"
-        android:text="挂断"
+        android:text="@string/hang_up_Label"
         android:layout_gravity="center|bottom"
         android:textColor="@android:color/white"
         android:layout_marginBottom="33dp"/>

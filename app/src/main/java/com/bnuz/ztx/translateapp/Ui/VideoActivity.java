@@ -4,7 +4,6 @@ package com.bnuz.ztx.translateapp.Ui;
 import android.bluetooth.BluetoothHeadset;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Camera;
 import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +45,6 @@ import org.webrtc.VideoRendererGui;
 import org.webrtc.VideoSource;
 import org.webrtc.VideoTrack;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;

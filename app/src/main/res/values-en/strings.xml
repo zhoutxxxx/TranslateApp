@@ -61,6 +61,13 @@
     <string name="Take_photo">Take photo</string>
     <string name="Choose_from_the_album">Choose from the album</string>
     <string name="Cancel">Cancel</string>
+    <!--视频-->
+    <string name="hang_up_Label">Hang Up</string>
+    <string name="link_waiting_Label">Connecting Now,Waiting...</string>
+    <!--消息-->
+    <string name="no_message_now">Now,Have Nothing Message</string>
+    <!--下载-->
+    <string name="no_download_now">Now, Have Nothing DownLoadPacket</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
@@ -86,6 +93,18 @@
     <string name="video_translate_Icon">&#xe64e;</string>
     <string name="camera_exchange_Icon">&#xe6f9;</string>
     <string name="phone_end_Icon">&#xe678;</string>
+    <string name="no_message_Icon">&#xe6ad;</string>
+    <string name="back_Icon">&#xe625;</string>
+    <string name="share_Icon">&#xe624;</string>
+    <string name="good_Icon">&#xe644;</string>
+    <string name="shopping_icon">&#xe7d6;</string>
+    <string name="China_money_Icon">&#xe505;</string>
+    <string name="downPrice_Icon">&#xf01d9;</string>
+    <string name="care_Icon">&#xf00fd;</string>
+    <string name="more_Icon">&#xe719;</string>
+    <string name="contact_service_Icon">&#xe7e2;</string>
+    <string name="right_goods_Icon">&#xe627;</string>
+    <string name="stories_Icon">&#xe7b8;</string>
 </resources>
 
 

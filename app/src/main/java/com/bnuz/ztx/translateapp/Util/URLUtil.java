@@ -53,8 +53,8 @@ public class URLUtil {
         return IP;
     }
 
-    //IP
-    final  String IP = "http://10.20.207.111:8080";
+    //IP地址
+    final  String IP = "http://120.77.177.104:8080/Translate";//120.77.177.104:8080/Translate
     public HttpParams getRegisterParams(String phone,String mail,String password){
         httpParams = new HttpParams();
         try {

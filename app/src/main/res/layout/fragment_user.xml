@@ -26,7 +26,7 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="110dp"
                 android:orientation="horizontal">
                 <!--登录头像-->
                 <LinearLayout
@@ -36,8 +36,8 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile_image"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:src="@mipmap/user"
                         app:civ_border_width="0dp"
                         app:civ_border_color="#bcbcbc"/>

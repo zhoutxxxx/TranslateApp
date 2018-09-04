@@ -1,6 +1,7 @@
 package com.bnuz.ztx.translateapp.net;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Build;
@@ -8,9 +9,11 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bnuz.ztx.translateapp.R;
+import com.bnuz.ztx.translateapp.Ui.PromotionActivity;
 import com.bnuz.ztx.translateapp.Util.ACache;
 import com.bnuz.ztx.translateapp.Util.HistoryUtil;
 import com.bnuz.ztx.translateapp.Util.ImageCacheUtil;
@@ -36,12 +39,13 @@ import java.util.List;
  * Created by ZTX on 2018/5/26.
  */
 
-public class MyVolley {
+public class MyVolley implements View.OnClickListener {
     List<String> bannerList, looperTextViewList, topIdList, chunkTitleList, descriptionList, imageUrlList, loveImageUrlList, loveStoriesList, loveMoneyList;
     List<Integer> loveStateList, mipmapList;
     ImageCacheUtil mImageCacheUtil; //cachUtil ->
    // DiskLruCache diskLruCache;
     Context context;
+    Intent intent;
 
     public MyVolley(Context context) {
         this.context = context;
@@ -759,6 +763,8 @@ public class MyVolley {
         TextView tv = a.findViewById(R.id.topTitle);
         LinearGradient mLinearGradient = new LinearGradient(0, 0, tv.getPaint().getTextSize() * 1, 0, context.getColor(R.color.chunkTitle_blue_start), context.getColor(R.color.chunkTitle_purple_end), Shader.TileMode.MIRROR);
         tv.getPaint().setShader(mLinearGradient);
+        LinearLayout myLinear = a.findViewById(R.id.view_one_linear);
+        myLinear.setOnClickListener(this);
         try {
             JSONObject jsonObject = new JSONObject(t);
             int resultCode = jsonObject.getInt("resultCode");
@@ -920,5 +926,16 @@ public class MyVolley {
                 parsingViewLoveJson(ACache.get(context).getAsString("loveJson"), view, context);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.view_one_linear:
+                intent = new Intent(context, PromotionActivity.class);
+                intent.putExtra("data", "1");
+                context.startActivity(intent);
+                break;
+        }
     }
 }

@@ -128,12 +128,6 @@ public class TabLayoutViewPager_Activity extends AppCompatActivity {
         //绑定
         mTabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
-//        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
-//            TabLayout.Tab tab = mTabLayout.getTabAt(i);
-//            if (tab != null) {
-//                tab.setCustomView(getTabView(getResources().getString(mListTile.get(i)), getResources().getString(mListIcon.get(i))));
-//            }
-//        }
     }
 
     private void setupTabIcons() {

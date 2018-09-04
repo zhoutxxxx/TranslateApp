@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.R;
+import com.bnuz.ztx.translateapp.Ui.DownLoadActivity;
+import com.bnuz.ztx.translateapp.Ui.MessageActivity;
 import com.bnuz.ztx.translateapp.Ui.SettingActivity;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
@@ -48,13 +50,22 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
         settingTextView = (TextView) view.findViewById(R.id.setting_tv_icon);
         settingTextView.setTypeface(new FontManager().getType(getActivity()));
         //设置item右边图标点击事件
+        information2 = (TextView) view.findViewById(R.id.information2);
+        information2.setTypeface(new FontManager().getType(getActivity()));
+        information2.setOnClickListener(this);
+        information3 = (TextView) view.findViewById(R.id.information3);
+        information3.setTypeface(new FontManager().getType(getActivity()));
+        information3.setOnClickListener(this);
         information4 = (TextView) view.findViewById(R.id.information4);
         information4.setTypeface(new FontManager().getType(getActivity()));
         information4.setOnClickListener(this);
-        information1TextView = (TextView) view.findViewById(R.id.money_tv);
-        information2TextView = (TextView) view.findViewById(R.id.message_tv);
-        information3TextView = (TextView) view.findViewById(R.id.download_tv);
         //设置item的点击事件
+        information1TextView = (TextView) view.findViewById(R.id.money_tv);
+        information1TextView.setOnClickListener(this);
+        information2TextView = (TextView) view.findViewById(R.id.message_tv);
+        information2TextView.setOnClickListener(this);
+        information3TextView = (TextView) view.findViewById(R.id.download_tv);
+        information3TextView.setOnClickListener(this);
         information4TextView = (TextView) view.findViewById(R.id.setting_tv);
         information4TextView.setOnClickListener(this);
         //编辑资料的按钮事件
@@ -69,10 +80,17 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
             case R.id.reserve_bt:
                 Toast.makeText(getActivity(), "这是编辑按钮", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.setting_tv:
-            case R.id.information4:
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+            case R.id.message_tv:case R.id.information2:
+                Intent intent2 = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.download_tv:case R.id.information3:
+                Intent intent3 = new Intent(getActivity(), DownLoadActivity.class);
+                startActivity(intent3);
+                break;
+            case R.id.setting_tv: case R.id.information4:
+                Intent intent4 = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent4);
                 break;
         }
     }
