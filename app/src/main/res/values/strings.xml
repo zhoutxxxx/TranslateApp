@@ -130,6 +130,10 @@
     <string name="right_goods_Icon">&#xe62d;</string>
     <string name="question_Icon">&#xe762;</string>
     <string name="picture_Icon">&#xe620;</string>
+    <string name="qq_share_Icon">&#xe65e;</string>
+    <string name="wx_share_Icon">&#xe73c;</string>
+    <string name="friend_share_Icon">&#xe73b;</string>
+    <string name="wb_share_Icon">&#xe73d;</string>
     <!--图片TAG-->
     <item name="img_tag" type="id"></item>
 </resources>

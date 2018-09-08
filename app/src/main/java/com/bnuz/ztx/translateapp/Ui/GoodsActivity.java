@@ -1,10 +1,14 @@
 package com.bnuz.ztx.translateapp.Ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,6 +18,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +33,9 @@ import android.widget.TextView;
 import com.bnuz.ztx.translateapp.Entity.Promotion;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
+import com.bnuz.ztx.translateapp.Util.ImageUtil;
 import com.bnuz.ztx.translateapp.Util.PicassoImageLoader;
+import com.bnuz.ztx.translateapp.View.CustomDialog;
 import com.bnuz.ztx.translateapp.View.MyScroll;
 
 import java.util.ArrayList;
@@ -39,7 +46,7 @@ import java.util.List;
  * Created by ZTX on 2018/8/18.
  */
 
-public class GoodsActivity extends AppCompatActivity {
+public class GoodsActivity extends AppCompatActivity implements View.OnClickListener {
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
     AppBarLayout appBarLayout;
@@ -59,6 +66,27 @@ public class GoodsActivity extends AppCompatActivity {
     private boolean isScroll;
     //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
     private int lastPos;
+    CustomDialog dialog;
+
+    ImageUtil imageUtil = new ImageUtil();
+    List<Bitmap> bitmap;
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1){
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                Integer widthScreen = displayMetrics.widthPixels;
+                for (int i = 0; i < bitmap.size() ; i++){
+                    ImageView imageView = new ImageView(getApplicationContext());
+                    Bitmap fitBitmap = imageUtil.getFitBitmap(bitmap.get(i),widthScreen);
+                    imageView.setImageBitmap(fitBitmap);
+                    linearLayout.addView(imageView);
+                }
+            }
+        }
+    };
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -96,16 +124,20 @@ public class GoodsActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleColor(Color.BLUE);
         backGray = findViewById(R.id.back_gray_bt);
         backGray.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        backGray.setOnClickListener(this);
         shareGary = findViewById(R.id.share_gray_bt);
         shareGary.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        shareGary.setOnClickListener(this);
         shoppingGary = findViewById(R.id.shopping_gray_bt);
         shoppingGary.setTypeface(new FontManager().getALiType(getApplicationContext()));
         backTool = findViewById(R.id.back_tools_tv);
         backTool.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        backTool.setOnClickListener(this);
         shoppingTool = findViewById(R.id.shopping_tools_tv);
         shoppingTool.setTypeface(new FontManager().getALiType(getApplicationContext()));
         shareTool = findViewById(R.id.share_tools_tv);
         shareTool.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        shareTool.setOnClickListener(this);
         contactService = findViewById(R.id.contact_service_icon_goods);
         contactService.setTypeface(new FontManager().getALiType(getApplicationContext()));
         stories = findViewById(R.id.stories_icon_goods);
@@ -133,6 +165,19 @@ public class GoodsActivity extends AppCompatActivity {
         myScroll = findViewById(R.id.myNest);
         myScroll.setFillViewport(true);
         myScroll.setFocusable(false);
+
+
+        //实例化dialog
+        dialog = new CustomDialog(this,100,100,R.layout.dialog_share,R.style.Theme_dialog,Gravity.BOTTOM,R.style.pop_anim_style);
+        TextView qqShare = dialog.findViewById(R.id.qq_share_icon);
+        qqShare.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        TextView wxShare = dialog.findViewById(R.id.wx_share_icon);
+        wxShare.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        TextView friendShare = dialog.findViewById(R.id.friend_share_icon);
+        friendShare.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        TextView wbShare = dialog.findViewById(R.id.wb_share_icon);
+        wbShare.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        dialog.setCancelable(true);
 
 
         //数据填充
@@ -177,14 +222,16 @@ public class GoodsActivity extends AppCompatActivity {
 
 
         linearLayout = findViewById(R.id.image_Linear);
-        for (int i = 0; i < promotion.getImageInformation().size(); i++) {
-            DisplayMetrics dm = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(dm);
-            int screenWidth = dm.widthPixels;
-            ImageView imageView = new ImageView(getApplicationContext());
-            new PicassoImageLoader().loadMaxBitmap(getApplicationContext(), promotion.getImageInformation().get(i).toString(), screenWidth, imageView);
-            linearLayout.addView(imageView);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bitmap = new ArrayList<>();
+                for (int i = 0; i < promotion.getImageInformation().size(); i++) {
+                    bitmap.add(new PicassoImageLoader().getBitmap(getApplicationContext(), promotion.getImageInformation().get(i).toString()));
+                }
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
 
 
         linearLayoutList = new ArrayList<>();
@@ -276,5 +323,23 @@ public class GoodsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_gray_bt:
+                finish();
+                break;
+            case R.id.back_tools_tv:
+                finish();
+                break;
+            case R.id.share_gray_bt:
+                dialog.show();
+                break;
+            case R.id.share_tools_tv:
+                dialog.show();
+                break;
+        }
     }
 }

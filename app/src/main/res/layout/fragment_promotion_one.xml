@@ -8,13 +8,21 @@
         android:id="@+id/smartRefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:srlEnableAutoLoadmore="true">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Promotion_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:text="下拉加载更多"
+            android:textSize="15dp"
+            android:textColor="#c9c9c9"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

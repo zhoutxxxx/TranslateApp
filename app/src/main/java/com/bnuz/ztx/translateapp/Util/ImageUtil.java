@@ -2,6 +2,7 @@ package com.bnuz.ztx.translateapp.Util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -116,8 +117,25 @@ public class ImageUtil {
         }
         return result;
     }
+
     public static Bitmap base64ToBitmap(String base64Data) {
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    public Bitmap getFitBitmap(Bitmap bitmap, Integer width) {
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getHeight();
+        float rate = (float) bitmapWidth / bitmapHeight;
+        int newHeight = Float.valueOf(String.valueOf((float) width / rate)).intValue();
+
+        float widthScale = (float) width / bitmapWidth;
+        float heightScale = (float) newHeight / bitmapHeight;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(widthScale, heightScale);
+
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+        return newBitmap;
     }
 }
