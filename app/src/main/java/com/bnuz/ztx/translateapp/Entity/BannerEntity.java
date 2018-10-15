@@ -2,6 +2,7 @@ package com.bnuz.ztx.translateapp.Entity;
 
 /**
  * Created by ZTX on 2018/5/19.
+ * 商城轮播图实体类
  */
 
 public class BannerEntity {

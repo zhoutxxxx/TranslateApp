@@ -42,23 +42,32 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ZTX on 2018/6/1.
+ * 即时通讯类
  */
 
 public class MyMQTT extends Service {
+    //测试Log的Tag
     private static final String TAG = "MqttTest";
+    //商城推送的订阅主题
     final String subscriptionTopic = "exampleAndroidTopic";
+    //接受视频通话请求的主题
     final String translateTopic = "TranslateAnswer";
+    //接受视频通话ICE的主题
     final String offerICETopic = "AnswerICE";
     private ScheduledExecutorService scheduler;
     private String userName = "guest"; // 连接的用户名
     private String passWord = "guest"; //连接的密码
     private String mDeviceId = "exampleAndroidTopic";       // Device ID, Secure.ANDROID_ID
     String url = "tcp://120.79.146.91:1883";
+    //连接配置
     private MqttConnectOptions options;
+    //上下文
     private Context context;
+    //MQTT连接客户端
     private MqttAndroidClient mqttAndroidClient;
 
 
+    //构造器
     public MyMQTT(Context context) {
         this.context = context;
     }
@@ -130,19 +139,22 @@ public class MyMQTT extends Service {
 
     }
 
+    //接收到消息后显示状态栏
     private void startNotification(MqttMessage message) {
+        //实例化一个状态栏管理器
         NotificationManager notificationManager =(NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this.context,this.context.getClass());
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        //点击跳转的Intent
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(context)
-                .setSmallIcon(R.mipmap.start)
-                .setContentTitle("翻译app")
-                .setContentIntent(pendingIntent)
-                .setContentText(message.toString())
-                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.start)//推送图标
+                .setContentTitle("翻译app")//推送主题
+                .setContentIntent(pendingIntent)//跳转选项
+                .setContentText(message.toString())//推送内容
+                .setAutoCancel(true)//点击后消失
                 .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
                 .build();
         notificationManager.notify(1, notification);
@@ -150,6 +162,7 @@ public class MyMQTT extends Service {
 
     public void subscribeToTopic() {
         try {
+            //默认订阅商城主题
             mqttAndroidClient.subscribe(subscriptionTopic, 0, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -161,6 +174,7 @@ public class MyMQTT extends Service {
                     Log.e(TAG, "onFailure ---> " + exception);
                 }
             });
+            //订阅接受视频请求
             mqttAndroidClient.subscribe(translateTopic, 0, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -172,6 +186,7 @@ public class MyMQTT extends Service {
                     Log.e(TAG, "onFailure ---> " + asyncActionToken);
                 }
             });
+            //订阅 ICE交换请求
             mqttAndroidClient.subscribe(offerICETopic, 0, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -192,7 +207,12 @@ public class MyMQTT extends Service {
 
     //发布消息
     public void publish(String topic,String msg,boolean isRetained,int qos) {
-
+        /*
+        topic 发送的主题
+        msg 发送的消息
+        isRetained 是否保存消息
+        qos 消息质量
+         */
         try {
             if (mqttAndroidClient!=null) {
                 MqttMessage message = new MqttMessage();

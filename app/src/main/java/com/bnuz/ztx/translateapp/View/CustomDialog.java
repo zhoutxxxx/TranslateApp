@@ -15,16 +15,16 @@ import com.bnuz.ztx.translateapp.Util.FontManager;
 
 /**
  * Created by ZTX on 2018/4/25.
+ * 自定义的Dialog窗口
  */
 
 public class CustomDialog extends Dialog{
-    //定义模板
+    //不同参数的构造器
     public CustomDialog(Context context, int layout, int style) {
         this(context, WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,layout,style, Gravity.CENTER);
     }
 
-    //定义属性
     public CustomDialog(Context context,int width,int height,int layout,int style,int gravity,int anim){
         super(context,style);
         //设置属性
@@ -38,7 +38,6 @@ public class CustomDialog extends Dialog{
         window.setWindowAnimations(anim);
     }
 
-    //实例
     public CustomDialog(Context context,int width,int height,int layout,int style,int gravity){
         this(context,width,height,layout,style,gravity, R.style.pop_anim_style);
     }

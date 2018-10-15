@@ -14,19 +14,23 @@ import android.widget.Toast;
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Ui.DownLoadActivity;
 import com.bnuz.ztx.translateapp.Ui.MessageActivity;
+import com.bnuz.ztx.translateapp.Ui.MoneyActivity;
 import com.bnuz.ztx.translateapp.Ui.SettingActivity;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
 
 /**
  * Created by ZTX on 2018/3/25.
+ * Activity-> 用户Fragment
  */
 
 public class UserFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     TextView information1, information2, information3, information4, information1TextView, information2TextView, information3TextView, information4TextView;
     TextView moneyTextView, messageTextView, downloadTextView, settingTextView;
     Button editButton;
+    Intent intent;
 
+    //创建View，添加布局
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, null);
         findView(view);
@@ -74,6 +78,7 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
 
     }
 
+    //布局点击事件
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -81,17 +86,20 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
                 Toast.makeText(getActivity(), "这是编辑按钮", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.message_tv:case R.id.information2:
-                Intent intent2 = new Intent(getActivity(), MessageActivity.class);
-                startActivity(intent2);
+                intent = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.download_tv:case R.id.information3:
-                Intent intent3 = new Intent(getActivity(), DownLoadActivity.class);
-                startActivity(intent3);
+                intent = new Intent(getActivity(), DownLoadActivity.class);
+                startActivity(intent);
                 break;
             case R.id.setting_tv: case R.id.information4:
-                Intent intent4 = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent4);
+                intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
                 break;
+            case R.id.money_tv:case R.id.information1:
+                intent = new Intent(getActivity(), MoneyActivity.class);
+                startActivity(intent);
         }
     }
 }

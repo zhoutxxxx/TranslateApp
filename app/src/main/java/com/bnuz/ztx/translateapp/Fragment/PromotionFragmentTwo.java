@@ -30,20 +30,27 @@ import java.util.List;
  */
 
 public class PromotionFragmentTwo extends Fragment implements OnItemClickListener {
+    //商品显示的列表
     RecyclerView recyclerView;
+    //Promotion类的List
     List<Promotion> list;
+    //自定义Adapter
     PromotionOneAdapter promotionOneAdapter;
+    //点击跳转的Intent
     Intent intent;
+
+    //创建View，添加布局
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_promotion_one, null);
+        //fragment获取父Activity传过来的bundle数据
         Bundle bundle = getArguments();
         String json = bundle.getString("Json");
-        findView(view,json);
+        findView(view, json);
         return view;
     }
 
-    private void findView(View view,String json) {
+    private void findView(View view, String json) {
         list = new ArrayList<>();
         parsingJson(json);
         recyclerView = view.findViewById(R.id.Promotion_recycle);
@@ -55,6 +62,7 @@ public class PromotionFragmentTwo extends Fragment implements OnItemClickListene
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //设置适配器
         recyclerView.setAdapter(promotionOneAdapter);
+        //item点击事件
         promotionOneAdapter.setItemClickListener(this);
     }
 

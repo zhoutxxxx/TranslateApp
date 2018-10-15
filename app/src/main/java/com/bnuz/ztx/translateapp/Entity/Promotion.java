@@ -5,25 +5,26 @@ import java.util.List;
 
 /**
  * Created by ZTX on 2018/8/11.
+ * 商品实体类
  */
 
 public class Promotion implements Serializable{
-    String imgUrl;
-    String title;
-    String subTitle;
-    String expressPrice;
-    String expressSum;
-    String promotion;
-    String fare;
-    String whiteBar;
-    String select;
-    String weight;
-    String RemarkSum;
-    List<Remark> remarks;
-    List<String> imageInformation;
-    String act;
-    String money;
-    String good;
+    String imgUrl;//主图url
+    String title;//商品标题
+    String subTitle;//商品子标题
+    String expressPrice;//快递价格
+    String expressSum;//已售数量
+    String promotion;//促销
+    String fare;//返利
+    String whiteBar;//白条
+    String select;//已选商品
+    String weight;//商品重量
+    String RemarkSum;//评论数
+    List<Remark> remarks;//Remark类的List
+    List<String> imageInformation;//商品信息的详细图片List
+    String act;//商品活动
+    String money;//商品价格
+    String good;//商品好评率
 
     public String getTitle() {
         return title;

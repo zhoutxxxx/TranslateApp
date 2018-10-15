@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 /**
  * Created by ZTX on 2018/8/27.
+ * 商品评论类
  */
 
 public class Remark implements Serializable{
-    String remarkName;
-    String remarkBody;
-    String remarkTime;
+    String remarkName;//用户名
+    String remarkBody;//评论主体
+    String remarkTime;//评论时间
 
     public String getRemarkName() {
         return remarkName;

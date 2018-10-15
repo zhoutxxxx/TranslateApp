@@ -1,13 +1,26 @@
 package com.bnuz.ztx.translateapp.Util;
 
+import android.content.Context;
+import android.widget.EditText;
+
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.kymjs.rxvolley.client.JsonRequest;
+import com.kymjs.rxvolley.client.RequestConfig;
+import com.kymjs.rxvolley.http.RequestQueue;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.youdao.sdk.app.Language;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 /**
@@ -16,6 +29,45 @@ import java.util.Map;
  */
 
 public class URLUtil {
+    final String robotKey = "f1054cbbb506495f9ecb1f5d0d8767be";//智能机器人密钥
+    HttpParams httpParams;
+
+    public HttpParams getRobotHttpParams(String s){
+        httpParams = new HttpParams();
+        try {
+            JSONObject json6 = new JSONObject();
+            json6.put("city","珠海");
+
+            JSONObject json5 = new JSONObject();
+            json5.putOpt("location", json6);
+
+            JSONObject json4 = new JSONObject();
+            json4.put("text",s);
+
+            JSONObject json2 = new JSONObject();
+            json2.putOpt("inputText",json4);
+            json2.putOpt("selfInfo",json5);
+
+            JSONObject json3 = new JSONObject();
+            json3.put("apiKey",robotKey);
+            json3.put("userId","322974");
+
+            JSONObject json1 = new JSONObject();
+            json1.put("reqType",0);
+            json1.putOpt("perception",json2);
+            json1.putOpt("userInfo",json3);
+            com.orhanobut.logger.Logger.json(json1.toString());
+            httpParams.putJsonParams(json1.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return httpParams;
+    }
+
+
+
     final String appKey = "073c24ee75a4bc9e";//应用实例
     final String appPassWord = "ERyzY0e4nQbP60AGvBOLF6xp45hQ896A";//应用密钥
     String query = null;//查询文本
@@ -46,7 +98,6 @@ public class URLUtil {
     String ASRSalt = String.valueOf(System.currentTimeMillis());
     String ASRType = "1";
     String ASRSign = "";//签名
-    HttpParams httpParams;
     //ASR将参数放入，并作UTF-8编码
 
     public  String getIP() {

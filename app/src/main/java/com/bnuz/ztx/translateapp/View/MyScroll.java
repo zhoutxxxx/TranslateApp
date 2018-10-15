@@ -9,11 +9,15 @@ import android.util.AttributeSet;
 
 /**
  * Created by ZTX on 2018/8/23.
+ * 自定义ScrollView
+ * 主要功能：继承NestScrolling，实现子滑动接口，更简单的处理控件之间的滑动冲突
  */
 
 public class MyScroll extends NestedScrollView implements NestedScrollingChild{
 
+    //一个callback
     private NestScrollCallbacks nestScrollCallbacks;
+    //创建一个子滑动辅助类
     private NestedScrollingChildHelper nestedScrollingChildHelper;
 
 

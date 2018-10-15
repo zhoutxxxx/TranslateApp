@@ -61,6 +61,33 @@
     <string name="Take_photo">拍照</string>
     <string name="Choose_from_the_album">从相册中选择</string>
     <string name="Cancel">取消</string>
+    <!--视频-->
+    <string name="hang_up_Label">挂断</string>
+    <string name="link_waiting_Label">正在连线，请等待...</string>
+    <!--消息-->
+    <string name="no_message_now">当前暂无任何消息</string>
+    <!--下载-->
+    <string name="no_download_now">当前没有下载包</string>
+    <!--商品界面-->
+    <string name="downPrice_Label">降价通知</string>
+    <string name="care_Label">关注</string>
+    <string name="promotion_goods_Label">促销</string>
+    <string name="feedBack_goods_Label">返利</string>
+    <string name="whiteBar_goods_Label">白条</string>
+    <string name="selected_goods_Label">已选</string>
+    <string name="arrived_goods_Label">送至</string>
+    <string name="weight_goods_Label">重量</string>
+    <string name="more_goods_Label">···</string>
+    <string name="contact_service_goods_Label">联系客服</string>
+    <string name="stories_goods_Label">店铺</string>
+    <string name="shopping_goods_Label">购物车</string>
+    <string name="add_shopping_Label">加入购物车</string>
+    <string name="remark_goods_Label">评论</string>
+    <string name="question_and_answer_Label">问答</string>
+    <string name="see_all_remark_Label">查看全部评论</string>
+    <string name="see_all_question_Label">查看所有提问</string>
+    <string name="good_remark_rate">好评率</string>
+    <string name="question_and_answer_sum">条问答</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
@@ -86,6 +113,28 @@
     <string name="TabLayout_Icon_Apply">&#xf009;</string>
     <string name="online_service_Icon">&#xe621;</string>
     <string name="video_translate_Icon">&#xe64e;</string>
+    <string name="camera_exchange_Icon">&#xe6f9;</string>
+    <string name="phone_end_Icon">&#xe678;</string>
+    <string name="no_message_Icon">&#xe6ad;</string>
+    <string name="back_Icon">&#xe625;</string>
+    <string name="share_Icon">&#xe624;</string>
+    <string name="good_Icon">&#xe644;</string>
+    <string name="shopping_icon">&#xe7d6;</string>
+    <string name="China_money_Icon">&#xe505;</string>
+    <string name="downPrice_Icon">&#xf01d9;</string>
+    <string name="care_Icon">&#xf00fd;</string>
+    <string name="more_Icon">&#xe719;</string>
+    <string name="contact_service_Icon">&#xe7e2;</string>
+    <string name="service_goods_Icon">&#xe627;</string>
+    <string name="stories_Icon">&#xe7b8;</string>
+    <string name="right_goods_Icon">&#xe62d;</string>
+    <string name="question_Icon">&#xe762;</string>
+    <string name="picture_Icon">&#xe620;</string>
+    <string name="qq_share_Icon">&#xe65e;</string>
+    <string name="wx_share_Icon">&#xe73c;</string>
+    <string name="friend_share_Icon">&#xe73b;</string>
+    <string name="wb_share_Icon">&#xe73d;</string>
     <!--图片TAG-->
-    <item type="id" name="img_tag"></item>
+    <item name="img_tag" type="id"></item>
 </resources>
+

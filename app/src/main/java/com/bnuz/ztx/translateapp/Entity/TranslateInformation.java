@@ -5,18 +5,19 @@ import java.util.List;
 
 /**
  * Created by ZTX on 2018/4/10.
+ * 翻译内容类
  */
 
 public class TranslateInformation {
-    List<String> explains = new ArrayList<>();
-    String us_phonetic = "";
-    String phonetic = "";
-    String uk_phonetic = "";
-    String query = "";
-    String translations = "";
-    String speakUrl = "";
-    String us_speech = "";
-    String uk_speech = "";
+    List<String> explains = new ArrayList<>();//翻译详细内容
+    String us_phonetic = "";//美式音标
+    String phonetic = "";//音标
+    String uk_phonetic = "";//英式音标
+    String query = "";//查询文本
+    String translations = "";//翻译文本
+    String speakUrl = "";//发音链接
+    String us_speech = "";//美式读法
+    String uk_speech = "";//英式读法
 
     public String getSpeakUrl() {
         return speakUrl;

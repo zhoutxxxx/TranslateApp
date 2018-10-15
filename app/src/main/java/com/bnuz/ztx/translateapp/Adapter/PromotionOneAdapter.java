@@ -19,18 +19,24 @@ import java.util.List;
 
 /**
  * Created by ZTX on 2018/8/11.
+ * 商品展示类
+ * 主要功能：将获取到的商品信息，通过recycleView展示出来
  */
 
 public class PromotionOneAdapter extends RecyclerView.Adapter<PromotionOneAdapter.ViewHolder> implements View.OnClickListener {
+    //创建一个Promotion类型的List
     List<Promotion> list;
+    //父Fragment的Context
     Context context;
+    //Item点击监听器
     private OnItemClickListener mItemClickListener;
+    //带参构造器
     public PromotionOneAdapter(Context context,List<Promotion> list){
         this.context = context;
         this.list = list;
     }
 
-
+    //Holder，每个Item的
     @Override
     public PromotionOneAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_promotion_item_one,parent,false);
@@ -38,18 +44,24 @@ public class PromotionOneAdapter extends RecyclerView.Adapter<PromotionOneAdapte
         view.setOnClickListener(this);
         return viewHolder;
     }
-
+    //绑定Holder
     @Override
     public void onBindViewHolder(PromotionOneAdapter.ViewHolder holder, int position) {
+        //添加图片
         new PicassoImageLoader().displayImage(context,list.get(position).getImgUrl(),holder.imageView);
+        //设置标题
         holder.title.setText(list.get(position).getTitle());
+        //价钱
         holder.money.setText(list.get(position).getMoney());
+        //好评率
         holder.good.setText(list.get(position).getGood());
+        //添加图标
         holder.activityIcon.setImageResource(addBitmap(position));
+        //每个Item设置一个Tag
         holder.itemView.setTag(position);
     }
 
-
+    //添加图片的方法
     private int addBitmap(int position) {
         if (list.get(position).getAct().equals("1")){
             return R.mipmap.recommed_icon;
@@ -62,12 +74,13 @@ public class PromotionOneAdapter extends RecyclerView.Adapter<PromotionOneAdapte
         }
     }
 
-
+    //返回Item的个数
     @Override
     public int getItemCount() {
         return list.size();
     }
 
+    //Holder类
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView,activityIcon;
         TextView title,moneyIcon,money,goodIcon,good,shoppingIcon;
@@ -88,13 +101,14 @@ public class PromotionOneAdapter extends RecyclerView.Adapter<PromotionOneAdapte
         }
     }
 
+    //Item点击事件
     @Override
     public void onClick(View v) {
         if (mItemClickListener!=null){
             mItemClickListener.onItemClick((Integer) v.getTag());
         }
     }
-
+    //点击监听器
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
     }

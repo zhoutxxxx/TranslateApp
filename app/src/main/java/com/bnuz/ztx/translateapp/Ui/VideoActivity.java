@@ -51,7 +51,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class VideoActivity extends AppCompatActivity implements View.OnClickListener {
+    //渲染界面
     GLSurfaceView myGLSurfaceView;
+    //视频连接
     PeerConnection pc;
     final SDPObserve sdpObserver = new SDPObserve();
     final PCObserve pcObserve = new PCObserve();

@@ -25,8 +25,8 @@ import java.util.Locale;
 
 public class SettingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    NiceSpinner niceSpinner;
-    List<String> data;
+    NiceSpinner niceSpinner;//下拉列表
+    List<String> data;//String类型的List 用来存放修改语言的选项
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +40,15 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         data.add(getResources().getString(R.string.Exchange_language_Chinese_item));
         data.add(getResources().getString(R.string.Exchange_language_English_item));
         niceSpinner.attachDataSource(data);
+        //记住当前的选项
         niceSpinner.setSelectedIndex(ShareUtils.getInt(SettingActivity.this,"language",0));
+        //下拉列表的点击事件
         niceSpinner.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+        //获取APP的配置信息，更改语言。
         Resources resources = SettingActivity.this.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
@@ -67,6 +70,7 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         }
         resources.updateConfiguration(config, dm);
         Toast.makeText(getApplicationContext(),getResources().getString(R.string.change_Language_Log) + data.get(i).toString(),Toast.LENGTH_SHORT).show();
+        //成功修改后需重新启动Activity
         Intent intent = new Intent(this, TabLayoutViewPager_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

@@ -31,19 +31,21 @@ import com.youth.banner.Banner;
 
 /**
  * Created by ZTX on 2018/5/2.
+ * 主Activity->商品Fragment
  */
 
-public class ShoppingFragment extends Fragment implements View.OnClickListener{
-    TextView scanningTextView, enterTextView, cameraTextView;
-    EditText editText;
-    Banner banner;
-    LooperTextView looperTextView;
-    ViewStub view1, view2, view3, view4, viewLove;
-    TextView more_bt;
-    MyVolley myVolley;
-    ImageView img1, img2;
-    Intent intent;
+public class ShoppingFragment extends Fragment implements View.OnClickListener {
+    TextView scanningTextView, enterTextView, cameraTextView;//扫码图标，搜索图标，拍照图标
+    EditText editText;//输入框
+    Banner banner;//商城轮播图
+    LooperTextView looperTextView;//自定义文字轮播
+    ViewStub view1, view2, view3, view4, viewLove;//子view模块
+    TextView more_bt;//更多按钮
+    MyVolley myVolley;//volley类，请求数据
+    ImageView img1, img2, img3, img4, img5, img6, img7, img8;
+    Intent intent;//点击跳转Intent
 
+    //创建View，添加布局
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping, null);
         findView(view);
@@ -51,8 +53,8 @@ public class ShoppingFragment extends Fragment implements View.OnClickListener{
     }
 
     private void findView(View view) {
+        //控件实例化
         editText = view.findViewById(R.id.input_et);
-        //初始化，订阅推送
         more_bt = view.findViewById(R.id.more);
         more_bt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         scanningTextView = view.findViewById(R.id.sao_tv);
@@ -64,6 +66,7 @@ public class ShoppingFragment extends Fragment implements View.OnClickListener{
         cameraTextView.setTypeface(new FontManager().getALiType(getContext()));
         myVolley = new MyVolley(getContext());
         banner = view.findViewById(R.id.myBanner);
+        //通过自定义请求类，请求数据
         myVolley.getBanner(new URLUtil().getIP() + "/Carousel", banner);
         looperTextView = view.findViewById(R.id.myLooper);
         myVolley.getLooperTextView(new URLUtil().getIP() + "/NewsCarousel", looperTextView);
@@ -83,8 +86,21 @@ public class ShoppingFragment extends Fragment implements View.OnClickListener{
         img1.setOnClickListener(this);
         img2 = view.findViewById(R.id.image_bt2);
         img2.setOnClickListener(this);
+        img3 = view.findViewById(R.id.image_bt3);
+        img3.setOnClickListener(this);
+        img4 = view.findViewById(R.id.image_bt4);
+        img4.setOnClickListener(this);
+        img5 = view.findViewById(R.id.image_bt5);
+        img5.setOnClickListener(this);
+        img6 = view.findViewById(R.id.image_bt6);
+        img6.setOnClickListener(this);
+        img7 = view.findViewById(R.id.image_bt7);
+        img7.setOnClickListener(this);
+        img8 = view.findViewById(R.id.image_bt8);
+        img8.setOnClickListener(this);
     }
 
+    //点击事件
     @Override
     public void onClick(View view) {
 
@@ -95,13 +111,17 @@ public class ShoppingFragment extends Fragment implements View.OnClickListener{
             case R.id.input_et:
                 break;
             case R.id.image_bt1:
+            case R.id.image_bt2:
+            case R.id.image_bt3:
+            case R.id.image_bt4:
+            case R.id.image_bt5:
+            case R.id.image_bt6:
+            case R.id.image_bt7:
+            case R.id.image_bt8:
                 intent = new Intent(getActivity(), PromotionActivity.class);
                 intent.putExtra("data", "1");
                 startActivity(intent);
                 break;
-            case R.id.image_bt2:
-                intent = new Intent(getActivity(), GoodsActivity.class);
-                startActivity(intent);
         }
     }
 }

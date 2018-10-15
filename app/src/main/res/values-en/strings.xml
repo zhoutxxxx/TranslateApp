@@ -68,6 +68,26 @@
     <string name="no_message_now">Now,Have Nothing Message</string>
     <!--下载-->
     <string name="no_download_now">Now, Have Nothing DownLoadPacket</string>
+    <!--商品界面-->
+    <string name="downPrice_Label">LowPrice</string>
+    <string name="care_Label">Care</string>
+    <string name="promotion_goods_Label">Promote</string>
+    <string name="feedBack_goods_Label">FeedBack</string>
+    <string name="whiteBar_goods_Label">WhiteBar</string>
+    <string name="selected_goods_Label">Selected</string>
+    <string name="arrived_goods_Label">Arrived</string>
+    <string name="weight_goods_Label">Weight</string>
+    <string name="more_goods_Label">···</string>
+    <string name="contact_service_goods_Label">Service</string>
+    <string name="stories_goods_Label">Stories</string>
+    <string name="shopping_goods_Label">ShopCar</string>
+    <string name="add_shopping_Label">AddCar</string>
+    <string name="remark_goods_Label">Remark</string>
+    <string name="question_and_answer_Label">QA</string>
+    <string name="see_all_remark_Label">See all remark</string>
+    <string name="see_all_question_Label">See all Question</string>
+    <string name="good_remark_rate">Rate</string>
+    <string name="question_and_answer_sum">of Answer</string>
     <!--fontawesome-->
     <string name="TabLayout_Icon_Translate">&#xf1ab;</string>
     <string name="TabLayout_Icon_User">&#xf007;</string>
@@ -85,6 +105,8 @@
     <string name="TabLayout_Icon_shopping">&#xf07a;</string>
     <string name="password_Icon">&#xf084;</string>
     <string name="look_password_Icon">&#xf06e;</string>
+    <string name="E_Mail_Icon">&#xf0e0;</string>
+    <string name="phone_Icon">&#xf095;</string>
     <string name="scanning_market_Icon">&#xe60c;</string>
     <string name="query_market_Icon">&#xe612;</string>
     <string name="camera_market_Icon">&#xe604;</string>
@@ -103,8 +125,17 @@
     <string name="care_Icon">&#xf00fd;</string>
     <string name="more_Icon">&#xe719;</string>
     <string name="contact_service_Icon">&#xe7e2;</string>
-    <string name="right_goods_Icon">&#xe627;</string>
+    <string name="service_goods_Icon">&#xe627;</string>
     <string name="stories_Icon">&#xe7b8;</string>
+    <string name="right_goods_Icon">&#xe62d;</string>
+    <string name="question_Icon">&#xe762;</string>
+    <string name="picture_Icon">&#xe620;</string>
+    <string name="qq_share_Icon">&#xe65e;</string>
+    <string name="wx_share_Icon">&#xe73c;</string>
+    <string name="friend_share_Icon">&#xe73b;</string>
+    <string name="wb_share_Icon">&#xe73d;</string>
+    <!--图片TAG-->
+    <item name="img_tag" type="id"></item>
 </resources>
 
 
