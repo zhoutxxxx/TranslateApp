@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bnuz.ztx.translateapp.R;
+import com.bnuz.ztx.translateapp.Util.FontManager;
 import com.bnuz.ztx.translateapp.Util.ShareUtils;
 
 import org.angmarch.views.NiceSpinner;
@@ -23,10 +25,11 @@ import java.util.Locale;
  * Created by ZTX on 2018/4/2.
  */
 
-public class SettingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class SettingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     NiceSpinner niceSpinner;//下拉列表
     List<String> data;//String类型的List 用来存放修改语言的选项
+    TextView back;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,10 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         niceSpinner.setSelectedIndex(ShareUtils.getInt(SettingActivity.this,"language",0));
         //下拉列表的点击事件
         niceSpinner.setOnItemSelectedListener(this);
+
+        back = findViewById(R.id.back_setting_tv);
+        back.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        back.setOnClickListener(this);
     }
 
     @Override
@@ -79,5 +86,14 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         Toast.makeText(SettingActivity.this,"NiceSpinner index is null" , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_setting_tv:
+                finish();
+                break;
+        }
     }
 }

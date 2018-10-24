@@ -9,7 +9,7 @@ import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Util.FontManager;
 
 public class MoneyActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView money, see, packet;
+    TextView money, see, packet,back;
     TextView moneySum;
     Boolean isLook;
     String moneyStr;
@@ -19,6 +19,9 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money);
         isLook = false;
+        back = findViewById(R.id.back_money_tv);
+        back.setTypeface(new FontManager().getALiType(getApplicationContext()));
+        back.setOnClickListener(this);
         money = findViewById(R.id.money_icon_my_money);
         money.setTypeface(new FontManager().getType(getApplicationContext()));
         see = findViewById(R.id.see_money_Icon);
@@ -43,6 +46,9 @@ public class MoneyActivity extends AppCompatActivity implements View.OnClickList
                     moneySum.setText(moneyStr);
                     isLook = true;
                 }
+                break;
+            case R.id.back_money_tv:
+                finish();
                 break;
         }
     }
