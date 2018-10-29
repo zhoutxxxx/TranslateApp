@@ -326,8 +326,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
                 }
                 //从相册中选择
                 if (which == 1) {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");//相片类型
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
                 }
                 Toast.makeText(getActivity(), items[which],
@@ -415,11 +416,23 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
                 break;
             case 2:
                 if (resultCode == getActivity().RESULT_OK) {
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        handleImageOnKitKat(data);
-                    } else {
-                        handleImageBeforeKitKat(data);
-                    }
+                    resizeImage(data.getData());
+                }
+                break;
+            case 3:
+                if (data != null) {
+                Bundle extras = data.getExtras();
+                    bitmap = extras.getParcelable("data");
+                    new Thread() {//对照片的处理过程放进线程中
+                        public void run() {
+                            //压缩图片
+                            bitmap = new ImageUtil().comp(bitmap);
+                            //图片灰度化
+                            bitmap = new ImageUtil().convertGreyImg(bitmap);
+                            //执行UI更新操作
+                            mHandler.post(runnableUI);
+                        }
+                    }.start();
                 }
                 break;
             default:
@@ -677,4 +690,19 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
             }
         });
     }
+    public void resizeImage(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //裁剪的大小
+        intent.putExtra("outputX", 150);
+        intent.putExtra("outputY", 150);
+        intent.putExtra("return-data", true);
+        //设置返回码
+        startActivityForResult(intent, 3);
+    }
+//
+
 }
