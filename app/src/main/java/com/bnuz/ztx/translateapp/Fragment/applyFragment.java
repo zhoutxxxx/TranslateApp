@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bnuz.ztx.translateapp.R;
 import com.bnuz.ztx.translateapp.Ui.RobotActivity;
@@ -22,6 +23,7 @@ import com.bnuz.ztx.translateapp.Util.FontManager;
 
 public class applyFragment extends Fragment implements View.OnClickListener {
     Button service, video;//视频通话按钮，在线客服按钮
+    TextView header;
     Intent intent;
 
     //创建View，添加布局
@@ -34,6 +36,8 @@ public class applyFragment extends Fragment implements View.OnClickListener {
     private void findView(View view) {
         //实例化
         video = (Button) view.findViewById(R.id.video_bt);
+        header = (TextView)view.findViewById(R.id.header_text);
+        header.setText( getResources().getString(R.string.TabLayout_Title_apply));
         video.setTypeface(new FontManager().getALiType(getContext()));
         video.setOnClickListener(this);
         service = (Button) view.findViewById(R.id.service_bt);

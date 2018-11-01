@@ -9,14 +9,9 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/colorPrimary"
-            android:padding="10dp"
-            android:text="@string/TabLayout_Title_apply"
-            android:textColor="@android:color/white"
-            android:textSize="19dp" />
+        <include
+            android:id="@+id/header"
+            layout="@layout/navigation_layout"/>
 
         <LinearLayout
             android:layout_width="match_parent"

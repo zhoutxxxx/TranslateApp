@@ -26,7 +26,7 @@ import com.bnuz.ztx.translateapp.Util.FontManager;
 
 public class UserFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     TextView information1, information2, information3, information4, information1TextView, information2TextView, information3TextView, information4TextView;
-    TextView moneyTextView, messageTextView, downloadTextView, settingTextView;
+    TextView moneyTextView, messageTextView, downloadTextView, settingTextView,header;
     Button editButton;
     Intent intent;
 
@@ -38,6 +38,8 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
     }
 
     private void findView(View view) {
+        header = (TextView)view.findViewById(R.id.header_text);
+        header.setText( getResources().getString(R.string.TabLayout_Title_User));
         //图标实例化
         moneyTextView = (TextView) view.findViewById(R.id.money_tv_icon);
         moneyTextView.setTypeface(new FontManager().getType(getActivity()));

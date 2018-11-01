@@ -69,7 +69,7 @@ import java.util.List;
  */
 
 public class TranslateFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
-    TextView enter, microphone, photo, exchange, queryTv, phoneticTv, phoneticTv2, voiceTv1, voiceTv2;
+    TextView enter, microphone, photo, exchange, queryTv, phoneticTv, phoneticTv2, voiceTv1, voiceTv2,header;
     NiceSpinner niceSpinner1, niceSpinner2;
     EditText input;
     String url, OCRUrl;
@@ -96,6 +96,8 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
 
     //实例化数据
     private void findView(View view) {
+        header = (TextView)view.findViewById(R.id.header_text);
+        header.setText( getResources().getString(R.string.TabLayout_Title_Translate));
         //优化图片显示
         iv = (ImageView) view.findViewById(R.id.iv_image);
         //左下拉列表
@@ -421,7 +423,7 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
                 break;
             case 3:
                 if (data != null) {
-                Bundle extras = data.getExtras();
+                    Bundle extras = data.getExtras();
                     bitmap = extras.getParcelable("data");
                     new Thread() {//对照片的处理过程放进线程中
                         public void run() {
