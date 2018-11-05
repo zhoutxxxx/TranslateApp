@@ -29,7 +29,8 @@
     <string name="Message_item">我的消息</string>
     <string name="DownLoad_item">下载离线包</string>
     <string name="Mine_Title">我的</string>
-    <string name="Sign_up">欢迎，请登录</string>
+    <string name="Welcome">欢迎,</string>
+    <string name="Sign_up">请登录</string>
     <string name="Edit_information">编辑资料</string>
     <!--设置Activity-->
     <string name="Setting_item">设置</string>
@@ -39,19 +40,20 @@
     <string name="Exchange_language_English_item">English</string>
     <string name="Automatic_updates_information">在连接Wifi下,自动更新软件</string>
     <string name="Language_switching_information">选择适合你的语种</string>
+    <string name="Exit_the_current_account">退出当前账号</string>
     <!--语音-->
     <string name="speaking_dialog">正在说话...</string>
     <string name="Finish">结束</string>
     <string name="select_Input_Language_Dialog_Title">请选择你输入语言?</string>
     <!--登录界面-->
     <string name="Login_button">登录</string>
-    <string name="User_EditText">手机号/邮箱</string>
+    <string name="User_EditText">账号</string>
     <string name="Password_EditText">密码</string>
     <string name="forgetPsw_TextView">忘记密码?</string>
     <string name="register_TextView">新用户注册</string>
     <string name="check_Information">登录失败，请检查信息是否正确</string>
     <!--注册界面-->
-    <string name="phone_EditText">手机号</string>
+    <string name="phone_EditText">账号</string>
     <string name="e_mail_EditText">邮箱</string>
     <string name="password_EditText">密码</string>
     <string name="sure_password_EditText">确认密码</string>

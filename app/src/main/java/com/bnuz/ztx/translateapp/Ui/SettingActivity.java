@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,8 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
 
     NiceSpinner niceSpinner;//下拉列表
     List<String> data;//String类型的List 用来存放修改语言的选项
-    TextView back;
+    TextView back,exit;
+    Switch update;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,13 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         back = findViewById(R.id.back_setting_tv);
         back.setTypeface(new FontManager().getALiType(getApplicationContext()));
         back.setOnClickListener(this);
+        exit = findViewById(R.id.exit);
+        exit.setOnClickListener(this);
+
+        update = findViewById(R.id.update_switch);
+        boolean value = ShareUtils.getBoolean(getApplicationContext(),"isChecked",false);
+        update.setChecked(value);
+        update.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +102,15 @@ public class SettingActivity extends AppCompatActivity implements AdapterView.On
         switch (v.getId()){
             case R.id.back_setting_tv:
                 finish();
+                break;
+            case R.id.exit:
+                ShareUtils.putString(getApplicationContext(),"user",null);
+                ShareUtils.putString(getApplicationContext(),"psw",null);
+                Intent intent = new Intent(this,LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.update_switch:
+                ShareUtils.putBoolean(getApplicationContext(),"isChecked",update.isChecked());
                 break;
         }
     }

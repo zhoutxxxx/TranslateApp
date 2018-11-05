@@ -1,11 +1,14 @@
 package com.bnuz.ztx.translateapp.Ui;
 
 
+import android.Manifest;
 import android.bluetooth.BluetoothHeadset;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -80,6 +83,7 @@ public class VideoActivity extends AppCompatActivity implements View.OnClickList
     TextView cameraChange, waitting, endLabel;
     Button phoneEnd;
     FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,11 @@ public class VideoActivity extends AppCompatActivity implements View.OnClickList
         PeerConnectionFactory.initializeAndroidGlobals(getApplicationContext(), true, true, true, true);
         pcFactory = new PeerConnectionFactory();
         //获取摄像头设备的数量和名字等属性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+            }
+        }
         CameraName = VideoCapturerAndroid.getNameOfFrontFacingDevice();
         videoCapturer = VideoCapturerAndroid.create(CameraName);
         //对界面进行一个属性设置
@@ -194,11 +203,12 @@ public class VideoActivity extends AppCompatActivity implements View.OnClickList
                 Logger.d("this isBack is ---->" + isBack);
                 break;
             case R.id.phone_end:
-                myMQTT.publish("offerEND", "end", false, 0);
-                videoCapturer.dispose();
-                videoSource.stop();
-                videoTrack.dispose();
-                pc.close();
+//                myMQTT.publish("offerEND", "end", false, 0);
+//                videoCapturer.dispose();
+//                videoSource.stop();
+//                videoTrack.dispose();
+//                pc.close();
+                onDestroy();
                 Toast.makeText(getApplicationContext(), "通话结束", Toast.LENGTH_SHORT).show();
                 break;
         }

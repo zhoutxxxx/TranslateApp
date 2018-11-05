@@ -4,12 +4,14 @@ import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.DocumentsContract;
@@ -313,9 +315,9 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
                         e.printStackTrace();
                     }
                     //根据SDK版本获取imageUri
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        imageUri = FileProvider.getUriForFile(getActivity(),
-                                "com.gyq.cameraalbumtest.fileprovider", outputImage);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        imageUri = FileProvider.getUriForFile(getActivity(), "com.gyq.cameraalbumtest.fileprovider", outputImage);
+                        imageUri = FileProvider.getUriForFile(getActivity(),"com.example.cameraalbumtest.fileprovider",outputImage);
                     } else {
                         imageUri = Uri.fromFile(outputImage);
                     }

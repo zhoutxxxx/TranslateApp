@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
+
         loginButton = (Button) findViewById(R.id.login_bt);
         loginButton.setOnClickListener(this);
         user = (TextView) findViewById(R.id.user_icon_tv);
@@ -68,15 +69,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passLogin.setOnClickListener(this);
         userEdit = (EditText) findViewById(R.id.user_et);
         pswEdit = (EditText) findViewById(R.id.password_et);
-        String user = ShareUtils.getString(getApplicationContext(), "user", null);
-        String psw = ShareUtils.getString(getApplicationContext(), "psw", null);
-        userEdit.setText(user);
         userEdit.setOnClickListener(this);
-        pswEdit.setText(psw);
         pswEdit.setOnClickListener(this);
         eye = (TextView)findViewById(R.id.eye_tv);
         eye.setTypeface(new FontManager().getType(getApplicationContext()));
         eye.setOnClickListener(this);
+
+
+        String user = ShareUtils.getString(getApplicationContext(), "user", null);
+        String psw = ShareUtils.getString(getApplicationContext(), "psw", null);
+        if (user != null && psw != null){
+            Intent intent = new Intent(this,TabLayoutViewPager_Activity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

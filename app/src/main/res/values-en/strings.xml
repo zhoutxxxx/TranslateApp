@@ -29,7 +29,8 @@
     <string name="Message_item">Message</string>
     <string name="DownLoad_item">Download the offline package</string>
     <string name="Mine_Title">Me</string>
-    <string name="Sign_up">Welcome，Please login</string>
+    <string name="Welcome">Welcome，</string>
+    <string name="Sign_up">Please Sign Up</string>
     <string name="Edit_information">Revise</string>
     <!--SettingActivity-->
     <string name="Setting_item">Setting</string>
@@ -39,19 +40,20 @@
     <string name="Exchange_language_English_item">English</string>
     <string name="Automatic_updates_information">Auto update software under WiFi</string>
     <string name="Language_switching_information">Choose the language that suits you</string>
+    <string name="Exit_the_current_account">Exit the current account</string>
     <!--Voice-->
     <string name="speaking_dialog">speak Now...</string>
     <string name="Finish">Finish</string>
     <string name="select_Input_Language_Dialog_Title">Please select the language you enter?</string>
     <!--Sign up-->
     <string name="Login_button">Sign Up</string>
-    <string name="User_EditText">Mobile Number/E-mail</string>
+    <string name="User_EditText">ID</string>
     <string name="Password_EditText">PassWord</string>
     <string name="forgetPsw_TextView">Forgot Password?</string>
     <string name="register_TextView">Sign In</string>
     <string name="check_Information">Login failed,Please check the information is correct?</string>
     <!--注册界面-->
-    <string name="phone_EditText">Phone Number</string>
+    <string name="phone_EditText">ID</string>
     <string name="e_mail_EditText">E—Mail Address</string>
     <string name="password_EditText">Password</string>
     <string name="sure_password_EditText">Confirm the password</string>
