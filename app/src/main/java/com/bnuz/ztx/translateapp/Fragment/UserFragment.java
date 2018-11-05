@@ -17,7 +17,6 @@ import com.bnuz.ztx.translateapp.Ui.MessageActivity;
 import com.bnuz.ztx.translateapp.Ui.MoneyActivity;
 import com.bnuz.ztx.translateapp.Ui.SettingActivity;
 import com.bnuz.ztx.translateapp.Util.FontManager;
-import com.bnuz.ztx.translateapp.Util.ShareUtils;
 
 
 /**
@@ -27,7 +26,7 @@ import com.bnuz.ztx.translateapp.Util.ShareUtils;
 
 public class UserFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
     TextView information1, information2, information3, information4, information1TextView, information2TextView, information3TextView, information4TextView;
-    TextView moneyTextView, messageTextView, downloadTextView, settingTextView,welcome;
+    TextView moneyTextView, messageTextView, downloadTextView, settingTextView,header;
     Button editButton;
     Intent intent;
 
@@ -39,6 +38,8 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
     }
 
     private void findView(View view) {
+        header = (TextView)view.findViewById(R.id.header_text);
+        header.setText( getResources().getString(R.string.TabLayout_Title_User));
         //图标实例化
         moneyTextView = (TextView) view.findViewById(R.id.money_tv_icon);
         moneyTextView.setTypeface(new FontManager().getType(getActivity()));
@@ -77,15 +78,6 @@ public class UserFragment extends android.support.v4.app.Fragment implements Vie
         editButton = (Button) view.findViewById(R.id.reserve_bt);
         editButton.setOnClickListener(this);
 
-        welcome = view.findViewById(R.id.mine_name);
-
-        String user = ShareUtils.getString(getContext(), "user", null);
-        String psw = ShareUtils.getString(getContext(), "psw", null);
-        if (user != null && psw != null){
-            welcome.setText(getResources().getString(R.string.Welcome) + user);
-        }else{
-            welcome.setText(getResources().getString(R.string.Welcome) + getResources().getString(R.string.Sign_up));
-        }
     }
 
     //布局点击事件

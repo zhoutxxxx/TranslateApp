@@ -8,18 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
-                android:padding="10dp"
-                android:text="@string/TabLayout_Title_User"
-                android:textColor="@android:color/white"
-                android:textSize="19dp"/>
-        </LinearLayout>
+        <include
+            android:id="@+id/header"
+            layout="@layout/navigation_layout"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -110,16 +101,8 @@
                         android:paddingRight="20dp"/>
                 </LinearLayout>
                 <!--水平线-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="40dp"
-                        android:background="@color/gray_soft"/>
-                </LinearLayout>
+                <include
+                    layout="@layout/horizontal_line"/>
                 <!--我的余额-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -152,16 +135,8 @@
                         android:paddingRight="20dp"/>
                 </LinearLayout>
                 <!--水平线-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="40dp"
-                        android:background="@color/gray_soft"/>
-                </LinearLayout>
+                <include
+                    layout="@layout/horizontal_line"/>
                 <!--我的余额-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -194,16 +169,8 @@
                         android:paddingRight="20dp"/>
                 </LinearLayout>
                 <!--水平线-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="40dp"
-                        android:background="@color/gray_soft"/>
-                </LinearLayout>
+                <include
+                    layout="@layout/horizontal_line"/>
                 <!--我的余额-->
                 <LinearLayout
                     android:layout_width="match_parent"
