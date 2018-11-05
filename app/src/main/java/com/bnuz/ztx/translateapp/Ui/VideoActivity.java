@@ -91,7 +91,7 @@ public class VideoActivity extends AppCompatActivity implements View.OnClickList
         myGLSurfaceView = findViewById(R.id.myView);
         EventBus.getDefault().register(this);
         init();
-        //初始化PeerConnectionFactory类（核心类）
+        // 初始化PeerConnectionFactory类（核心类）
         PeerConnectionFactory.initializeAndroidGlobals(getApplicationContext(), true, true, true, true);
         pcFactory = new PeerConnectionFactory();
         //获取摄像头设备的数量和名字等属性
