@@ -198,9 +198,14 @@ public class TranslateFragment extends Fragment implements View.OnClickListener,
         switch (view.getId()) {
             //翻译按钮
             case R.id.enter_tv:
-                loadingDialog.show();
-                TXTRequest();
-                break;
+                String s = input.getText().toString();
+                if (s.length() == 0){
+                    break;
+                }else{
+                    loadingDialog.show();
+                    TXTRequest();
+                    break;
+                }
             //照相按钮
             case R.id.photo_tv:
                 OCRRequest();
